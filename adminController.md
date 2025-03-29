@@ -5,57 +5,78 @@ Functions Overview
 The adminController.js file contains numerous functions, each responsible for specific routes and functionalities within the admin interface of the application.
 Page Rendering Functions
 adminPage
+```js
 const adminPage = async (req, res) => {
     return res.render("manage/index.ejs");
 }
+```
 This function renders the main administration page at the path /manage/index.ejs.
 Adminmainpage
+```js
 const adminmainpage = async (req, res) => {
     return res.render("manage/dashboard.ejs");
 }
+```
 Renders the admin dashboard page at /manage/dashboard.ejs.
 adminPage3
+```js
 const adminPage3 = async (req, res) => {
     return res.render("manage/a-index-bet/index3.ejs");
 }
+```
 Displays page 3 of the admin management system at /manage/a-index-bet/index3.ejs.
 adminPage5
+```js
 const adminPage5 = async (req, res) => {
     return res.render("manage/a-index-bet/index5.ejs");
 }
+```
 Renders page 5 of the admin management system at /manage/a-index-bet/index5.ejs.
 adminPage10
+```js
 const adminPage10 = async (req, res) => {
     return res.render("manage/a-index-bet/index10.ejs");
 }
+```
 Displays page 10 of the admin management system located at /manage/a-index-bet/index10.ejs.
 adminPage5d
+```js
 const adminPage5d = async (req, res) => {
     return res.render("manage/5d.ejs");
 }
+```
 Renders the five-digits management page located at /manage/5d.ejs.
 adminPageK3
+```js
 const adminPageK3 = async (req, res) => {
     return res.render("manage/k3.ejs");
 }
+```
 Displays the K3 management page at /manage/k3.ejs.
 ctvProfilePage
+```js
 const ctvProfilePage = async (req, res) => {
     var phone = req.params.phone;
     return res.render("manage/profileCTV.ejs", { phone });
 }
+```
 Renders the profile page for CTV (Collaborators) based on the phone parameter provided in the URL.
 giftPage
+```js
 const giftPage = async (req, res) => {
     return res.render("manage/giftPage.ejs");
 }
+```
 Renders the gift management page at /manage/giftPage.ejs.
 membersPage
+```js
 const membersPage = async (req, res) => {
     return res.render("manage/members.ejs");
 }
+```
 Displays the members management page at /manage/members.ejs.
 adminChatPage
+```js
 const adminChatPage = async (req, res) => {
    var f_api= process.env.Firebase_Apikey;
    var f_authdomain= process.env.Firebase_AuthDomain;
@@ -67,11 +88,13 @@ const adminChatPage = async (req, res) => {
    var f_mesuareId= process.env.Firebase_MeasurementId;
 return res.render("manage/aChat.ejs",{d_f_api: f_api, d_f_authdomain :f_authdomain,d_f_dburl:f_dburl,d_f_projid:f_projid,d_f_stobck:f_stobck,d_f_messId:f_messId,d_f_appid:f_appid,d_f_mesuareId:f_mesuareId });
 }
+```
 
 The code defines an asynchronous function called adminChatPage. This function takes two inputs: req (request) and res (response).
 Inside the function, it retrieves several environment variables related to Firebase, such as the API key, authentication domain, database URL, project ID, storage bucket, messaging sender ID, app ID, and measurement ID.
 Finally, it sends a response that renders a webpage called aChat.ejs and passes these Firebase values to that page as data.
 k3chatPage
+```js
 const k3chatPage = async (req, res) => {
     var f_api= process.env.Firebase_Apikey;
     var f_authdomain= process.env.Firebase_AuthDomain;
@@ -84,8 +107,10 @@ const k3chatPage = async (req, res) => {
     return res.render("manage/ChatK3.ejs",{d_f_api: f_api, d_f_authdomain :f_authdomain,d_f_dburl:f_dburl,d_f_projid:f_projid,d_f_stobck:f_stobck,d_f_messId:f_messId,d_f_appid:f_appid,d_f_mesuareId:f_mesuareId}
     );
 }
+```
 This code defines a function called k3chatPage that handles a web request. It gets some settings for Firebase from environment variables, like API key, authentication domain, database URL, project ID, storage bucket, message sender ID, app ID, and measurement ID. Then, it sends a response to the user by rendering a template called "ChatK3.ejs" with those Firebase settings included.
 d5chatPage
+```js
 const d5chatPage = async (req, res) => {
     var f_api= process.env.Firebase_Apikey;
     var f_authdomain= process.env.Firebase_AuthDomain;
@@ -97,26 +122,31 @@ const d5chatPage = async (req, res) => {
     var f_mesuareId= process.env.Firebase_MeasurementId;
     return res.render("manage/Chat5d.ejs",  {d_f_api: f_api, d_f_authdomain :f_authdomain,d_f_dburl:f_dburl,d_f_projid:f_projid,d_f_stobck:f_stobck,d_f_messId:f_messId,d_f_appid:f_appid,d_f_mesuareId:f_mesuareId});
 }
+```
 This code is a function called d5chatPage. It takes two inputs: req (request) and res (response). 
 1.	It retrieves several environment variables related to Firebase, which is a platform for building apps. These variables include:
-o	Firebase_Apikey
-o	Firebase_AuthDomain
-o	Firebase_Dburl
-o	Firebase_ProjId
-o	Firebase_StorageBucket
-o	Firebase_MessageSenId
-o	Firebase_AppId
-o	Firebase_MeasurementId
-o	After getting these values, the function sends a response to the client. It uses the res.render method to display a webpage called "Chat5d.ejs". 
+```	Firebase_Apikey
+	Firebase_AuthDomain
+	Firebase_Dburl
+	Firebase_ProjId
+	Firebase_StorageBucket
+	Firebase_MessageSenId
+	Firebase_AppId
+	Firebase_MeasurementId
+```
+	After getting these values, the function sends a response to the client. It uses the res.render method to display a webpage called "Chat5d.ejs". 
 o	The function also passes the Firebase values to the webpage so that it can use them. Each value is sent with a specific name, starting with d_, to help the webpage access them.
 ctvPage
+```js
 const ctvPage = async (req, res) => {
     return res.render("manage/ctv.ejs");
 }
+```
 Renders the CTV management page.
 User and Member Management Functions
 userInfo
 This function retrieves user information based on the phone number passed in the request body. It checks if the user exists, gathers hierarchical user data (like referrals), and compiles the user's transactions and financial details before returning the data in the response.
+```js
 const userInfo = async (req, res) => {
     let auth = req.cookies.auth;
     let phone = req.body.phone;
@@ -243,7 +273,7 @@ const userInfo = async (req, res) => {
     });
 }
 
-
+```
 •	It first checks if a phone number is provided in the request body.
 •	Returns a failure response if the phone number is missing or if the user is not found in the database.
 •	Retrieves the user information from the 'users' table based on the provided phone number.
@@ -254,6 +284,7 @@ const userInfo = async (req, res) => {
 
 recharge
 Balances and retrieves recharge and withdrawal data for the users. It categorizes based on their statuses to present relevant information to the requester.
+```js
 const recharge = async (req, res) => {
     let auth = req.cookies.auth;
     if (!auth) {
@@ -277,12 +308,13 @@ const recharge = async (req, res) => {
         datas4: withdraw2,
     });
 }
-
+```
 It checks if the auth cookie exists in the request. If not, it returns a JSON response with status code 200 containing a message of 'Failed', a status of false, and a timestamp generated using new Date().getTime().
 Then, it executes four asynchronous queries using connection.query() to retrieve data from the database tables recharge and withdraw based on their status values.
 Finally, it returns a JSON response with status code 200 containing a message of 'Success', a status of true, and the queried data stored in variables recharge, recharge2, withdraw, and withdraw2.
 settingGet
 Retrieves various application and user-specific settings including banking information.	
+```js
 const settingGet = async (req, res) => {
     try {
         let auth = req.cookies.auth;
@@ -323,7 +355,7 @@ const settingGet = async (req, res) => {
     }
 }
 
-
+```
 Within a try-catch block, the function attempts to retrieve the authentication token from the request cookies. If no token is found, it returns a JSON response with a status of 'Failed'.
 Subsequently, SQL queries are executed using an active database connection to fetch specific data from tables like users, bank_recharge, bank_recharge_momo, and admin.
 If data is found in bank_recharge_momo based on certain conditions, it extracts the first element from the result.
@@ -332,6 +364,7 @@ If any errors occur during the process, a 500 status response with 'Failed' mess
 
 rechargeDuyet
 Processes recharge requests based on user confirmation and updates the status accordingly. It handles both confirmations and deletions of recharge requests.
+```js
 const rechargeDuyet = async (req, res) => {
     let auth = req.cookies.auth;
     let id = req.body.id;
@@ -389,7 +422,7 @@ const rechargeDuyet = async (req, res) => {
         });
     }
 }
-
+```
 •	It first extracts auth, id, and type from req.cookies and req.body.
 •	If any of these values is missing, it returns a failure response.
 •	If type is 'confirm', it updates the status of a recharge in the database based on the provided id.
@@ -399,6 +432,7 @@ const rechargeDuyet = async (req, res) => {
 
 getUserDataByPhone
 Fetches user data such as phone, code, and invite information from the database based on the provided phone number.
+```js
 const getUserDataByPhone = async (phone) => {
     let [users] = await connection.query('SELECT `phone`, `code`,`name_user`,`invite` FROM users WHERE `phone` = ? ', [phone]);
     const user = users?.[0]
@@ -414,6 +448,7 @@ const getUserDataByPhone = async (phone) => {
         invite: user.invite,
     }
 }
+```
 The provided code defines an asynchronous function getUserDataByPhone that accepts a phone parameter. Inside the function, it queries a database using connection.query to fetch user data based on the provided phone number.
 The fetched users array is destructured to extract the first element (if it exists) into the user variable using optional chaining (?.) to handle cases where users may be undefined or empty.
 If the user is not found (undefined or null), an Error is thrown with the message 'Unable to get user data!'
@@ -421,6 +456,7 @@ Finally, the function returns an object containing specific properties (phone, c
 
 addUserAccountBalance
 Adds a specified amount to the user's account balance and also awards a bonus to the inviter associated with the user.
+```js
 const addUserAccountBalance = async ({ money, phone, invite }) => {
     const user_money = money + (money / 100) * 5
     const inviter_money = (money / 100) * 5
@@ -436,13 +472,14 @@ const addUserAccountBalance = async ({ money, phone, invite }) => {
         console.log("SUCCESSFULLY ADD MONEY TO inviter")
     }
 }
-
+```
 This code defines an asynchronous function called addUserAccountBalance that takes an object with money, phone, and invite as parameters. The function calculates the user's money and inviter's money based on the input money. It then updates the user's money and total money in the database using the provided phone number.
 Next, it queries the database to find an inviter based on the invite code. If an inviter is found, it updates the inviter's money and total money in the database.
 The code uses async/await to handle asynchronous operations like querying the database. The connection object is assumed to be defined elsewhere and provides the query method to interact with the database.
 
 updateLevel
 Updates user levels based on provided hierarchy inputs such as f1, f2, f3, and f4.
+```js
 const updateLevel = async (req, res) => {
     try {
         let id = req.body.id;
@@ -474,7 +511,7 @@ const updateLevel = async (req, res) => {
         });
     }
 };
-
+```
 The given code defines an asynchronous function updateLevel that updates records in a database table named 'level' based on the request body parameters.
 •	req and res are objects representing the request and response respectively.
 •	The function retrieves id, f1, f2, f3, f4 from the request body.
@@ -485,6 +522,7 @@ The given code defines an asynchronous function updateLevel that updates records
 
 handlWithdraw
 Handles withdrawal requests by updating the status based on confirmation or deletion actions.
+```js
 const handlWithdraw = async (req, res) => {
     let auth = req.cookies.auth;
     let id = req.body.id;
@@ -537,6 +575,7 @@ const handlWithdraw = async (req, res) => {
         });
     }
 }
+```
 This code defines an asynchronous function handleWithdraw that handles withdrawal requests.
 It extracts authentication data, ID, and type from the request body. If any of these values are missing, it returns a failure response.
 If the type is 'confirm', it updates the withdrawal status, fetches related information, and processes either a transfer or a simple withdrawal. It then sends notifications based on the transaction type.
@@ -544,6 +583,7 @@ If the type is 'delete', it updates the withdrawal status to '2', returns the wi
 The code uses SQL queries to interact with a database and contains conditional flows based on the withdrawal type.
 createBonus
 Creates bonuses for users based on selected criteria, allowing for bonus amounts to be adjusted based on different selections.
+```js
 const createBonus = async (req, res) => {
     const randomString = (length) => {
         var result = '';
@@ -684,7 +724,7 @@ const createBonus = async (req, res) => {
         });
     }
 }
-
+```
 The code defines an asynchronous function createBonus that handles various operations based on the input type. Here's a breakdown of the code:
 1.	A helper function randomString generates a random alphanumeric string of a specified length.
 2.	A function timerJoin formats a given timestamp to a specific date-time format.
@@ -696,7 +736,7 @@ The code defines an asynchronous function createBonus that handles various opera
 8.	Returns a JSON response with the corresponding message and status for each scenario.
 register
 This function registers a new user by validating input data and storing it in the database.
-
+```js
 const register = async (req, res) => {
     let { username, password,invitecode } = req.body;
     let id_user = randomNumber(10000, 99999);
@@ -754,7 +794,7 @@ const register = async (req, res) => {
     }
 
 }
-
+```
 The code defines an asynchronous function register that handles user registration. Here is a breakdown of the code:
 •	It extracts username, password, and invitecode from the req.body.
 •	Generates random id_user, name_user, and code.
@@ -768,6 +808,7 @@ The code defines an asynchronous function register that handles user registratio
 
 profileUser
 Gets the profile information of a user identified by their phone number. It returns financial transaction history along with the User’s profile details.
+```js
 const profileUser = async (req, res) => {
     let phone = req.body.phone;
     if (!phone) {
@@ -795,19 +836,22 @@ const profileUser = async (req, res) => {
         withdraw: withdraw,
     });
 }
-
+```
 In the provided code snippet, an asynchronous function profileUser is defined that takes req (request) and res (response) as parameters. It accesses the phone number from the request body and performs database queries based on that phone number.
 If the phone number is not provided, it sends a JSON response with a 'Phone Error' message and status set to false along with the current timestamp. If no user is found for the provided phone number, it returns a similar error response.
 Otherwise, it queries the 'recharge' and 'withdraw' tables for the given phone number, orders the results by ID in descending order, and limits the results to the latest 10 entries for each table. Finally, it sends a success response with status set to true along with the fetched 'recharge' and 'withdraw' data.
 
 infoMember
+```js
 const infoMember = async (req, res) => {
     let phone = req.params.id;
     return res.render("manage/profileMember.ejs", { phone });
 }
+```
 Displays the information of a specified member based on the phone ID provided in the URL.
 listMember
 Fetches a paginated list of members from the database.
+```js
 const listMember = async (req, res) => {
     let { pageno, limit } = req.body;
 
@@ -832,6 +876,7 @@ const listMember = async (req, res) => {
             status: false
         });
     }
+
     const [users] = await connection.query(`SELECT * FROM users WHERE veri = 1  ORDER BY id DESC LIMIT ${pageno}, ${limit}; `);
     const [total_users] = await connection.query(`SELECT * FROM users WHERE veri = 1 ; `);
     return res.status(200).json({
@@ -842,12 +887,13 @@ const listMember = async (req, res) => {
     });
 }
 
-
+```
 The given code defines an asynchronous function listMember that handles a request and response object. It retrieves pageno and limit from the request body.
 If either pageno or limit is missing or less than zero, it returns a JSON response indicating 'No more data' with an empty gameslist array and status false.
 It then executes SQL queries to fetch users based on the verification status and calculates the total number of users meeting the verification requirement. Finally, it returns a JSON response with the retrieved users, success message, status true, and the total number of pages based on the supplied limit.
 settingBank
 This function handles the request for setting bank-related information. It expects a request object (req) and a response object (res) as parameters. The function performs the following steps:
+```js
 const settingBank = async (req, res) => {
     try {
         let auth = req.cookies.auth;
@@ -916,34 +962,38 @@ const settingBank = async (req, res) => {
         });
     }
 }
-
+```
 deleteBankRechargeById(id)
 This function deletes a bank recharge entry from the database based on the provided ID. It expects the ID of the bank recharge entry as a parameter. The function performs the following steps:
+```js
 const deleteBankRechargeById = async (id) => {
     const [recharge] = await connection.query("DELETE FROM bank_recharge WHERE id = ?", [id]);
 
     return recharge
 }
+```
 tranfermode
 This function handles the request for updating the transfer mode for a user. It expects a request object (req) and a response object (res) as parameters. The function performs the following steps:
 1.	Extracts the authentication token from the request cookies and the transfer mode from the request body.
 2.	Queries the database to retrieve information about the user associated with the authentication token.
 3.	Updates the transfer mode for the user in the 'bank_recharge' table in the database.
 4.	Returns a JSON response with a 'Submitted successfully' message and sets the status to true.
-5.	const tranfermode = async (req, res) => {
-6.	    let auth = req.cookies.auth;
-7.	    let tran_mode = req.body.mode_tran;
-8.	    const [rows] = await connection.query('SELECT * FROM users WHERE `token` = ? ', [auth]);
-9.	    let user = rows[0];
-10.	    await connection.execute("UPDATE bank_recharge SET transfer_mode = ?  WHERE `phone` = ? ", [tran_mode,user.phone] );
-11.	    return res.status(200).json({
-12.	        message: 'Submitted successfully',
-13.	        status: true,
-14.	        });
-15.	    } 
-16.	
+```js	
+	const tranfermode = async (req, res) => {
+	    let auth = req.cookies.auth;
+	    let tran_mode = req.body.mode_tran;
+	    const [rows] = await connection.query('SELECT * FROM users WHERE `token` = ? ', [auth]);
+	    let user = rows[0];
+	    await connection.execute("UPDATE bank_recharge SET transfer_mode = ?  WHERE `phone` = ? ", [tran_mode,user.phone] );
+	    return res.status(200).json({
+	        message: 'Submitted successfully',
+	        status: true,
+	        });
+	    } 
+```	
 settingCskh
 This function handles the request for setting customer support information. It expects a request object (req) and a response object (res) as parameters. The function performs the following steps:
+```js
 const settingCskh = async (req, res) => {
     let auth = req.cookies.auth;
     let telegram = req.body.telegram;
@@ -962,19 +1012,21 @@ const settingCskh = async (req, res) => {
         status: true,
     });
 }
-
+```
 levelSetting
 This function renders the 'manage/levelSetting.ejs' view. It does not expect any parameters.
-
+```js
 const levelSetting = async (req, res) => {
     return res.render("manage/levelSetting.ejs");
 }
+```
 settings
 This function renders the 'manage/settings.ejs' view. It does not expect any parameters.
-
+```js
 const settings = async (req, res) => {
     return res.render("manage/settings.ejs");
 }
+```
 editResult2
 This function handles the request for editing a result. It expects a request object (req) and a response object (res) as parameters. The function performs the following steps:
 1.	Extracts the game and list parameters from the request body.
@@ -982,7 +1034,8 @@ This function handles the request for editing a result. It expects a request obj
 3.	Determines the appropriate variable ('join') based on the provided game parameter.
 4.	Executes an SQL update query to update the corresponding variable with the provided list value in the 'admin' table.
 5.	Returns a JSON response with an 'Editing is successful' message and sets the status to true.
-
+   
+```js
 const editResult2 = async (req, res) => {
     let { game, list } = req.body;
 
@@ -1008,9 +1061,10 @@ const editResult2 = async (req, res) => {
 
 }
 
-
+```
 CreatedSalary
 This function handles the request for creating a salary record. It expects a request object (req) and a response object (res) as parameters. The function performs the following steps:
+```js
 const CreatedSalary = async (req, res) => {
     try {
         const phone = req.body.phone;
@@ -1062,7 +1116,7 @@ const CreatedSalary = async (req, res) => {
     }
 };
 
-
+```
 1.	Extracts the phone number, amount, and type parameters from the request body.
 2.	Validates the phone number to ensure it is a 10-digit number. If it is invalid, it returns a JSON response with an 'ERROR!!! Invalid phone number' message and sets the status to false.
 3.	Checks if a user with the provided phone number exists. If not, it returns a JSON response with an 'ERROR!!! User with the provided phone number does not exist' message and sets the status to false.
@@ -1073,29 +1127,31 @@ getSalary
 This function handles the request for retrieving all salary records. It expects a request object (req) and a response object (res) as parameters. The function performs the following steps:
 1.	Queries the 'salary' table to retrieve all records, ordered by timestamp in descending order.
 2.	Returns a JSON response with a 'Success' message, sets the status to true, and includes the retrieved salary records.
-3.	const getSalary = async (req, res) => {
-4.	    const [rows] = await connection.query(`SELECT * FROM salary ORDER BY time DESC`);
-5.	
-6.	    if (!rows) {
-7.	        return res.status(200).json({
-8.	            message: 'Failed',
-9.	            status: false,
-10.	
-11.	        });
-12.	    }
-13.	    console.log("asdasdasd : " + rows)
-14.	    return res.status(200).json({
-15.	        message: 'Success',
-16.	        status: true,
-17.	        data: {
-18.	
-19.	        },
-20.	        rows: rows
-21.	    })
-22.	};
-23.	
+```js	
+	const getSalary = async (req, res) => {
+	    const [rows] = await connection.query(`SELECT * FROM salary ORDER BY time DESC`);
+	
+	    if (!rows) {
+	        return res.status(200).json({
+	            message: 'Failed',
+	            status: false,
+	
+	        });
+	    }
+	    console.log("asdasdasd : " + rows)
+	    return res.status(200).json({
+	        message: 'Success',
+	        status: true,
+	        data: {
+	
+	        },
+	        rows: rows
+	    })
+	};
+```	
 gettranfermode
 This function handles the request for retrieving the transfer mode for a user. It expects a request object (req) and a response object (res) as parameters. The function performs the following steps:
+```js
 const gettranfermode = async (req, res) => {
     let auth = req.cookies.auth;
     const [user] = await connection.execute('SELECT `phone` FROM `users` WHERE `token` = ?', [auth]);
@@ -1117,9 +1173,10 @@ const gettranfermode = async (req, res) => {
         rows: rows
     })
 };
-
+```
 getdashboardInfo
 This function handles the request for retrieving dashboard information. It expects a request object (req) and a response object (res) as parameters. The function performs the following steps:
+```js
 const getdashboardInfo = async (req, res) => {
     let auth = req.cookies.auth;
     let totaltodayUsers = 0;
@@ -1256,7 +1313,7 @@ const getdashboardInfo = async (req, res) => {
     })
 }
 
-
+```
 1.	Extracts the authentication token from the request cookies.
 2.	Performs various calculations and queries to retrieve information such as the number of users that joined today, today's total recharge and withdrawal amounts, total user balance, total number of users, pending recharge and withdrawal counts, today's total bets and winnings, monthly turnover, and more.
 3.	Returns a JSON response with a 'Success' message, sets the status to true, and includes the retrieved dashboard information.
@@ -1268,6 +1325,7 @@ const getdashboardInfo = async (req, res) => {
 
 settingbuff
 This function is responsible for updating the money account balance for a user. It is triggered when a request is made to the "/settingbuff" endpoint.
+```js
 const settingbuff = async (req, res) => {
     let auth = req.cookies.auth;
     let id_user = req.body.id_user;
@@ -1300,7 +1358,7 @@ const settingbuff = async (req, res) => {
         });
     }
 }
-
+```
 The function retrieves the user's authentication token from the request cookies and the necessary user and transaction data from the request body. It then verifies the availability of the required data. If any of the fields (id_user, buff_acc, or money_value) are missing, it returns a "Failed" response indicating the missing fields.
 If all the fields are present, the function queries the database to fetch the user with the provided id_user. If the user is found, it updates the user's money account based on the buff_acc value:
 •	If buff_acc is equal to 1, the money balance is increased by money_value.
@@ -1308,6 +1366,7 @@ If all the fields are present, the function queries the database to fetch the us
 The function then returns a "Successful change" response indicating the success of the money account update.
 listCTV
 This function retrieves a list of users (CTVs) based on the provided pagination parameters (pageno and pageto). It is triggered when a request is made to the "/listCTV" endpoint.
+```js
 const listCTV = async (req, res) => {
     let { pageno, pageto } = req.body;
 
@@ -1339,11 +1398,12 @@ const listCTV = async (req, res) => {
         datas: wingo,
     });
 }
-
+```
 infoCtv
 This function retrieves various information about a CTV (user) based on the provided phone number. It is triggered when a request is made to the "/infoCtv" endpoint.
 The function retrieves the phone number from the request body and queries the database to fetch information about the user with the provided phone number.
 If the user is found, the function performs several additional queries to calculate various statistics related to the user's performance:
+```
 1.	f1: The number of directly referred users (level = 1).
 2.	f2: The number of users referred by f1 (level = 2).
 3.	f3: The number of users referred by f2 (level = 3).
@@ -1361,6 +1421,8 @@ If the user is found, the function performs several additional queries to calcul
 15.	moneyCTV: The amount of money earned by the CTV as commission.
 16.	redenvelopes_used: The list of redenvelopes used by the CTV today.
 17.	financial_details_today: The list of financial transactions made by the CTV today.
+```
+```js
 const infoCtv = async (req, res) => {
     const phone = req.body.phone;
 
@@ -1593,11 +1655,12 @@ const infoCtv = async (req, res) => {
         financial_details_today: financial_details_today,
     });
 }
-
+```
 The function finally returns a "Success" response with the retrieved information.
 infoCtv2
 This function retrieves various information about a CTV (user) based on the provided phone number and time and date. It is triggered when a request is made to the "/infoCtv2" endpoint.
 The function retrieves the phone number and timeDate from the request body and queries the database to fetch information about the user and other related data.
+```js
 const infoCtv2 = async (req, res) => {
     const phone = req.body.phone;
     const timeDate = req.body.timeDate;
@@ -1700,12 +1763,13 @@ const infoCtv2 = async (req, res) => {
         financial_details_today: financial_details_today,
     });
 }
-
+```
 The function performs similar operations as the infoCtv function but with the additional parameter timeDate. It calculates the statistics based on the specified time and date instead of the current time.
 The calculated statistics and the retrieved information are then returned in the response.
 
 listRedenvelope
 This function retrieves a list of redenvelopes used by a specific user (CTV). It is triggered when a request is made to the "/listRedenvelope/:phone" endpoint.
+```js
 const listRedenvelope = async (req, res) => {
     let auth = req.cookies.auth;
     let phone = req.params.phone;
@@ -1762,12 +1826,13 @@ const listRedenvelope = async (req, res) => {
         page_total: Math.ceil(total_users.length / limit)
     });
 }
-
+```
 The function retrieves the user's authentication token, phone number, and pagination parameters from the request. It verifies their availability and fetches the corresponding user from the database.
 If the user is found, the function queries the database to fetch a paginated list of redenvelopes used by the user. The result is limited based on the provided pagination parameters.
 The function returns a "Success" response with the list of redenvelopes and the total number of users using redenvelopes
 listBet
 This function retrieves a list of bets made by a specific user. It is triggered when a request is made to the "/listBet/:phone" endpoint.
+```js
 const listBet = async (req, res) => {
     let auth = req.cookies.auth;
     let phone = req.params.phone;
@@ -1825,12 +1890,13 @@ const listBet = async (req, res) => {
     });
 }
 
-
+```
 The function retrieves the user's authentication token, phone number, and pagination parameters from the request. It verifies their availability and fetches the corresponding user from the database.
 If the user is found, the function queries the database to fetch a paginated list of bets made by the user. The result is limited based on the provided pagination parameters.
 The function returns a "Success" response with the list of bets and the total number of bets made by the user.
 listOrderOld
 This function retrieves a list of game results for a specific game (K5D). It is triggered when a request is made to the "/listOrderOld" endpoint.
+```js
 const listOrderOld = async (req, res) => {
     let { gameJoin } = req.body;
     let internet_bet = req.body.join_al;
@@ -1887,12 +1953,13 @@ const listOrderOld = async (req, res) => {
     });
 }
 
-
+```
 The function retrieves the gameJoin and internet_bet parameters from the request body and verifies their availability. It then fetches the game results and related waiting bets from the database.
 If the game results are available, the function returns a "Get success" response with the game results, waiting bets, and relevant settings.
 
 listOrderOldK3
 This function retrieves a list of game results for a specific game (K3D). It is triggered when a request is made to the "/listOrderOldK3" endpoint.
+```js
 const listOrderOldK3 = async (req, res) => {
     let { gameJoin } = req.body;
 
@@ -1949,11 +2016,12 @@ const listOrderOldK3 = async (req, res) => {
     });
 }
 
-
+```
 The function retrieves the gameJoin parameter from the request body and verifies its availability. It then fetches the game results and related waiting bets from the database.
 If the game results are available, the function returns a "Get success" response with the game results, waiting bets, and relevant settings.
 editResult
 This function edits the game result list for a specific game. It is triggered when a request is made to the "/editResult" endpoint.
+```js
 const editResult = async (req, res) => {
     let { game, list } = req.body;
 
@@ -1979,18 +2047,20 @@ const editResult = async (req, res) => {
 
 }
 
-
+```
 The function retrieves the game and list parameters from the request body and verifies their availability. It then updates the corresponding game results in the database with the provided list.
 The function returns an "Editing is successful" response indicating the success of the operation.
 CreatedSalaryRecord
 This function renders the "CreatedSalaryRecord" page. It is triggered when a request is made to the "/CreatedSalaryRecord" endpoint.
+```js
 const CreatedSalaryRecord = async (req, res) => {
     return res.render("manage/CreatedSalaryRecord.ejs");
 }
-
+```
 The function does not accept any request parameters and does not return a response. It serves as a route endpoint for rendering the page.
 makecolloborator
 This function updates a user's level to 2, making them a collaborator. It is triggered when a request is made to the "/makecolloborator" endpoint.
+```js
 const makecolloborator = async (req, res) => {
     let auth = req.cookies.auth;
     let u_phone = req.body.u_phone;
@@ -2015,12 +2085,13 @@ const makecolloborator = async (req, res) => {
     })
 };
 
-
+```
 The function retrieves the user's authentication token and the target user's phone number from the request body. It updates the level field of the user and the corresponding point_list entry to 2.
 The function then returns a "Success" response indicating the success of the update.
 
 
 rechargePage
+```js
 const rechargePage = async (req, res) => {
     return res.render("manage/recharge.ejs");
 }
@@ -2080,6 +2151,7 @@ const statistical2 = async (req, res) => {
         withdrawToday: withdraw_today[0].total,
     });
 }
+```
 This code defines an asynchronous function called statistical2. It retrieves various statistics from a database. 
 1.	It calculates the total money for two different statuses (1 and 2) from a table called minutes_1.
 2.	It counts the number of users who are online (status 1) and offline (status 0) from a users table.
@@ -2089,6 +2161,7 @@ This code defines an asynchronous function called statistical2. It retrieves var
 Authorization and Middleware Functions
 middlewareAdminController
 Checks if an admin user is authenticated and authorized before granting access to specific routes.
+```js
 const middlewareAdminController = async (req, res, next) => {
     // xác nhận token
     const auth = req.cookies.auth;
@@ -2113,6 +2186,7 @@ const middlewareAdminController = async (req, res, next) => {
         return res.redirect("/login");
     }
 }
+```
 A middleware function validates user sessions using JWT tokens and checks user roles.
 The provided code defines a middleware function named middlewareAdminController using async/await syntax, which takes req, res, and next as parameters. It performs the following actions:
 1.	Checks the existence of a token in the auth variable retrieved from req.cookies.
@@ -2126,6 +2200,7 @@ The provided code defines a middleware function named middlewareAdminController 
 
 changeAdmin
 Allows changes to admin settings and records, updating the database accordingly.
+```js
 const changeAdmin = async (req, res) => {
     let auth = req.cookies.auth;
     let value = req.body.value;
@@ -2183,7 +2258,7 @@ const changeAdmin = async (req, res) => {
     }
 
 }
-
+```
 The given code defines an asynchronous function changeAdmin that handles requests and responses in a web application. Here's a step-by-step explanation:
 1.	It extracts auth, value, type, and typeid from the request body and cookies.
 2.	If any of the required values is missing, it returns a failure response with a message, status, and timestamp.
@@ -2195,6 +2270,7 @@ The given code defines an asynchronous function changeAdmin that handles request
 
 banned
 Handles the banning and unbanning of users based on their IDs and provided status.
+```js
 const banned = async (req, res) => {
     let auth = req.cookies.auth;
     let id = req.body.id;
@@ -2217,12 +2293,13 @@ const banned = async (req, res) => {
         status: true,
     });
 }
-
+```
 The provided code defines an asynchronous function banned that takes req and res as parameters. It checks for the existence of an auth cookie and id in the request body. If either is missing, it returns a response with a status code of 200 and an error message. Otherwise, it updates the status of a user based on the type provided ('open' or 'close') using a SQL query through connection.query.
 If type is 'open', it sets the user status to 1; if type is 'close', it sets the user status to 2. Finally, it returns a response with a status code of 200 and a success message after the status update.
 
-on_off_colloborator
+`js on_off_colloborator`
 Enables or disables collaborator actions based on the provided parameters.
+```js
 const on_off_colloborator = async (req, res) => {
     let auth = req.cookies.auth;
     let id = req.body.id;
@@ -2246,13 +2323,14 @@ const on_off_colloborator = async (req, res) => {
     });
 }
 
-
+```
 The provided code defines an asynchronous function on_off_colloborator that takes req and res as parameters. The function first extracts the auth, id, and type from the request body. If either auth or id is missing, it returns a Failed status along with a timestamp.
 Depending on the value of type ('on' or 'off'), the function updates the colloborator_action in the bank_recharge table accordingly. It uses the id to identify the record to update.
 Finally, if the update is successful, it returns a Successful change status with a boolean true value.
 Database Interaction Functions
 getCollotoogle
 Retrieves collaborator details based on phone numbers from a specified database table.
+```js
 const getCollotoogle = async (req, res) => {
     let coll_phone = req.body.coll_phone;
     const [collo_sett] = await connection.query(`SELECT * FROM bank_recharge WHERE phone = ?`, [coll_phone]);
@@ -2264,6 +2342,7 @@ const getCollotoogle = async (req, res) => {
     });
 
 }
+```
 1.	A function getCollotoogle is defined as an asynchronous function that takes req and res as parameters.
 2.	The function extracts coll_phone from req.body.
 3.	It then queries the database using the extracted coll_phone value to fetch data from the bank_recharge table.
@@ -2271,6 +2350,7 @@ const getCollotoogle = async (req, res) => {
 5.	Finally, the function returns a JSON response with status 200 containing the object with the fetched data.
 getLevelInfo
 Fetches the current settings for user levels, used for the administrative configuration.
+```js
 const getLevelInfo = async (req, res) => {
 
     const [rows] = await connection.query('SELECT * FROM `level`');
@@ -2320,11 +2400,12 @@ const getLevelInfo = async (req, res) => {
     // });
 
 }
-
+```
 This code defines an asynchronous function getLevelInfo that handles a request and response. It queries a database table named level and stores the result in rows. If the query result is empty, it returns a JSON response with a message 'Failed' and status false. Otherwise, it logs the rows to the console and returns a JSON response with a message 'Success', status true, and includes the queried rows.
 
 listRechargeMem
 Fetches recharge records for a specified member, implementing pagination.
+```js
 const listRechargeMem = async (req, res) => {
     let auth = req.cookies.auth;
     let phone = req.params.phone;
@@ -2381,7 +2462,7 @@ const listRechargeMem = async (req, res) => {
         page_total: Math.ceil(total_users.length / limit)
     });
 }
-
+```
 1.	It extracts auth from request cookies, phone from request parameters, and pageno and limit from request body.
 2.	Checks if pageno or limit is missing or invalid, then returns a JSON response with an error message and status.
 3.	Queries the database for the user based on the phone number and token received.
@@ -2391,6 +2472,7 @@ const listRechargeMem = async (req, res) => {
 7.	Returns a success response with the recharge data and calculated total pages.
 listWithdrawMem
 Obtains withdrawal records for a specified member, utilizing pagination.
+```js
 const listWithdrawMem = async (req, res) => {
     let auth = req.cookies.auth;
     let phone = req.params.phone;
@@ -2448,7 +2530,7 @@ const listWithdrawMem = async (req, res) => {
     });
 }
 
-
+```
 1.	It defines an asynchronous function listWithdrawMem that takes req and res as parameters.
 2.	It extracts auth from cookies in the request, phone from request parameters, and pageno & limit from the request body.
 3.	It includes several conditional checks to handle different scenarios and return appropriate JSON responses.
@@ -2458,7 +2540,7 @@ const listWithdrawMem = async (req, res) => {
 Other Helper Functions
 randomString
 Generates a random alphanumeric string of a specified length.
-
+```js
 const randomString = (length) => {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -2469,7 +2551,7 @@ const randomString = (length) => {
     }
     return result;
 }
-
+```
 1.	A variable result is initialized to an empty string to store the generated random string.
 2.	A string characters containing all uppercase and lowercase letters is defined.
 3.	The length of the characters string is stored in charactersLength.
@@ -2478,6 +2560,7 @@ const randomString = (length) => {
 6.	Finally, the generated random string is returned.
 ipAddress
 Retrieves the IP address of the requesting user.
+```js
 const ipAddress = (req) => {
     let ip = '';
     if (req.headers['x-forwarded-for']) {
@@ -2489,20 +2572,21 @@ const ipAddress = (req) => {
     }
     return ip;
 }
-
+```
 We defined a function ipAddress that takes a single parameter req of type *http.Request and returns a string representing the IP address.
 We initialize the ip variable as an empty string. Then, we check if the request has a value for 'X-Forwarded-For' header. If it does, we split the value by comma and take the first part as the IP address.
 If the request doesn't have the 'X-Forwarded-For' header but has req.RemoteAddr, we assign that value to ip. If neither condition is met, we also assign req.RemoteAddr to ip.
 
 timeCreate
 Generates the current timestamp.
+```js
 const timeCreate = () => {
     const d = new Date();
     const time = d.getTime();
     return time;
 }
 
-
+```
 1.	new Date() creates a new Date object representing the current date and time in JavaScript.
 2.	getTime() method returns the number of milliseconds since January 1, 1970, when the Date object was created.
 3.	In the optimized code snippet:
@@ -2512,16 +2596,18 @@ const timeCreate = () => {
 
 formatT
 Formats numbers to ensure double digits (e.g., converts '1' to '01').
+```js
 function formateT(params) {
     let result = (params < 10) ? "0" + params : params;
     return result;
 }
-
+```
 The given code defines a function named formatT that takes an integer parameter named params and returns a formatted string.
 Inside the function, it uses a ternary operator to check if the params is less than 10. If it is less than 10, it prepends a '0' to the params value to ensure it is at least two digits long. Otherwise, it keeps the params value as is.
 The optimized code modifies the original code by using fmt.Sprintf to format the params value as a two-digit number with leading zeros. This approach is more concise and readable compared to the ternary operator.
 timerJoin
 Joins timestamps by adding a specified number of hours and formatting them appropriately.
+```js
 function timerJoin(params = '', addHours = 0) {
     let date = '';
     if (params) {
@@ -2546,7 +2632,7 @@ function timerJoin(params = '', addHours = 0) {
     return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
 }
 
-
+```
 The provided code defines a function timerJoin that takes two parameters: params (which defaults to an empty string) and addHours (which defaults to 0).
 Inside the function, it creates a new Date object based on the provided params or the current date if no params is provided. It then adds the specified number of hours to the date provided in params.
 Next, it extracts the year, month, day, hour (converted to 12-hour format), minute, and second components from the date object. The hour is adjusted to ensure it stays within the 12-hour format, and it determines whether it is AM or PM based on the hour.
