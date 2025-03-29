@@ -1,17 +1,17 @@
 Code Documentation - socketIoController.js
 The purpose of this code file is to handle socket.io connections and emit messages to connected clients.
 Import
-The code imports the connectDB function from the ../config/connectDB file. This function establishes a connection to the database.
-Function: sendMessageAdmin(io)
+The code imports the connectDB function from the `../config/connectDB` file. This function establishes a connection to the database.
+Function: `sendMessageAdmin(io)`
 This function is responsible for handling the socket.io connections and emitting messages to connected clients.
 Parameters
 •	io: The socket.io instance passed as a parameter to the function.
 Usage
-To use this function, pass the socket.io instance as an argument when calling sendMessageAdmin(io).
+To use this function, pass the socket.io instance as an argument when calling `sendMessageAdmin(io)`.
 
     
 Function Logic
-
+```js
 const sendMessageAdmin = (io) => {
     io.on('connection', (socket) => {
         socket.on('data-server', (msg) => {
@@ -32,7 +32,7 @@ const sendMessageAdmin = (io) => {
     });
 } 
     
-
+```
 The provided code defines a function named sendMessageAdmin that takes io as a parameter. 
 
 1.	Inside this function, it sets up event listeners for different socket events using the io.on method. When a specific event is received, the function emits the same event with the associated message using io.emit.
