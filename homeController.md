@@ -246,81 +246,89 @@ Response:
 ________________________________________
 `transactionhistoryPage()`
 This function handles the request for the transaction history page of the wallet section.
+```js
 const transactionhistoryPage = async (req, res) => {
     return res.render("wallet/transactionhistory.ejs");
 }
-
+```
 
 Response:
 •	Render the wallet/transactionhistory.ejs template.
 ________________________________________
-walletPage()
+`walletPage()`
 This function handles the request for the wallet page.
+```js
 const walletPage = async (req, res) => {
     return res.render("wallet/index.ejs");
 }
-
+```
 Response:
 •	Render the wallet/index.ejs template.
 ________________________________________
-rechargePage()
+`rechargePage()`
 This function handles the request for the recharge page of the wallet section.
-
+```js
 const rechargePage = async (req, res) => {
     return res.render("wallet/recharge.ejs", {
         MinimumMoney: process.env.MINIMUM_MONEY
     });
 }
-
+```
 Response:
 •	Render the wallet/recharge.ejs template.
 •	Pass the MinimumMoney variable to the template.
 ________________________________________
-rechargeAwardCollectionRecord()
+`rechargeAwardCollectionRecord()`
 This function handles the request for the recharge award collection record page.
+```js
 const rechargeAwardCollectionRecord = async (req, res) => {
     return res.render("checkIn/rechargeAwardCollectionRecord.ejs");
   };
-
+```
 Response:
 •	Render the checkIn/rechargeAwardCollectionRecord.ejs template.
 ________________________________________
-rechargerecordPage()
+`rechargerecordPage()`
 This function handles the request for the recharge record page of the wallet section.
+```js
 const rechargerecordPage = async (req, res) => {
     return res.render("wallet/rechargerecord.ejs");
 }
+```
 Response:
 •	Render the wallet/rechargerecord.ejs template.
 ________________________________________
-withdrawalPage()
+`withdrawalPage()`
 This function handles the request for the withdrawal page of the wallet section.
+```js
 const withdrawalPage = async (req, res) => {
     return res.render("wallet/withdrawal.ejs");
 }
-
+```
 Response:
 •	Render the wallet/withdrawal.ejs template.
 ________________________________________
-withdrawalrecordPage()
+`withdrawalrecordPage()`
 This function handles the request for the withdrawal record page of the wallet section.
+```js
 const withdrawalrecordPage = async (req, res) => {
     return res.render("wallet/withdrawalrecord.ejs");
 }
-
+```
 Response:
 •	Render the wallet/withdrawalrecord.ejs template.
 ________________________________________
-transfer()
+`transfer()`
 This function handles the request for the transfer page of the wallet section.
+```js
 const transfer = async (req, res) => {
     return res.render("wallet/transfer.ejs");
 }
-
+```
 Response:
 •	Render the wallet/transfer.ejs template.
 ________________________________________
-mianPage()
+`mianPage()`
 This function handles the request for the main page of the member section.
 Request:
 •	auth: Token from the user's cookie.
@@ -328,6 +336,7 @@ Response:
 •	Fetch the user's level and the customer support contact from the database.
 •	Render the member/index.ejs template.
 •	Pass the level and cskh variables to the template.
+```js
 const mianPage = async (req, res) => {
     let auth = req.cookies.auth;
     const [user] = await connection.query('SELECT `level` FROM users WHERE `token` = ? ', [auth]);
@@ -336,7 +345,7 @@ const mianPage = async (req, res) => {
     let level = user[0].level;
     return res.render("member/index.ejs", { level, cskh });
 }
-
+```
 In the given code snippet:
 
 1.	A function mainPage is defined as an asynchronous function that 
@@ -348,12 +357,13 @@ In the given code snippet:
 7.	Finally, the function renders an EJS template member/index.ejs and passes the level and cskh values to it for rendering.
 
 ________________________________________
-safePage()
+`safePage()`
 This function handles the request for the safe page of the member section.
 Response:
 •	Fetch the sandbox mode and stake ROI values from the environment variables.
 •	Render the member/safe.ejs template.
 •	Pass the sandbox, roi1, roi2, roi3, and roi4 variables to the template.
+```js
 const safePage = async (req, res) => {
     var sandbox = process.env.SANDBOX_MODE;
     var roi1 = process.env.STAKE_ROI_1;
@@ -362,35 +372,38 @@ const safePage = async (req, res) => {
     var roi4 = process.env.STAKE_ROI_12;
     return res.render("member/safe.ejs",{ sandbox,roi1,roi2,roi3,roi4});
 }
+```
 In this code snippet, an asynchronous arrow function safePage is defined that takes req and res as parameters.
 1.	Inside the function, values are assigned to variables sandbox, roi1, roi2, roi3, and roi4 by accessing the corresponding environment variables using process.env.
 2.	Finally, the function returns the rendered template safe.ejs with the variables sandbox, roi1, roi2, roi3, and roi4 passed as data to the template.
 
 ________________________________________
-languegePage()
+`languegePage()`
 This function handles the request for the language page of the member section.
+```js
 const languegePage = async (req, res) => {
     let lang = req.cookies.lang;
     return res.render("member/language.ejs",{lang});
 }
-
+```
 Request:
 •	lang: Language from the user's cookie.
 Response:
 •	Render the member/language.ejs template.
 •	Pass the lang variable to the template.
 ________________________________________
-avatarpage()
+`avatarpage()`
 This function handles the request for the avatar page of the member section.
+```js
 const avatarpage = async (req, res) => {
     let lang = req.cookies.lang;
     return res.render("member/avatar.ejs");
 }
-
+```
 Response:
 •	Render the member/avatar.ejs template.
 ________________________________________
-d_get_betting()
+`d_get_betting()`
 This function handles the request for the betting details of a particular game.
 Request:
 •	auth: Token from the user's cookie.
@@ -398,6 +411,7 @@ Request:
 Response:
 •	Fetch the betting details from the database based on the game name and user's phone number.
 •	Return a JSON response with the message, status, and betting details.
+```js
 const d_get_betting = async (req, res) => {
     let auth = req.cookies.auth;
     const [user] = await connection.query('SELECT `phone` FROM users WHERE `token` = ? ', [auth]);
@@ -426,34 +440,39 @@ const d_get_betting = async (req, res) => {
         datas: betting_list,
     });
 }
+```
 This code defines an asynchronous function d_get_betting that takes req and res as parameters. It first retrieves the auth token from cookies and then queries the database to get the user's phone number based on the token.
 1.	It then checks the value of gameJoin from the request body and performs different queries based on the value. If gameJoin is 'WinGo', '5D', 'K3', or 'Trx Wingo', corresponding database queries are executed to fetch betting information for the user.
 2.	The function finally returns a JSON response with a status code of 200, along with a message indicating success, a boolean status value, and the betting_list obtained from the database query.
 
 ________________________________________
-aboutPage()
+`aboutPage()`
 This function handles the request for the about page of the member section.
+```js
 const aboutPage = async (req, res) => {
     return res.render("member/about/index.ejs");
 }
-
+```
 Response:
 •	Render the member/about/index.ejs template.
 ________________________________________
-notificationPage()
+`notificationPage()`
 This function handles the request for the notification page of the member section.
+```js
 const notificationPage = async (req, res) => {
     return res.render("member/notification.ejs");
 }
+```
 Response:
 •	Render the member/notification.ejs template.
 ________________________________________
-wingochat()
+`wingochat()`
 This function handles the request for the wingo chat page of the member section.
 Response:
 •	Fetch the latest wingo details from the database.
 •	Render the member/wingochat.ejs template.
 •	Pass the d_period, d_amount, and Firebase credentials variables to the template.
+```js
 const wingochat = async (req, res) => {
     const [winGo1] = await connection.execute('SELECT * FROM `wingo` WHERE `game` = "wingo" ORDER BY `id` DESC LIMIT 2 ', []);
     const period = winGo1[1].period;
@@ -468,6 +487,7 @@ const wingochat = async (req, res) => {
     var f_mesuareId= process.env.Firebase_MeasurementId;
     return res.render("member/wingochat.ejs", { d_period: period, d_amount :amount,d_f_api: f_api, d_f_authdomain :f_authdomain,d_f_dburl:f_dburl,d_f_projid:f_projid,d_f_stobck:f_stobck,d_f_messId:f_messId,d_f_appid:f_appid,d_f_mesuareId:f_mesuareId});
 }
+```
 In this code snippet:
 1.	A function named wingochat is declared as an asynchronous function that takes two parameters: req and res.
 2.	The function queries a database table named wingo to retrieve the latest 2 records where the game column is 'wingo' and orders them by id.
@@ -476,13 +496,13 @@ In this code snippet:
 5.	Finally, the function renders an EJS template named wingochat.ejs and passes the extracted data (period, amount, Firebase variables) as an object to the template.
 
 ________________________________________
-k3chat()
+`k3chat()`
 This function handles the request for the k3 chat page of the member section.
 Response:
 •	Fetch the latest K3 details from the database.
 •	Render the member/k3chat.ejs template.
 •	Pass the kd_period, kd_amount, and Firebase credentials variables to the template.
-
+```js
 const k3chat = async (req, res) => {
     const [k31] = await connection.execute('SELECT * FROM `k3` WHERE `game` = "1" ORDER BY `id` DESC LIMIT 2 ', []);
     const k_period = k31[1].period;
@@ -497,6 +517,7 @@ const k3chat = async (req, res) => {
     var f_mesuareId= process.env.Firebase_MeasurementId;
     return res.render("member/k3chat.ejs", { kd_period: k_period, kd_amount :k_amount,d_f_api: f_api, d_f_authdomain :f_authdomain,d_f_dburl:f_dburl,d_f_projid:f_projid,d_f_stobck:f_stobck,d_f_messId:f_messId,d_f_appid:f_appid,d_f_mesuareId:f_mesuareId});
 }
+```
 The provided code defines an asynchronous function k3chat that takes req and res as parameters. 
 1.	It executes a SQL query to fetch data from the 'k3' table based on the game condition and orders it by 'id' in descending order, limiting to 2 results. 
 2.	It then extracts the 'period' and 'result' values from the second element of the fetched data (k31[1]).
@@ -504,12 +525,13 @@ The provided code defines an asynchronous function k3chat that takes req and res
 4.	Finally, it renders a template 'k3chat.ejs' using res.render and passes the extracted data and Firebase variables as an object to the template.
 
 ________________________________________
-d5chat()
+`d5chat()`
 This function handles the request for the 5D chat page of the member section.
 Response:
 •	Fetch the latest 5D details from the database.
 •	Render the member/d5chat.ejs template.
 •	Pass the d5_period, d5_amount, and Firebase credentials variables to the template.
+```js
 const d5chat = async (req, res) => {
     const [d51] = await connection.execute('SELECT * FROM `d5` WHERE `game` = "1" ORDER BY `id` DESC LIMIT 2 ', []);
     const d5_period = d51[1].period;
@@ -524,6 +546,7 @@ const d5chat = async (req, res) => {
     var f_mesuareId= process.env.Firebase_MeasurementId;
     return res.render("member/d5chat.ejs", { d5_period: d5_period, d5_amount :d5_amount , d_f_api: f_api, d_f_authdomain :f_authdomain,d_f_dburl:f_dburl,d_f_projid:f_projid,d_f_stobck:f_stobck,d_f_messId:f_messId,d_f_appid:f_appid,d_f_mesuareId:f_mesuareId});
 }
+```
 The given code defines an asynchronous function d5chat that takes req and res as parameters.
 1.	Inside the function, a SQL query is executed to select data from a table named d5 where the column game equals 1. 
 2.	The result is stored in d51, which is an array.
@@ -533,39 +556,47 @@ The given code defines an asynchronous function d5chat that takes req and res as
 6.	Finally, the function renders a template named d5chat.ejs and passes the extracted data along with Firebase variables as an object for rendering the view.
 
 ________________________________________
-recordsalary()
+`recordsalary()`
 This function handles the request for the salary record page of the member section.
+```js
 const recordsalary = async (req, res) => {
     return res.render("member/about/recordsalary.ejs");
 }
+```
 Response:
 •	Render the member/about/recordsalary.ejs template.
 ________________________________________
-gameStatisticsPage()
+`gameStatisticsPage()`
 This function handles the request for the game statistics page of the member section.
+```js
 const gameStatisticsPage = async (req, res) => {
     return res.render("member/game_statistics.ejs");
 }
+```
 Response:
 •	Render the member/game_statistics.ejs template.
 ________________________________________
-privacyPolicy()
+`privacyPolicy()`
 This function handles the request for the privacy policy page of the member section.
+```js
 const privacyPolicy = async (req, res) => {
     return res.render("member/about/privacyPolicy.ejs");
 }
+```
 Response:
 •	Render the member/about/privacyPolicy.ejs template.
 ________________________________________
-newtutorial()
+`newtutorial()`
 This function handles the request for the new tutorial page of the member section.
+```js
 const newtutorial = async (req, res) => {
     return res.render("member/newtutorial.ejs");
 }
+```
 Response:
 •	Render the member/newtutorial.ejs template.
 ________________________________________
-forgot()
+`forgot()`
 This function handles the request for the forgot password page of the member section.
 Request:
 •	auth: Token from the user's cookie.
@@ -573,45 +604,53 @@ Response:
 •	Fetch the time OTP from the database based on the token.
 •	Render the member/forgot.ejs template.
 •	Pass the time variable to the template.
+```js
 const forgot = async (req, res) => {
     let auth = req.cookies.auth;
     const [user] = await connection.query('SELECT `time_otp` FROM users WHERE token = ? ', [auth]);
     let time = user[0].time_otp;
     return res.render("member/forgot.ejs", { time });
 }
+```
 The given code defines an asynchronous function forgot that takes req and res as parameters. 
 1.	It reads the value of auth from the cookies in the request object. It then queries the database using connection.query to select the time_otp from the users table where the token matches the auth value.
 2.	Once the query is executed, it extracts the time_otp value from the result and assigns it to the variable time. 
 3.	Finally, it renders the 'member/forgot.ejs' template passing the time value as data to be used in the template.
 
 ________________________________________
-redenvelopes()
+`redenvelopes()`
 This function handles the request for the red envelopes page of the member section.
+```js
 const redenvelopes = async (req, res) => {
     return res.render("member/redenvelopes.ejs");
 }
+```
 Response:
 •	Render the member/redenvelopes.ejs template.
 ________________________________________
-riskAgreement()
+`riskAgreement()`
 This function handles the request for the risk agreement page of the member section.
+```js
 const riskAgreement = async (req, res) => {
     return res.render("member/about/riskAgreement.ejs");
 }
+```
 Response:
 •	Render the member/about/riskAgreement.ejs template.
 ________________________________________
-myProfilePage()
+`myProfilePage()`
 This function handles the request for the my profile page of the member section.
-
+```js
 const myProfilePage = async (req, res) => {
     return res.render("member/myProfile.ejs");
 }
+```
 Response:
 •	Render the member/myProfile.ejs template.
 ________________________________________
-getSalaryRecord()
+`getSalaryRecord()`
 This function handles the request for the salary record details of the current user.
+```js
 const getSalaryRecord = async (req, res) => {
     const auth = req.cookies.auth;
 
@@ -639,7 +678,7 @@ const getSalaryRecord = async (req, res) => {
         rows: getPhone,
     })
 }
-
+```
 The given code defines an asynchronous function getSalaryRecord that takes req and res as parameters.
 1.	It extracts auth from cookies in the request.
 2.	 Then, it queries the database table 'users' to fetch records based on the token value in auth.
@@ -656,29 +695,33 @@ Response:
 •	Fetch the salary records from the database based on the user's phone number.
 •	Return a JSON response with the message, status, user's details, and salary records.
 ________________________________________
-attendancePage()
+`attendancePage()`
 This function handles the request for the attendance page.
+```js
 const attendancePage = async (req, res) => {
     return res.render("checkIn/attendance.ejs");
   };
-
+```
 Response:
 •	Render the checkIn/attendance.ejs template.
 ________________________________________
-attendanceRecordPage()
+`attendanceRecordPage()`
 This function handles the request for the attendance record page.
+ ```js
   const attendanceRecordPage = async (req, res) => {
     return res.render("checkIn/attendanceRecord.ejs");
   };
-
+```
 Response:
 •	Render the checkIn/attendanceRecord.ejs template.
 ________________________________________
-attendanceRulesPage()
+`attendanceRulesPage()`
 This function handles the request for the attendance rules page.
+```js
   const attendanceRulesPage = async (req, res) => {
     return res.render("checkIn/attendanceRules.ejs");
   };
+```
 Response:
 •	Render the checkIn/attendanceRules.ejs template.
 
