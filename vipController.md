@@ -2,10 +2,12 @@ Documentation - vipController.js
 This code file, vipController.js, is responsible for managing the VIP rewards and level system in the software project.
 Constants
 The following constants are defined in the code file:
+```js
 import {
   REWARD_STATUS_TYPES_MAP,
   REWARD_TYPES_MAP,
 } from "../constants/reward_types.js";
+```
 •	REWARD_STATUS_TYPES_MAP: A map of reward status types.
 •	REWARD_TYPES_MAP: A map of reward types.
 Variable
@@ -15,14 +17,16 @@ The code initializes the DailyRebateBonusList array with an initial object conta
 •	id: the unique identifier of the rebate bonus.
 •	rebetAmount: the amount of rebate available on a daily basis.
 •	bonusAmount: the initial bonus amount, which is initially set to 0.
+```js
 DailRebateBonusList = [{
     id: 1,
     rebetAmount: 50,
     bonusAmount: 0,
   },
 ]
-
+```
 •	VIP_REWORDS_LIST: An array of VIP reward objects, each containing the level, required experience points, level up reward amount, monthly reward amount, safe percentage, and rebate rate.
+```js
 const VIP_REWORDS_LIST = [
   {
     level: 0,
@@ -114,10 +118,11 @@ const VIP_REWORDS_LIST = [
   },
 ];
 
-
+```
 Helper Functions
 The following helper functions are defined in the code file:
 •	getSubordinateDataByPhone(phone): Retrieves the total betting amount for a given phone number by querying multiple tables in the database. Returns an object with the total betting amount.
+```js
 const getSubordinateDataByPhone = async (phone) => {
   const [gameWingo] = await connection.query(
     "SELECT SUM(money) as totalBettingAmount FROM minutes_1 WHERE phone = ?",
@@ -151,13 +156,14 @@ const getSubordinateDataByPhone = async (phone) => {
       parseInt(gameTrxWingoBettingAmount),
   };
 };
-
+```
 This code defines an asynchronous function getSubordinateDataByPhone that takes a phone parameter. 
 1.	Inside the function, it performs multiple SQL queries to calculate the total betting amounts for different games based on the provided phone.
 2.	Each SQL query is executed using connection.query with a specific table name and the phone number as a parameter, and the result is stored in a destructured array variable.
 3.	The total betting amount for each game is extracted from the first element of the result array or default to 0 if the result is falsy. Finally, the total of all game betting amounts is calculated by summing up the parsed integer values of each game's betting amount.
 4.	The function returns an object containing the total bettingAmount as the sum of all game betting amounts.
 •	insertRewordClaim(rewardData): Inserts a new reward claim into the database with the provided reward data, including reward ID, reward type, phone number, reward amount, status, and time.
+```js
 const insertRewordClaim = async ({
   rewardId,
   rewardType,
@@ -171,6 +177,7 @@ const insertRewordClaim = async ({
     [rewardId, rewardType, phone, amount, status, time],
   );
 };
+```
 The given code defines an asynchronous function insertRewordClaim that takes an object as an argument containing properties rewardId, rewardType, phone, amount, status, and time.
 
 1.	Inside the function, it uses connection.execute to execute an SQL query to insert data into a table named claimed_rewards. The values for the query are provided as an array containing rewardId, rewardType, phone, amount, status, and time, corresponding to the placeholders ? in the query.
@@ -178,6 +185,7 @@ The given code defines an asynchronous function insertRewordClaim that takes an 
 Controller Functions
 The following controller functions are defined in the code file:
 •	releaseRebateCommission(): Releases rebate commission to eligible users. This function calculates the daily rebate amount based on the commissions earned the previous day, checks for any claimable rebate bonuses, and updates the user's balance and reward claim records accordingly.
+```js
 const releaseRebateCommission = async () => {
   try {
     const [users] = await connection.query(
@@ -263,6 +271,7 @@ const releaseRebateCommission = async () => {
     console.log(error);
   }
 }
+```
 The given code defines an asynchronous function releaseRebateCommission that processes rebate commissions for users. Here is a breakdown of the code:
 1.	It retrieves user data from the database with columns 'vip_level', 'phone', 'money', and 'id'.
 2.	Calculates the daily rebate amount for each user.
@@ -272,6 +281,7 @@ The given code defines an asynchronous function releaseRebateCommission that pro
 6.	Error handling is done using a try-catch block to log any errors that may occur.
 7.	The code utilizes asynchronous functions to interact with the database and handle the processing logic based on the retrieved data.
 •	releaseVIPLevel(): Releases VIP level rewards to eligible users. This function calculates the user's VIP level based on their betting amount, checks for any level up rewards and monthly rewards, and updates the user's balance and reward claim records accordingly.
+```js
 const releaseVIPLevel = async () => {
   try {
     // let lastMonth1st2amUnix = moment().subtract(1, "months").startOf("month").add(2, "hours").unix();
@@ -346,7 +356,7 @@ const releaseVIPLevel = async () => {
     console.log(error);
   }
 };
-
+```
 The given code is an asynchronous function named releaseVIPLevel that processes VIP level upgrades and rewards for users based on their betting amounts and conditions.
 1.	It starts by querying the database to get a list of users' VIP levels, phones, money, and IDs. Then, it iterates over each user and retrieves their betting amount from another function named getSubordinateDataByPhone.
 2.	Based on the user's current and last VIP level, it determines if there is a level up and updates the user's VIP level, money, and total money accordingly. It also inserts reward claims for level up bonuses and monthly rewards.
@@ -354,6 +364,7 @@ The given code is an asynchronous function named releaseVIPLevel that processes 
 4.	If any error occurs during the process, it is caught and logged to the console.
 
 •	getMyVIPLevelInfo(req, res): Retrieves the VIP level information for the authenticated user. This function fetches the user's phone number and VIP level from the database, calculates their experience points, and returns the VIP level, experience points, and days left until the next payout as JSON.
+```js
 const getMyVIPLevelInfo = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -391,7 +402,7 @@ const getMyVIPLevelInfo = async (req, res) => {
     res.status(500).json({ status: false, message: "Internal server error" });
   }
 };
-
+```
 The provided code is an asynchronous function in Node.js used to retrieve and calculate VIP user information. Here is the explanation of the code:
 1.	const getMyVIPLevelInfo is an asynchronous function that takes req (request) and res (response) as parameters.
 2.	It first extracts the authorization token from the request cookies.
@@ -404,6 +415,7 @@ The provided code is an asynchronous function in Node.js used to retrieve and ca
 9.	If any error occurs during this process, it logs the error and sends a 500 status response with the message 'Internal server error'.
 
 •	getVIPHistory(req, res): Retrieves the reward claim history for the authenticated user. This function fetches the user's phone number from the database and returns a list of claimed rewards (VIP level up bonuses and monthly rewards) as JSON.
+```js
 const getVIPHistory = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -437,7 +449,7 @@ const getVIPHistory = async (req, res) => {
   }
 };
 
-
+```
 
 This code defines an asynchronous function getVIPHistory that handles a request and response object. It first tries to extract the authorization token from the request cookies. 
 1.	If the token is missing, it returns a 401 status with an 'Unauthorized' message. Otherwise, it queries the database to fetch the user's phone number using the token.
