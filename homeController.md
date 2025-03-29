@@ -2,66 +2,71 @@ Documentation: homeController.js
 This code file is located at src/controllers/homeController.js.
 The purpose of this code file is to handle the routes for rendering various pages of the application.
 Functions
-homePage()
+`homePage()`
 This function handles the request for the home page of the application.
+```js
 const homePage = async (req, res) => {
     const [settings] = await connection.query('SELECT `app` FROM admin');
     let app = settings[0].app;
     return res.render("home/index.ejs", { app});
 }
-
+```
 Response:
 •	Render the home/index.ejs template.
 •	Pass the app variable to the template.
 ________________________________________
-activityPage()
+`activityPage()`
 This function handles the request for the activity page.
-
+```js
 const activityPage = async (req, res) => {
     return res.render("checkIn/activity.ejs");
 }
-
+```
 
 Response:
 •	Render the checkIn/activity.ejs template.
 ________________________________________
-invitationRulesPage()
+`invitationRulesPage()`
 This function handles the request for the invitation rules page.
+```js
 const invitationRulesPage = async (req, res) => {
     return res.render("checkIn/invitationRules.ejs");
   };
-
+```
 Response:
 •	Render the checkIn/invitationRules.ejs template.
 ________________________________________
-rabateRatioPage()
+`rabateRatioPage()`
 This function handles the request for the rebate ratio page.
+```js
 const rabateRatioPage = async (req, res) => {
     return res.render("promotion/rebateratio.ejs");
 };
-
+````
 Response:
 •	Render the promotion/rebateratio.ejs template.
 ________________________________________
-rebatePage()
+`rebatePage()`
 This function handles the request for the rebate page.
+```js
 const rebatePage = async (req, res) => {
     return res.render("checkIn/rebate.ejs");
 }
 
-
+```
 Response:
 •	Render the checkIn/rebate.ejs template.
 ________________________________________
-vipPage()
+`vipPage()`
 This function handles the request for the VIP page.
+```js
 const vipPage = async (req, res) => {
     let auth = req.cookies.auth;
     const [userinfo] = await connection.query('SELECT `name_user` FROM users WHERE `token` = ? ', [auth]);
     let userid = userinfo[0].name_user;
     return res.render("checkIn/vip.ejs", {  UserName : userid });
 }
-
+```
 Request:
 •	auth: Token from the user's cookie.
 Response:
@@ -69,80 +74,87 @@ Response:
 •	Render the checkIn/vip.ejs template.
 •	Pass the UserName variable to the template.
 ________________________________________
-jackpotPage()
+`jackpotPage()`
 This function handles the request for the jackpot page.
+```js
 const jackpotPage = async (req, res) => {
     return res.render("checkIn/jackpot.ejs");
 }
-
+```
 Response:
 •	Render the checkIn/jackpot.ejs template.
 ________________________________________
-dailytaskPage()
+`dailytaskPage()`
 This function handles the request for the daily task page.
+```js
 const dailytaskPage = async (req, res) => {
     return res.render("checkIn/dailytask.ejs");
 }
-
+```
 
 Response:
 •	Render the checkIn/dailytask.ejs template.
 ________________________________________
-invibonusPage()
+`invibonusPage()`
 This function handles the request for the invitation bonus page.
+```js
 const invibonusPage = async (req, res) => {
     return res.render("checkIn/invibonus.ejs");
 }
-
+```
 Response:
 •	Render the checkIn/invibonus.ejs template.
 ________________________________________
-checkInPage()
+`checkInPage()`
 This function handles the request for the check-in page.
-
+```js
 const checkInPage = async (req, res) => {
     return res.render("checkIn/checkIn.ejs");
 }
-
+```
 Response:
 •	Render the checkIn/checkIn.ejs template.
 ________________________________________
-checkDes()
+`checkDes()`
 This function handles the request for the check-in description page.
+```js
 const checkDes = async (req, res) => {
     return res.render("checkIn/checkDes.ejs");
 }
-
+```
 Response:
 •	Render the checkIn/checkDes.ejs template.
 ________________________________________
-checkRecord()
+`checkRecord()`
 This function handles the request for the check-in record page.
+```js
 const checkRecord = async (req, res) => {
     return res.render("checkIn/checkRecord.ejs");
 }
-
+```
 Response:
 •	Render the checkIn/checkRecord.ejs template.
 ________________________________________
-addBank()
+`addBank()`
 This function handles the request for the add bank page.
+```js
 const addBank = async (req, res) => {
     return res.render("wallet/addbank.ejs");
 }
-
+```
 Response:
 •	Render the wallet/addbank.ejs template.
 ________________________________________
-promotionPage()
+`promotionPage()`
 This function handles the request for the promotion page.
+```js
 const promotionPage = async (req, res) => {
     let auth = req.cookies.auth;
     const [rows] = await connection.execute('SELECT `user_level` FROM `users` WHERE `token` = ? AND veri = 1', [auth]);
     var user_level = rows[0].user_level;
     return res.render("promotion/promotion.ejs", {user_level});
 }
-
+```
 Request:
 •	auth: Token from the user's cookie.
 Response:
@@ -150,83 +162,89 @@ Response:
 •	Render the promotion/promotion.ejs template.
 •	Pass the user_level variable to the template.
 ________________________________________
-subordinatesPage()
+`subordinatesPage()`
 This function handles the request for the subordinates page.
+```js
 const subordinatesPage = async (req, res) => {
     return res.render("promotion/subordinates.ejs");
   };
-
+```
 Response:
 •	Render the promotion/subordinates.ejs template.
 ________________________________________
-promotion1Page()
+`promotion1Page()`
 This function handles the request for the promotion 1 page.
-
+```js
 const promotion1Page = async (req, res) => {
     return res.render("promotion/promotion1.ejs");
 }
-
+```
 Response:
 •	Render the promotion/promotion1.ejs template.
 ________________________________________
-promotionmyTeamPage()
+`promotionmyTeamPage()`
 This function handles the request for the my team page of the promotion section.
+```js
 const promotionmyTeamPage = async (req, res) => {
     return res.render("promotion/myTeam.ejs");
 }
-
+```
 Response:
 •	Render the promotion/myTeam.ejs template.
 ________________________________________
-promotionDesPage()
+`promotionDesPage()`
 This function handles the request for the promotion description page.
+```js
 const promotionDesPage = async (req, res) => {
     return res.render("promotion/promotionDes.ejs");
 }
-
+```
 
 Response:
 •	Render the promotion/promotionDes.ejs template.
 ________________________________________
-comhistoryPage()
+`comhistoryPage()`
 This function handles the request for the commission history page.
+```js
 const comhistoryPage = async (req, res) => {
     return res.render("promotion/comhistory.ejs");
 }
-
+```
 Response:
 •	Render the promotion/comhistory.ejs template.
 ________________________________________
-mybethistoryPage()
+`mybethistoryPage()`
 This function handles the request for the my bet history page.
-
+```js
 const mybethistoryPage = async (req, res) => {
     return res.render("promotion/mybethistory.ejs");
 }
-
+```
 Response:
 •	Render the promotion/mybethistory.ejs template.
 ________________________________________
-tutorialPage()
+`tutorialPage()`
 This function handles the request for the tutorial page of the promotion section.
+```js
 const tutorialPage = async (req, res) => {
     return res.render("promotion/tutorial.ejs");
 }
-
+```
 
 Response:
 •	Render the promotion/tutorial.ejs template.
 ________________________________________
-bonusRecordPage()
+`bonusRecordPage()`
 This function handles the request for the bonus record page of the promotion section.
+```js
 const bonusRecordPage = async (req, res) => {
     return res.render("promotion/bonusrecord.ejs");
 }
-
+```
 Response:
 •	Render the promotion/bonusrecord.ejs template.
 ________________________________________
-transactionhistoryPage()
+`transactionhistoryPage()`
 This function handles the request for the transaction history page of the wallet section.
 const transactionhistoryPage = async (req, res) => {
     return res.render("wallet/transactionhistory.ejs");
