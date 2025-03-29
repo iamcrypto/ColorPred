@@ -2,7 +2,9 @@ Documentation for cronJobContronler.js
 Overview
 This code file contains the implementation of the cronJobContronler function, which serves as "cron job" is a scheduled task, or command, that is executed automatically at a specific time or interval, using the cron utility on Unix-like operating systems, automating repetitive tasks like backups or system updates.and cron is a time-based job scheduler, meaning it allows you to schedule commands or scripts to run at specific times or intervals.
 
-Function: cron.schedule('*/1 * * * *')
+Function: 
+```js
+cron.schedule('*/1 * * * *')
 cron.schedule('*/1 * * * *', async() => {
 
         await trxWingoController.addTrxWingo(1);
@@ -36,6 +38,7 @@ cron.schedule('*/1 * * * *', async() => {
         
 
     });
+```
 This code runs a task every minute. Here’s what it does step by step:
 1.	It calls a function to add a transaction for a game.
 2.	It handles that transaction.
@@ -44,7 +47,9 @@ This code runs a task every minute. Here’s what it does step by step:
 5.	It does this for four different games, each time sending the latest data to the connected clients.
 In summary, the code keeps updating and sending the latest game data to users every minute.
 
-Function: cron.schedule('*/3 * * * *')
+Function:
+```js
+cron.schedule('*/3 * * * *')
 
  cron.schedule('*/3 * * * *', async() => {
 
@@ -75,7 +80,7 @@ Function: cron.schedule('*/3 * * * *')
         io.emit('data-server-k3', { data: data3, 'game': '3' });
 
     });
-
+```
 This code sets up a scheduled task that runs every 3 minutes. Inside this task, it does the following:
 1.	It calls functions to handle transactions for a game named "Trx Wingo" with the number 3.
 2.	It retrieves the last two records from a database table related to "Trx Wingo" and sends this data to clients connected through the io object.
@@ -83,7 +88,9 @@ This code sets up a scheduled task that runs every 3 minutes. Inside this task, 
 4.	It does the same for a game called "K5" and another called "K3", fetching the last two records for each and sending the data to clients.
 Overall, the code regularly updates connected clients with the latest game data every 3 minutes.
 
-Function: cron.schedule('*/5 * * * *')
+Function:
+```js
+cron.schedule('*/5 * * * *')
  cron.schedule('*/5 * * * *', async() => {
 
         await trxWingoController.addTrxWingo(5);
@@ -113,7 +120,7 @@ Function: cron.schedule('*/5 * * * *')
         io.emit('data-server-k3', { data: data3, 'game': '5' });
     });
    
-
+```
 This code sets up a scheduled task that runs every 5 minutes. In this task, it performs several actions:
 1.	It adds a transaction for a game called "Wingo" and handles it.
 2.	It retrieves the last two records from a database table for "Wingo" and sends this data to connected clients.
@@ -121,7 +128,9 @@ This code sets up a scheduled task that runs every 5 minutes. In this task, it p
 4.	It adds and handles a game called "5D", retrieves its last two records, and sends this data to clients.
 5.	Finally, it adds and handles a game called "K3", retrieves its last two records, and sends this data to clients.
 Each time it runs, it checks the latest data for these games and shares it with users connected to the server.
-Function: cron.schedule('*/10 * * * *')
+Function:
+```js
+ cron.schedule('*/10 * * * *')
     cron.schedule('*/10 * * * *', async() => {
 
         await trxWingoController.addTrxWingo(10);
@@ -152,7 +161,7 @@ Function: cron.schedule('*/10 * * * *')
         io.emit('data-server-k3', { data: data3, 'game': '10' });
 
     });
-
+```
 
 This code sets up a scheduled task that runs every 10 minutes. Here's what it does step-by-step:
 1.	It calls a function to add a transaction for a game called "trxWingo" and processes it.
@@ -161,24 +170,32 @@ This code sets up a scheduled task that runs every 10 minutes. Here's what it do
 4.	It does something similar for a game called "5D", adding and processing it, then getting the last two entries from the "d5" database and sending that data to the server.
 5.	Finally, it adds and processes a game called "K3", retrieves the last two entries from the "k3" database, and sends that data to the server.
 Each time it runs, the code updates and shares the latest game data with the server for different games.
-Function: cron.schedule('0 1 * * *')
+Function:
+```js
+cron.schedule('0 1 * * *')
 cron.schedule('0 1 * * *', async() => {
         await connection.execute('UPDATE users SET roses_today = ?', [0]);
         await connection.execute('UPDATE point_list SET money = ?', [0]);
         await connection.execute('UPDATE turn_over SET daily_turn_over = ?', [0]);
     });
+```
 This code sets up a scheduled task that runs every day at 1:00 AM. When it runs, it performs three actions in a database:
 1.	It resets the "roses_today" value for all users to 0.
 2.	It resets the "money" value in the "point_list" table to 0.
 3.	It resets the "dailyturnover" value in the "turn_over" table to 0.
 These actions likely reset daily counters or values to start fresh for the new day.
-Function: cron.schedule("0 2 1 * *")
+Function:
+```js
+ cron.schedule("0 2 1 * *")
 cron.schedule("0 2 1 * *", async () => {
       vipController.releaseVIPLevel();
     });
+```
 This code sets up a scheduled task using the cron library. It runs every month on the first day at 2:00 AM. When the task runs, it calls the releaseVIPLevel function from the vipController object. This likely means it updates or resets something related to VIP levels in a system.
 
-Function: cron.schedule("0 0 * * *")
+Function: 
+```js
+cron.schedule("0 0 * * *")
 
 cron.schedule(
       "0 0 * * *",
@@ -190,7 +207,7 @@ cron.schedule(
         await vipController.releaseRebateCommission()
       }
     );
-
+```
 This code sets up a scheduled task that runs every day at midnight (00:00). When the task runs, it will perform several actions in order:
 1.	It will call the distributeCommission method from the winGoController.
 2.	Then, it will call the distributeCommission method from the k3Controller.

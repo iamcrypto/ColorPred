@@ -2,17 +2,18 @@ Documentation for accountController.js
 This code file contains the implementation of the account controller for a software project.
 Import Statements
 The code file starts with import statements for various libraries and dependencies:
-•	connection - imported from "../config/connectDB"
-•	jwt - imported from 'jsonwebtoken'
-•	md5 - imported from "md5"
-•	request - imported from 'request'
-•	dotenv - imported from "dotenv/config"
-•	e - imported from "express"
+```js	connection - imported from "../config/connectDB"
+	jwt - imported from 'jsonwebtoken'
+	md5 - imported from "md5"
+	request - imported from 'request'
+	dotenv - imported from "dotenv/config"
+	e - imported from "express"
+```
 Helper Functions
 The code file contains several helper functions that are used throughout the implementation:
 randomString(length)
 This function generates a random string of the specified length.
-
+```js
 const randomString = (length) => {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -24,7 +25,7 @@ const randomString = (length) => {
     return result;
 }
 
-    
+```    
 The given code defines a function randomString that takes a parameter length and generates a random string of alphabets (both uppercase and lowercase) of the specified length.
 Here's a breakdown of the code:
 1.	strings.Builder is used to efficiently build strings.
@@ -33,7 +34,7 @@ Here's a breakdown of the code:
 4.	Finally, the generated random string is returned.
 
 Example usage:
-
+```js
 var random = randomString(10);
 console.log(random);
 // Output: "IowxlUtndY"
@@ -45,10 +46,11 @@ This function generates a random number between the specified minimum and maximu
 const randomNumber = (min, max) => {
     return String(Math.floor(Math.random() * (max - min + 1)) + min);
 }
+```
  The provided code defines a function randomNumber that takes two parameters min and max. Inside the function, it generates a random number between min (inclusive) and max (inclusive). The random number is obtained by multiplying a random floating-point number between 0 and 1 by the difference between max and min, adding min to it, flooring the result to get an integer, and finally converting it to a string before returning.
 
 Example usage:
-
+```js
 var number = randomNumber(1, 100);
 console.log(number);
 // Output: "42"
@@ -61,12 +63,12 @@ const isNumber = (params) => {
     return pattern.test(params);
 }
     
-
+```
 The given code defines a function called isNumber which takes a parameter params and checks if the input is a number using a regular expression.
 The regular expression /^[0-9]*\d$/ ensures that the input contains only numeric characters.
 The function then uses the test() method of the regular expression to check if the params string matches the defined pattern, and returns true if it is a number and false otherwise.
 Example usage:
-
+```js
 var result = isNumber("12345");
 console.log(result);
 // Output: true
@@ -84,7 +86,7 @@ const ipAddress = (req) => {
     }
     return ip;
 }
-    
+```    
 This code defines a function ipAddress that takes a req parameter, typically representing a request object in a server environment. It extracts the IP address of the client making the request by looking at different places depending on the structure of the request object.
 1.	If the x-forwarded-for header is present in the request's headers, it extracts the first IP address from it.
 2.	Otherwise, if the connection object exists in the request and it has a remoteAddress property, it uses that as the IP address.
@@ -92,7 +94,7 @@ This code defines a function ipAddress that takes a req parameter, typically rep
 4.	The function then returns the extracted IP address.
 
 Example usage:
-
+```js
 var ip = ipAddress(req);
 console.log(ip);
 // Output: "192.168.0.1"
@@ -106,47 +108,48 @@ const timeCreate = () => {
     const time = d.getTime();
     return time;
 }
-    
+```    
 In the provided code snippet, a function timeCreate is defined without any parameters. Inside the function, a new Date object d is created using the current date and time. The getTime() method is then called on the date object d to get the current time in milliseconds since the Unix epoch. Finally, the current time in milliseconds is returned from the function.
 The optimized version of the code snippet replaces the usage of Date with time.Now() in Go, which provides a more idiomatic way to get the current time. The UnixNano() method is used to get the current time in nanoseconds since the Unix epoch, which is of type int64. The function signature specifies that the function returns an int64 value instead of a number.
 
 Example usage:
-
+```js
 var time = timeCreate();
 console.log(time);
 // Output: 1618274454321
-    
+```    
 Controller Functions
 The code file contains several controller functions that handle different routes and actions:
-loginPage(req, res)
+`js loginPage(req, res)`
 This function renders the login page.
 
-
+```js
 const loginPage = async (req, res) => {
     return res.render("account/login.ejs");
 }
- registerPage(req, res)
+```
+`js registerPage(req, res)`
 This function renders the register page.
-
+```js
 const registerPage = async (req, res) => {
     var whatsapp1 = process.env.WHATSAPP_LOCAL_KEY;
     var whatsapp2 = process.env.WHATSAPP_INTERNATIONAL_KEY;
     return res.render("account/register.ejs", {whatsapp1, whatsapp2});
 }
-    
+```    
 The provided code defines an asynchronous function named registerPage with two variables whatsapp1 and whatsapp2 that are assigned values from environment variables WHATSAPP_LOCAL_KEY and WHATSAPP_INTERNATIONAL_KEY respectively. It then renders an EJS template 'account/register.ejs' and passes an object containing whatsapp1 and whatsapp2 to the template for rendering.
 
-forgotPage(req, res)
+`js forgotPage(req, res)`
 This function renders the forgot password page.
 
-
+```js
 const forgotPage = async (req, res) => {
     return res.render("account/forgot.ejs");
 }
-    
-login(req, res)
+```    
+`js login(req, res)`
 This function handles the login process by validating the username, password, and country code and returning the appropriate response.
-
+```js
 const login = async (req, res) => {
     let { username, pwd , countrycode} = req.body;
 
@@ -190,7 +193,7 @@ const login = async (req, res) => {
 
 }
 
-    
+```    
 In the provided code snippet, there is an asynchronous function named login that handles user authentication.
 The function destructures the req.body object to extract username, pwd, and countrycode. It then checks if any of these values are missing. If any of them is missing, it returns an error message.
 Inside a try-catch block, the code attempts to query a database table to find a user with the provided username, encrypted pwd, and countrycode. If a user is found, it checks the user's status. If the status is active, it generates a JWT token, updates the user's token in the database, and sends a success response with the token. If the status is not active, it returns an account locked message. If no user is found, it returns an incorrect username or password message.
@@ -199,9 +202,9 @@ If any errors occur during the database operations, they are caught in the catch
 Example usage:
 
 ...
-register(req, res)
+`js register(req, res)`
 This function handles the registration process by validating the username, password, and invite code and returning the appropriate response.
-
+```js
 const register = async (req, res) => {
     let now = new Date().getTime();
     let { username, pwd, invitecode, countrycode } = req.body;
@@ -293,7 +296,7 @@ const register = async (req, res) => {
 
 }
 
-
+```
 The given code is a Node.js route handler function implemented using async/await features. Here's a breakdown of the code:
 1.	Await input data from the request body like username, password, invite code, and country code.
 2.	Perform validations on the input data to ensure all required fields are provided and meet certain criteria.
@@ -303,17 +306,18 @@ The given code is a Node.js route handler function implemented using async/await
     
 Example usage:
 
-...
-forgotPage(req, res)
-This function renders the forgot password page.
 
+`js forgotPage(req, res)`
+This function renders the forgot password page.
+```js
 const forgotPage = async (req, res) => {
     return res.render("account/forgot.ejs");
 }
-    
-verifyCode(req, res)
-This function handles the verification process for a given phone number by sending an OTP code via SMS.
+```    
+`js verifyCode(req, res)`
 
+This function handles the verification process for a given phone number by sending an OTP code via SMS.
+```js
 const verifyCode = async (req, res) => {
     let phone = req.body.phone;
     let now = new Date().getTime();
@@ -366,7 +370,7 @@ const verifyCode = async (req, res) => {
     }
 
 }
-
+```
 This code is an asynchronous function named verifyCode that handles a verification process for a user. Here's a breakdown of the code:
 1.	phone, now, timeEnd, and otp are initialized to specific values.
 2.	A check is performed on the phone number length and whether it is a numeric value. If the conditions are not met, an error response is sent.
@@ -377,10 +381,10 @@ This code is an asynchronous function named verifyCode that handles a verificati
  
 Example usage:
 
-...
-verifyCodePass(req, res)
-This function handles the verification process for a given phone number during password reset by sending an OTP code via SMS.
 
+`js verifyCodePass(req, res)`
+This function handles the verification process for a given phone number during password reset by sending an OTP code via SMS.
+```js
 const verifyCodePass = async (req, res) => {
     let phone = req.body.phone;
     let now = new Date().getTime();
@@ -427,7 +431,7 @@ const verifyCodePass = async (req, res) => {
 
 }
 
-
+```
     
 The code defines an asynchronous function named verifyCodePass that takes req and res as parameters.
 1.	It extracts the phone from req.body and calculates the current time and the time after two minutes, and generates a random OTP.
@@ -438,9 +442,10 @@ The code defines an asynchronous function named verifyCodePass that takes req an
 
 Example usage:
 
-...
-forGotPassword(req, res)
+
+`js forGotPassword(req, res)`
 This function handles the password reset process by validating the username, OTP code, and new password.
+```js
 const forGotPassword = async (req, res) => {
     let username = req.body.username;
     let otp = req.body.otp;
@@ -493,7 +498,7 @@ const forGotPassword = async (req, res) => {
     }
 
 }
-
+```
 
 The given code defines an asynchronous function forGotPassword that handles the process of resetting a user's password. Here's an explanation of what the code does:
 1.	username, otp, and pwd variables are extracted from the request body.
@@ -507,10 +512,10 @@ The given code defines an asynchronous function forGotPassword that handles the 
 
 Example usage:
 
-...
-keFuMenu(req, res)
-This function renders the keFu menu page with the appropriate Telegram settings based on the user's level or the admin's settings.
 
+`js keFuMenu(req, res)`
+This function renders the keFu menu page with the appropriate Telegram settings based on the user's level or the admin's settings.
+```js
 const keFuMenu = async(req, res) => {
     let auth = req.cookies.auth;
 
@@ -537,16 +542,17 @@ const keFuMenu = async(req, res) => {
     return res.render("keFuMenu.ejs", {telegram}); 
 }
 
-    
+```    
 In this code snippet, a function named keFuMenu is defined as an asynchronous arrow function that takes req and res as parameters.
 Inside the function, the code fetches the auth token from req.cookies.auth and uses it to query the database to retrieve user information including the level and ctv.
 Depending on the retrieved data, the function then determines the telegram value either from the admin table or the point_list table. Finally, it renders an ejs template named keFuMenu.ejs passing the telegram value to it.
 
 Example usage:
 
-...
-updateAvatarAPI(req, res)
+
+`js updateAvatarAPI(req, res)`
 This function handles the update of the user's avatar by accepting the avatar URL in the request body and updating the corresponding database record.
+```js
 const updateAvatarAPI = async (req, res) => {
     try {
       let auth = req.cookies.auth;
@@ -576,7 +582,7 @@ const updateAvatarAPI = async (req, res) => {
     }
   };
 
-
+```
 This code defines an asynchronous function named updateAvatarAPI that handles the update of a user's avatar. Here is a breakdown of the code:
 1.	auth is assigned the value of req.cookies.auth, and avatar is assigned the value of req.body.avatar.
 2.	A database query is executed using the connection.query method to select rows from the users table where the token matches auth. If no rows are returned, a response with an error message is sent back.
