@@ -9,17 +9,21 @@ Parameters
 •	n (number): The number to convert into its ordinal form.
 Returns
 The converted ordinal form of the given number.
+```js
 function getOrdinal(n) {
   let s = ["th", "st", "nd", "rd"],
     v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
+```
 Example
+```
 console.log(getOrdinal(1)); // Output: 1st
 console.log(getOrdinal(2)); // Output: 2nd
 console.log(getOrdinal(3)); // Output: 3rd
 console.log(getOrdinal(4)); // Output: 4th
 getSubordinateDataByPhone(phone)
+```
 This asynchronous function retrieves various data related to recharge and betting for a given phone number.
 Parameters
 •	phone (string): The phone number for which to retrieve the data.
@@ -29,6 +33,7 @@ An object containing the following properties:
 •	rechargeAmount (number): The total recharge amount for the given phone number.
 •	firstRechargeAmount (number): The amount of the first recharge for the given phone number.
 •	bettingAmount (number): The total betting amount for the given phone number. This is calculated by summing the betting amounts from different games.
+```js
 const getSubordinateDataByPhone = async (phone) => {
   const [[row_1]] = await connection.execute(
     "SELECT COUNT(*) AS `count` FROM `recharge` WHERE `phone` = ? AND `status` = ?",
@@ -75,14 +80,16 @@ const getSubordinateDataByPhone = async (phone) => {
       parseInt(game5DBettingAmount),
   };
 };
-
+```
 Example
+```js
 const data = await getSubordinateDataByPhone("1234567890");
 console.log(data.rechargeQuantity);
 console.log(data.rechargeAmount);
 console.log(data.firstRechargeAmount);
 console.log(data.bettingAmount);
 getSubordinatesListDataByCode(code, startDate)
+```
 This asynchronous function retrieves data for the list of subordinates for a given code. The data includes information such as the number of subordinates, their recharge and betting statistics, etc.
 Parameters
 •	code (string): The code for which to retrieve the subordinates' data.
@@ -97,6 +104,7 @@ An object containing the following properties:
 •	subordinatesWithBettingCount (number): The number of subordinates who have made at least one bet.
 •	subordinatesBettingAmount (number): The total betting amount of all subordinates.
 •	subordinatesFirstDepositAmount (number): The total amount of the first recharge of all subordinates.
+```js
 const getSubordinatesListDataByCode = async (code, startDate) => {
   let [subordinatesList] = startDate
     ? await connection.execute(
@@ -168,6 +176,7 @@ console.log(data.subordinatesWithBettingCount);
 console.log(data.subordinatesBettingAmount);
 console.log(data.subordinatesFirstDepositAmount);
 getOneLevelTeamSubordinatesData(directSubordinatesList)
+```
 This asynchronous function retrieves data for the subordinates in the direct subordinates list. It includes statistics such as the number of subordinates, their recharge and betting statistics, etc.
 Parameters
 •	directSubordinatesList (array): An array of objects representing the direct subordinates. Each object should contain the code of a direct subordinate.
@@ -178,6 +187,7 @@ An object containing the following properties:
 •	oneLevelTeamSubordinatesRechargeAmount (number): The total recharge amount of all subordinates in the direct subordinates list and their indirect subordinates.
 •	oneLevelTeamSubordinatesWithDepositCount (number): The number of subordinates in the direct subordinates list and their indirect subordinates who have made at least one recharge.
 •	oneLevelTeamSubordinatesList (array): An array of objects representing the subordinates in the direct subordinates list and their indirect subordinates. Each object contains information such as the code, phone number, id_user, level, time, recharge quantity, recharge amount, betting amount, first recharge amount, etc.
+```js
 const getOneLevelTeamSubordinatesData = async (directSubordinatesList) => {
   let oneLevelTeamSubordinatesCount = 0;
   let oneLevelTeamSubordinatesRechargeQuantity = 0;
@@ -210,8 +220,9 @@ const getOneLevelTeamSubordinatesData = async (directSubordinatesList) => {
     oneLevelTeamSubordinatesList,
   };
 };
-•	
+```
 Example
+```js
 const data = await getOneLevelTeamSubordinatesData([
   { code: "ABC123" },
   { code: "DEF456" },
@@ -222,7 +233,9 @@ console.log(data.oneLevelTeamSubordinatesRechargeAmount);
 console.log(data.oneLevelTeamSubordinatesWithDepositCount);
 console.log(data.oneLevelTeamSubordinatesList);
 createInviteMap
+```
 This function takes an array of user objects (rows) and creates a map of users grouped by their invite codes. It returns the invite map, where each invite code is a key that points to an array of users with that invite code.
+```js
 const createInviteMap = (rows) => {
   const inviteMap = {};
   rows.forEach((user) => {
@@ -233,7 +246,7 @@ const createInviteMap = (rows) => {
   });
   return inviteMap;
 };
-
+```
 The given code defines a function createInviteMap that takes a slice of User structs as input, loops through each user, and organizes them into a map based on their invite field.
 Here's a breakdown of the code:
 1.	func createInviteMap(rows []User) map[string][]User {: This line declares a function named createInviteMap that accepts a slice of User structs as input and returns a map with string keys and slice of User values.
@@ -251,6 +264,7 @@ This function calculates the users at each level based on the provided invite ma
  * @param {number} maxLevel - The maximum level.
  * @returns {Array} - An array of user objects with user levels.
  */
+```js
 const getLevelUsers = (inviteMap, userCode, currentLevel, maxLevel) => {
   if (currentLevel > maxLevel) return [];
 
@@ -261,7 +275,7 @@ const getLevelUsers = (inviteMap, userCode, currentLevel, maxLevel) => {
     ...getLevelUsers(inviteMap, user.code, currentLevel + 1, maxLevel),
   ]);
 };
-
+```
 The provided code defines a recursive function getLevelUsers that takes in parameters inviteMap (an object), userCode (a string), currentLevel (a number), and maxLevel (a number).
 1.	It first checks if the currentLevel is greater than maxLevel, and if so, returns an empty array.
 2.	Then it extracts the levelUsers from inviteMap based on the provided userCode. If the levelUsers array is empty, it also returns an empty array.
@@ -276,12 +290,14 @@ This function combines the createInviteMap and getLevelUsers functions to calcul
  * @param {number} maxLevel - The maximum level.
  * @returns {Object} - An object with user levels and level 1 referrals.
  */
+```js
 const getUserLevels = (rows, userCode, maxLevel = 10) => {
   const inviteMap = createInviteMap(rows);
   const usersByLevels = getLevelUsers(inviteMap, userCode, 1, maxLevel);
 
   return { usersByLevels, level1Referrals: inviteMap[userCode] };
 };
+```
 The provided code defines a function getUserLevels that takes three parameters - rows, userCode, and maxLevel with a default value of 10. Inside the function, it first calls a function createInviteMap(rows) to create a map of user invitations.
 Next, it calls another function getLevelUsers with the created inviteMap, userCode, starting level 1, and the maxLevel provided as arguments. This function retrieves the users at different levels based on the invite map.
 The function returns an object with two properties:
@@ -295,6 +311,7 @@ This asynchronous function retrieves user statistics within a given time range a
  * @param {string} [phone=""] - The phone number (optional).
  * @returns {Promise} - A promise that resolves to an array of user statistics rows.
  */
+```js
 const userStats = async (startTime, endTime, phone = "") => {
   const [rows] = await connection.query(
     `
@@ -381,7 +398,7 @@ const userStats = async (startTime, endTime, phone = "") => {
 
   return rows;
 };
-
+```
 The provided code is an asynchronous JavaScript function that retrieves user statistics from multiple tables in a database based on the given time range and optional phone number. The function constructs a complex SQL query using JOIN operations to fetch data from different tables.
 Here is a breakdown of the SQL query:
 1.	The query selects various fields from the 'users' table and calculates aggregated values from related tables for deposit amounts, bets, and commissions.
@@ -394,7 +411,7 @@ This asynchronous function retrieves commission statistics for a specific time a
  * @param {number} time - The specific time.
  * @param {string} phone - The phone number.
  * @returns {Promise
-
+```js
 const getCommissionStatsByTime = async (time, phone) => {
   const { startOfYesterdayTimestamp, endOfYesterdayTimestamp } =
     yesterdayTime();
@@ -422,7 +439,7 @@ const getCommissionStatsByTime = async (time, phone) => {
   );
   return commissionRow?.[0] || {};
 };
-
+```
 This code defines an asynchronous function getCommissionStatsByTime that takes time and phone as parameters and retrieves commission statistics based on the provided time and phone.
 1.	It first destructures startOfYesterdayTimestamp and endOfYesterdayTimestamp from the result of calling the function yesterdayTime().
 2.	Then it executes a SQL query to fetch commission data for the given time and phone, calculating total commission, last week's commission, and yesterday's commission using different conditions. The results are stored in commissionRow.
@@ -430,6 +447,7 @@ This code defines an asynchronous function getCommissionStatsByTime that takes t
 
 Function: subordinatesDataAPI
 This function is an API endpoint that retrieves data related to subordinates. Here's what it does:
+```js
 const subordinatesDataAPI = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -516,7 +534,7 @@ const subordinatesDataAPI = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
+```
 1.	It extracts an authentication token from the request cookies.
 2.	It retrieves the start of the current week's timestamp using the getStartOfWeekTimestamp() function.
 3.	It retrieves the start and end timestamps of yesterday using the yesterdayTime() function.
@@ -529,6 +547,7 @@ const subordinatesDataAPI = async (req, res) => {
 10.	Finally, it returns the extracted data in a JSON response with a status code of 200 (OK).
 Function: subordinatesDataByTimeAPI
 This function is another API endpoint that retrieves subordinates data based on a given time range. Here's what it does:
+```js
 const subordinatesDataByTimeAPI = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -627,6 +646,7 @@ const subordinatesDataByTimeAPI = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 1.	It extracts an authentication token from the request cookies.
 2.	It queries the database to fetch the user information based on the authentication token.
 3.	It checks if the user is not found and returns a status code of 401 (Unauthorized) with an error message in JSON format.
@@ -637,6 +657,7 @@ const subordinatesDataByTimeAPI = async (req, res) => {
 8.	Finally, it returns the formatted results in a JSON response with a status code of 200 (OK).
 Function: subordinatesAPI
 This function is also an API endpoint that retrieves subordinates data based on a specified type. Here's what it does:
+```js
 const subordinatesAPI = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -707,6 +728,7 @@ const subordinatesAPI = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 1.	It extracts an authentication token from the request cookies.
 2.	It queries the database to fetch the user information based on the authentication token.
 3.	It retrieves the start and end timestamps based on the specified type (today, yesterday, this month) using appropriate functions (getTodayStartTime(), yesterdayTime(), monthTime() ).
@@ -719,6 +741,7 @@ Now that we have analyzed the code file and its functions, we have a better unde
 Invitation Bonus Functions
 getInvitationBonus
 This function retrieves the invitation bonus data for the authenticated user. It requires an authentication token to identify the user in the database. The function performs the following steps:
+```js
 const getInvitationBonus = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -791,6 +814,7 @@ const getInvitationBonus = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 1.	Verifies the authentication token.
 2.	Retrieves user data from the database based on the token.
 3.	Calculates the number of direct subordinates and their total recharge amount.
@@ -798,7 +822,7 @@ const getInvitationBonus = async (req, res) => {
 5.	Calculates the invitation bonus data based on the InvitationBonusList and direct subordinates' data.
 6.	Returns the invitation bonus data in the response.
 Example usage:
-    
+   ```js 
       GET /invitation-bonus
       Request:
       {
@@ -833,9 +857,10 @@ Example usage:
         "status": true,
         "message": "Successfully fetched invitation bonus data"
       }
-    
+   ``` 
 claimInvitationBonus
 This function allows the authenticated user to claim an invitation bonus. It requires an authentication token and the claim ID of the bonus to be claimed. The function performs the following steps:
+```js
 const claimInvitationBonus = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -953,6 +978,7 @@ const claimInvitationBonus = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 1.	Verifies the authentication token.
 2.	Retrieves user data from the database based on the token.
 3.	Calculates the number of direct subordinates and their total recharge amount.
@@ -962,7 +988,7 @@ const claimInvitationBonus = async (req, res) => {
 7.	If the bonus can be claimed, updates the user's money in the database and inserts a new row in the claimed_rewards table.
 8.	Returns a successful response if the bonus is claimed, or an error response if the bonus cannot be claimed.
 Example usage:
-    
+    ```js
       POST /claim-invitation-bonus
       Request:
       {
@@ -979,9 +1005,10 @@ Example usage:
         "status": true,
         "message": "Successfully claimed invitation bonus"
       }
-    
+  ```  
 getInvitedMembers
 This function retrieves the list of members invited by the authenticated user. It requires an authentication token to identify the user in the database. The function performs the following steps:
+```js
 const getInvitedMembers = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1030,13 +1057,14 @@ const getInvitedMembers = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 1.	Verifies the authentication token.
 2.	Retrieves user data from the database based on the token.
 3.	Retrieves the list of invited members from the database based on the user's invite code.
 4.	Calculates the recharge amount for each invited member.
 5.	Returns the list of invited members in the response.
 Example usage:
-    
+    ```js
       GET /invited-members
       Request:
       {
@@ -1062,10 +1090,11 @@ Example usage:
         "status": true,
         "message": "Successfully fetched invited members"
       }
-    
+    ```
 Daily Recharge Bonus Functions
 getDailyRechargeReword
 This function retrieves the daily recharge bonus data for the authenticated user. It requires an authentication token to identify the user in the database. The function performs the following steps:
+```js
 const getDailyRechargeReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1114,6 +1143,7 @@ const getDailyRechargeReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 1.	Verifies the authentication token.
 2.	Retrieves user data from the database based on the token.
 3.	Calculates the total recharge amount for the user for the current day.
@@ -1121,7 +1151,7 @@ const getDailyRechargeReword = async (req, res) => {
 5.	Calculates the daily recharge bonus data based on the DailyRechargeBonusList and the user's recharge amount.
 6.	Returns the daily recharge bonus data in the response.
 Example usage:
-    
+    ```js
       GET /daily-recharge-bonus
       Request:
       {
@@ -1148,9 +1178,10 @@ Example usage:
         "status": true,
         "message": "Successfully fetched daily recharge bonus data"
       }
-    
+    ```
 claimDailyRechargeReword
 This function is used to claim the daily recharge reward. It takes the user's authentication token and the ID of the reward as input and returns a response indicating whether the reward was successfully claimed or not.
+```js
 const claimDailyRechargeReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1246,6 +1277,7 @@ const claimDailyRechargeReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 The provided code is an asynchronous function named claimDailyRechargeReward that handles the logic for claiming a daily recharge reward. Here is a detailed explanation of the code:
 1.	It first extracts the authorization token and daily recharge reward ID from the request.
 2.	Queries the database to retrieve user information based on the token.
@@ -1257,14 +1289,16 @@ The provided code is an asynchronous function named claimDailyRechargeReward tha
 8.	Returns success response after claiming the daily recharge bonus.
 9.	If any error occurs during the process, it logs the error and returns a 500 status response with the error message.
 Example usage:
-POST /claim-daily-recharge-reward
+`POST /claim-daily-recharge-reward`
 Content-Type: application/json
-
+```js
 {
   "claim_id": 1
 }
+```
 dailyRechargeRewordRecord
 This function is used to fetch the daily recharge reward records for a user. It retrieves the claimed rewards data for the daily recharge bonus and returns it as a response.
+```js
 const dailyRechargeRewordRecord = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1305,6 +1339,7 @@ const dailyRechargeRewordRecord = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+```
 The provided code is an asynchronous function named dailyRechargeRewordRecord that handles fetching daily recharge bonus records. Here’s a breakdown of the code:
 1.	It tries to extract the authToken from the cookies of the request object.
 2.	Queries the database to fetch a user's phone number based on the provided token and verification status.
@@ -1314,9 +1349,10 @@ The provided code is an asynchronous function named dailyRechargeRewordRecord th
 6.	Finally, returns a JSON response with the fetched data, a success status, and a message indicating a successful fetch operation.
 7.	If any errors occur during the process, it catches the error, logs it, and returns a 500 status with a message 'Something went wrong'.
 Example usage:
-GET /daily-recharge-reward-record
+`GET /daily-recharge-reward-record`
 getFirstRechargeRewords
 This function is used to retrieve the available first recharge rewards for a user. It fetches the claimed rewards data for the first recharge bonus and returns it as a response.
+```js
 const getFirstRechargeRewords = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1378,6 +1414,7 @@ const getFirstRechargeRewords = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 This function getFirstRechargeRewards is an asynchronous function that handles retrieving first recharge bonus data. Here's a breakdown of the code:
 1.	It first tries to extract the authToken from the request cookies.
 2.	Queries the database to fetch user information based on the token. If no user is found, it returns an unauthorized response.
@@ -1387,9 +1424,10 @@ This function getFirstRechargeRewards is an asynchronous function that handles r
 6.	Returns a JSON response with the bonus data, expiration status, and a success message.
 7.	If an error occurs during the process, it logs the error and returns a 500 status with an error message.
 Example usage:
-GET /first-recharge-rewards
+`GET /first-recharge-rewards`
 claimFirstRechargeReword
 This function is used to claim a first recharge reward for a user. It takes the user's authentication token and the ID of the reward as input and returns a response indicating whether the reward was successfully claimed or not.
+```js
 const claimFirstRechargeReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1492,6 +1530,7 @@ const claimFirstRechargeReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 The provided code defines an asynchronous function named claimFirstRechargeReword that processes a request to claim the first recharge bonus reward. Here is a breakdown of the code:
 1.	It retrieves the authentication token and the firstRechargeRewordId from the request object.
 2.	It checks if the user associated with the token exists and returns an error if not.
@@ -1501,14 +1540,16 @@ The provided code defines an asynchronous function named claimFirstRechargeRewor
 6.	It updates the user's money and total money based on the claimed bonus data and inserts a record in the claimed_rewards table.
 7.	Finally, it returns a success response if the bonus is claimed successfully or an error response if any exception occurs.
 Example usage:
-POST /claim-first-recharge-reward
+`POST /claim-first-recharge-reward`
 Content-Type: application/json
-
+```js
 {
   "id": 1
 }
+```
 getAttendanceBonus
 This function is used to fetch the attendance bonus data for a user. It retrieves the claimed attendance bonus data and returns it as a response.
+```js
 const getAttendanceBonus = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1570,7 +1611,7 @@ const getAttendanceBonus = async (req, res) => {
     });
   }
 };
-
+```
 The provided code defines an asynchronous function getAttendanceBonus that handles the logic for fetching attendance bonus data. Here's a breakdown of the code:
 1.	We first attempt to retrieve the authorization token from the request cookies.
 2.	We then query the database to fetch the user's phone number based on the token and verification status.
@@ -1580,9 +1621,10 @@ The provided code defines an asynchronous function getAttendanceBonus that handl
 6.	The function looks for the corresponding attendance bonus data in a list (presumably AttendanceBonusList).
 7.	Finally, it returns a JSON response with status, bonus data (if found), and a success message. In case of an error, it logs the error and returns a 500 status with the error message.
 Example usage:
-GET /attendance-bonus
+`GET /attendance-bonus`
 claimAttendanceBonus
 This function is used to claim an attendance bonus for a user. It takes the user's authentication token as input and returns a response indicating whether the bonus was successfully claimed or not.
+```js
 const claimAttendanceBonus = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1683,6 +1725,7 @@ const claimAttendanceBonus = async (req, res) => {
     });
   }
 };
+```
 In the provided code, the claimAttendanceBonus function is an asynchronous function used to handle the process of claiming attendance bonuses for users based on certain conditions. Here is a breakdown of the code:
 1.	The function first tries to fetch the authToken from the request cookies and retrieves the user information based on the token from the database.
 2.	It checks if the user exists and is authorized. If not, it returns a response with status 401 indicating unauthorized.
@@ -1692,9 +1735,10 @@ In the provided code, the claimAttendanceBonus function is an asynchronous funct
 6.	If all conditions are met, it updates the user's money in the database, adds the claimed reward entry, and returns a success response with the claimed bonus details.
 7.	Any errors that occur during the process are caught in the catch block and a corresponding error response is sent.
 Example usage:
-POST /claim-attendance-bonus
+`POST /claim-attendance-bonus`
 getAttendanceBonusRecord
 This function is used to fetch the attendance bonus records for a user. It retrieves the claimed attendance bonus data and returns it as a response.
+```js
 const getAttendanceBonusRecord = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1739,6 +1783,7 @@ const getAttendanceBonusRecord = async (req, res) => {
     });
   }
 };
+```
 The provided code is an asynchronous function named getAttendanceBonusRecord that fetches attendance bonus records based on the user's authentication token. Here's a breakdown of the code:
 1.	It first tries to extract the authentication token from the request cookies.
 2.	Queries the database to retrieve the user's phone number based on the token and verification status.
@@ -1748,9 +1793,10 @@ The provided code is an asynchronous function named getAttendanceBonusRecord tha
 6.	Returns the formatted claimed rewards data along with a success message if everything is successful.
 7.	If any error occurs during the process, it logs the error and returns a 500 Internal Server Error response with the error message.
 Example usage:
-GET /attendance-bonus-record
+`GET /attendance-bonus-record`
 getDailyBettingeReword
 This function is used to fetch the available daily betting rewards for a user. It retrieves the claimed daily betting bonus data and returns it as a response.
+```js
 const getDailyBettingeReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -1821,6 +1867,7 @@ const getDailyBettingeReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 This code defines an asynchronous function getDailyBettingeReword that takes req and res as parameters. It tries to fetch user information based on an authentication token from a database, calculates the total betting amounts for different categories, and processes the daily recharge bonus data.
 Explanation:
 1.	It retrieves the authToken from req.cookies and queries the database to get the user's phone number.
@@ -1831,9 +1878,10 @@ Explanation:
 6.	Maps the DailyBettingBonusList to create a list of daily betting rewards with details like betting amount, bonus amount, and claim status.
 7.	Returns the list of daily betting rewards along with a success message if all operations are successful. Otherwise, logs the error and returns a server error response.
 Example usage:
-GET /daily-betting-rewards
+`GET /daily-betting-rewards`
 getDailyRebateReword
 This function is used to fetch the available daily rebate rewards for a user. It retrieves the claimed daily rebate bonus data and returns it as a response.
+```js
 const getDailyRebateReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;;
@@ -1889,7 +1937,7 @@ const getDailyRebateReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
+```
 The provided code is an asynchronous function named getDailyRebateReword. It fetches daily rebate reward-related data based on certain conditions.
 Here is a breakdown of the code:
 1.	It first tries to fetch the authToken from the req.cookies.
@@ -1900,9 +1948,10 @@ Here is a breakdown of the code:
 6.	Returns the constructed data with a success status if everything runs without errors.
 7.	If any error occurs during the process, it logs the error and returns a response with the error message and a status of 500.
 Example usage:
-GET /daily-rebate-rewards
+`GET /daily-rebate-rewards`
 claimDailyBettingReword
 This function is used to claim a daily betting reward for a user. It takes the user's authentication token and the ID of the reward as input and returns a response indicating whether the reward was successfully claimed or not.
+```js
 const claimDailyBettingReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;;
@@ -2019,7 +2068,7 @@ const claimDailyBettingReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
+```
 This code defines an asynchronous function claimDailyBettingReword that takes two parameters req and res, which are typically the request and response objects in a Node.js application.
 1.	The function attempts to claim a daily betting reward by performing various database queries based on the user's phone number and authorization token.
 2.	If the user is not authorized, it returns a 401 Unauthorized response with a message.
@@ -2028,15 +2077,16 @@ This code defines an asynchronous function claimDailyBettingReword that takes tw
 5.	If the user is eligible for the bonus, it updates the user's money balance, inserts a record into the claimed_rewards table, and returns a success response.
 6.	If any error occurs during the process, it logs the error and returns a 500 Internal Server Error response with an error message.
 Example usage:
-POST /claim-daily-betting-reward
+`POST /claim-daily-betting-reward`
 Content-Type: application/json
-
+```js
 {
   "claim_id": 1
 }
-
+```
 claimDailyRechargeReword
 This function is used to claim the daily recharge reward. It takes the user's authentication token and the ID of the reward as input and returns a response indicating whether the reward was successfully claimed or not.
+```js
 const claimDailyRechargeReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -2132,20 +2182,23 @@ const claimDailyRechargeReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 The provided code is an asynchronous function named claimDailyRebateReword that handles claiming daily rebate rewards. 
 1.	It first extracts authToken and dailyRebateRewordId from the request object. It then performs a database query to retrieve the user's phone number based on the provided token.
 2.	If the user is not found (i.e., unauthorized), it returns a 401 status with a message 'Unauthorized'. It calculates the start of the current day using moment() library, fetches commissions for the user, determines the daily rebate amount, and looks up claimed betting rewards for the day.
 3.	The function then constructs a list of daily rebate rewards, filters out claimable bonuses, checks if the specified bonus can be claimed, and updates the user's balance accordingly. Finally, it inserts a new record in the claimed rewards table and returns a success message if the process is completed without errors.
 4.	The provided code is well-structured and handles potential errors by catching exceptions using a try-catch block. It also logs any errors encountered during the process for debugging purposes.
 Example usage:
-POST /claim-daily-recharge-reward
+`POST /claim-daily-recharge-reward`
 Content-Type: application/json
-
+```js
 {
   "claim_id": 1
 }
+```
 dailyRechargeRewordRecord
 This function is used to fetch the daily recharge reward records for a user. It retrieves the claimed rewards data for the daily recharge bonus and returns it as a response.
+```js
 const dailyRechargeRewordRecord = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -2186,7 +2239,7 @@ const dailyRechargeRewordRecord = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
+```
 The provided code defines an asynchronous function dailyBettingRewardRecord that retrieves a user's daily betting reward record.
 Here is an explanation of the code:
 1.	It first tries to extract the authToken from the request cookies.
@@ -2198,9 +2251,10 @@ Here is an explanation of the code:
 7.	Finally, it responds with a 200 status along with the retrieved data, a success status, and a message indicating the successful fetch of daily recharge bonus records.
 8.	If any error occurs during the process, it logs the error and responds with a 500 status and a 'Something went wrong' message.
 Example usage:
-GET /daily-recharge-reward-record
+`GET /daily-recharge-reward-record`
 getFirstRechargeRewords
 This function is used to retrieve the available first recharge rewards for a user. It fetches the claimed rewards data for the first recharge bonus and returns it as a response.
+```js
 const getFirstRechargeRewords = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -2262,6 +2316,7 @@ const getFirstRechargeRewords = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 This code defines an asynchronous function getFirstRechargeRewards that fetches data related to first recharge rewards based on the user's authentication token and phone number. Here's a breakdown of the code:
 1.	It retrieves the user's phone number from the database using the authentication token.
 2.	If the user is not found, it returns a 401 status with an 'Unauthorized' message.
@@ -2270,9 +2325,10 @@ This code defines an asynchronous function getFirstRechargeRewards that fetches 
 5.	Finally, it constructs a response object containing the reward data, expiration status, and a success message.
 6.	The code is wrapped in a try-catch block to handle any errors that may occur during database operations. If an error occurs, it logs the error and returns a 500 status with an error message.
 Example usage:
-GET /first-recharge-rewards
+`GET /first-recharge-rewards`
 claimFirstRechargeReword
 This function is used to claim a first recharge reward for a user. It takes the user's authentication token and the ID of the reward as input and returns a response indicating whether the reward was successfully claimed or not.
+```js
 const claimFirstRechargeReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -2375,6 +2431,7 @@ const claimFirstRechargeReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 In this code, an asynchronous function claimFirstRechargeReword is defined with req and res parameters for handling requests and responses. 
 1.	It tries to claim the first recharge reward based on certain conditions.
 2.	The function first retrieves the authToken and firstRechargeRewordId from the request objects. It then queries the database using the connection.execute method to fetch user information and check if the user is authorized. If not authorized, it returns a 401 status with an 'Unauthorized' message.
@@ -2382,14 +2439,15 @@ In this code, an asynchronous function claimFirstRechargeReword is defined with 
 4.	If there are claimable bonuses and they are not already claimed or expired, the function updates the user's money and total money in the database and adds a new entry to the claimed_rewards table. It then returns a success status with a corresponding message.
 5.	If any errors occur during the process, it catches the error, logs it, and returns a 500 status with the error message in the response.
 Example usage:
-POST /claim-first-recharge-reward
+`POST /claim-first-recharge-reward`
 Content-Type: application/json
-
+```js
 {
   "id": 1
 }
-
+```
 Function: claimDailyRebateReword
+```js
     const claimDailyRebateReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;;
@@ -2486,7 +2544,7 @@ Function: claimDailyRebateReword
   }
 };
 
- 
+ ```
 The claimDailyRebateReword function is responsible for allowing a user to claim their daily rebate reward. It takes in the req and res objects as parameters.
 1.	The function retrieves the authentication token from the request cookies and the daily rebate reward ID from the request body.
 2.	It then retrieves the user's phone number from the database.
@@ -2502,6 +2560,7 @@ The claimDailyRebateReword function is responsible for allowing a user to claim 
 12.	It inserts the claimed reward into the database.
 13.	Finally, the function returns a success response if the reward is successfully claimed.
 Function: dailyBetttingRewordRecord
+```js
 const dailyBetttingRewordRecord = async (req, res) => {
   try {
     const authToken = req.cookies.auth;;
@@ -2542,6 +2601,7 @@ const dailyBetttingRewordRecord = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+```
 The dailyBetttingRewordRecord function is responsible for retrieving the daily betting bonus records for a user. It takes in the req and res objects as parameters.
 1.	The function retrieves the authentication token from the request cookies.
 2.	It retrieves the user's phone number from the database.
@@ -2550,6 +2610,7 @@ The dailyBetttingRewordRecord function is responsible for retrieving the daily b
 5.	It generates the claimed rewards data with the required information, such as reward ID, required betting amount, claimed amount, status, and time.
 6.	Finally, the function returns the claimed rewards data as a response.
 Function: dailyRebateRewordRecord
+```js
 const dailyRebateRewordRecord = async (req, res) => {
   try {
     const authToken = req.cookies.auth;;
@@ -2589,7 +2650,7 @@ const dailyRebateRewordRecord = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
+```
 The dailyRebateRewordRecord function is responsible for retrieving the daily rebate bonus records for a user. It takes in the req and res objects as parameters.
 1.	The function retrieves the authentication token from the request cookies.
 2.	It retrieves the user's phone number from the database.
@@ -2598,6 +2659,7 @@ The dailyRebateRewordRecord function is responsible for retrieving the daily reb
 5.	It generates the claimed rewards data with the required information, such as reward ID, required betting amount, claimed amount, status, and time.
 6.	Finally, the function returns the claimed rewards data as a response.
 Function: getweeklyBettingeReword
+```js
 const getweeklyBettingeReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;;
@@ -2673,7 +2735,8 @@ const getweeklyBettingeReword = async (req, res) => {
     console.log(error);
     return res.status(500).json({ message: error.message });
   }
-};  
+};
+```
 The getweeklyBettingeReword function is responsible for retrieving the weekly betting bonus data for a user. It takes in the req and res objects as parameters.
 •	The function retrieves the authentication token from the request cookies.
 •	It retrieves the user's phone number from the database.
@@ -2687,6 +2750,7 @@ The getweeklyBettingeReword function is responsible for retrieving the weekly be
 •	Based on the week's betting amount, the function generates a list of available weekly betting rewards with their required betting amounts, bonus amounts, and claim statuses.
 •	Finally, the function returns the weekly betting rewards as a response.
 Function: claimWeeklyBettingReword
+```js
 const claimWeeklyBettingReword = async (req, res) => {
   try {
     const authToken = req.cookies.auth;;
@@ -2810,6 +2874,7 @@ const claimWeeklyBettingReword = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+```
 The claimWeeklyBettingReword function is responsible for allowing a user to claim their weekly betting bonus. It takes in the req and res objects as parameters.
 1.	The function retrieves the authentication token from the request cookies and the weekly betting reward ID from the request body.
 2.	It retrieves the user's phone number from the database.
@@ -2828,6 +2893,7 @@ The claimWeeklyBettingReword function is responsible for allowing a user to clai
 15.	It inserts the claimed reward into the database.
 16.	Finally, the function returns a success response if the reward is successfully claimed.
 Function: weeklyBetttingRewordRecord
+```js
 const weeklyBetttingRewordRecord = async (req, res) => {
   try {
     const authToken = req.cookies.auth;
@@ -2868,7 +2934,7 @@ const weeklyBetttingRewordRecord = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
+```
 The weeklyBetttingRewordRecord function is responsible for retrieving the weekly betting bonus records for a user. It takes in the req and res objects as parameters.
 1.	The function retrieves the authentication token from the request cookies.
 2.	It retrieves the user's phone number from the database.
@@ -2877,6 +2943,7 @@ The weeklyBetttingRewordRecord function is responsible for retrieving the weekly
 5.	It generates the claimed rewards data with the required information, such as reward ID, required betting amount, claimed amount, status, and time.
 6.	Finally, the function returns the claimed rewards data as a response.
 Function: addonstake
+```js
 const addonstake = async (req, res) => {
   const authToken = req.cookies.auth;
   let stack_amt = req.body.stack_amt;
@@ -2951,6 +3018,7 @@ const addonstake = async (req, res) => {
   });
   }
 }
+```
 The addonstake function is responsible for allowing a user to add a stake to their account. It takes in the req and res objects as parameters.
 1.	The function retrieves the authentication token from the request cookies and the stake amount, period, monthly ROI, and yearly ROI from the request body.
 2.	If the stake amount and period are not provided, the function returns a failure status.
@@ -2960,6 +3028,7 @@ The addonstake function is responsible for allowing a user to add a stake to the
 6.	If the user has enough money to fulfill the stake request, the function calculates the stake end date based on the stack period and inserts the stake data into the database.
 7.	Finally, the function returns a success response if the stake is successfully added.
 Function: getstakedetails
+```js
 const getstakedetails = async (req, res) => {
   const authToken = req.cookies.auth;
 
@@ -2999,7 +3068,7 @@ const getstakedetails = async (req, res) => {
     useractivestakes: useractivestakes,
   });
 }
-
+```
 The getstakedetails function is responsible for retrieving the stake details for a user. It takes in the req and res objects as parameters.
 1.	The function retrieves the authentication token from the request cookies.
 2.	The function retrieves the user's phone number and money from the database.
@@ -3009,6 +3078,7 @@ The getstakedetails function is responsible for retrieving the stake details for
 6.	The function retrieves the active stake details for the user from the claimed_rewards table.
 7.	Finally, the function returns the stake details as a response.
 Function: formateT
+```js
 function formateT(params) {
   let result = (params < 10) ? "0" + params : params;
   return result;
@@ -3039,7 +3109,7 @@ function timerJoin(params = '', addHours = 0) {
 
   return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
 }
-
+```
 1.	The function creates a new date object based on the provided timestamp or the current date if no timestamp is provided.
 2.	If the addHours parameter is provided, the function adds the specified number of hours to the date.
 3.	The function extracts the year, month, day, hours, minutes, and seconds from the date object.
