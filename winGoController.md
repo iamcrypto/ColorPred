@@ -2,6 +2,7 @@ Code Documentation: winGoController.js
 This code file contains the implementation of the winGo game controller functions.
 Function: winGoPage
 This function renders the "bet/wingo/win.ejs" view for the winGo page.
+```js
 const winGoPage = async (req, res) => {
     return res.render("bet/wingo/win.ejs");
 }
@@ -45,10 +46,12 @@ function formateT(params) {
     let result = (params < 10) ? "0" + params : params;
     return result;
 }
+```
 Example:
-formateT(params)
-Function: timerJoin
+`formateT(params)`
+Function: `timerJoin`
 This function generates a formatted string representing the current date and time with an optional offset in hours.
+```js
 function timerJoin(params = '', addHours = 0) {
     let date = '';
     if (params) {
@@ -72,11 +75,12 @@ function timerJoin(params = '', addHours = 0) {
 
     return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
 }
-	
+```	
 Example:
-timerJoin(params, addHours)
-Function: rosesPlus
+`timerJoin(params, addHours)`
+Function: `rosesPlus`
 This function calculates and distributes commissions to referrers based on the user's total money and level.
+```js
 const rosesPlus = async (auth, money) => {
     const [level] = await connection.query('SELECT * FROM level ');
 
@@ -122,7 +126,7 @@ const rosesPlus = async (auth, money) => {
         }
     }
 }
-
+```
 The provided code is an asynchronous function named rosesPlus that takes two parameters: auth and money. It performs a series of database queries and updates based on certain conditions.
 1.	It first fetches a row from the level table and assigns it to level.
 2.	Then it fetches a user's information based on the auth token from the users table and stores it in userInfo.
@@ -133,9 +137,10 @@ The provided code is an asynchronous function named rosesPlus that takes two par
 7.	At each iteration, it fetches the next user's information and continues the process until a certain condition is met.
 8.	If no more next user is found, it breaks out of the loop.
 Example:
-rosesPlus(auth, money)
-Function: rosesPlus1
+`rosesPlus(auth, money)`
+Function: `rosesPlus1`
 This function calculates and distributes commissions to referrers based on the user's total money and level using a different logic.
+```js
 const rosesPlus1 = async (phone, money, levels = [], timeNow = "") => {
     try {
       const [userResult] = await connection.query(
@@ -205,6 +210,7 @@ const rosesPlus1 = async (phone, money, levels = [], timeNow = "") => {
       return { success: false, message: error.message };
     }
   };
+```
 The provided code is an asynchronous function named rosesPlus1 that takes in parameters phone, money, levels (an array, defaulting to an empty array), and timeNow (a string, defaulting to an empty string). It performs a series of database queries and updates based on the input parameters.
 Here is a breakdown of the code:
 1.	It queries the database to retrieve user information based on the provided phone (assuming there is a connection object available).
@@ -215,9 +221,10 @@ Here is a breakdown of the code:
 6.	Otherwise, it returns an object with success: true and a success message.
 
 Example:
-rosesPlus1(phone, money, levels, timeNow)
-Function: distributeCommission
+`rosesPlus1(phone, money, levels, timeNow)`
+Function: `distributeCommission`
 This function distributes commissions to referrers based on the bets placed by users.
+```js
 const distributeCommission = async () => {
     try {
       const { startOfYesterdayTimestamp, endOfYesterdayTimestamp } =
@@ -266,7 +273,7 @@ const distributeCommission = async () => {
       return { success: false, message: error.message };
     }
   };
-
+```
 In this code snippet:
 1.	An asynchronous function distributeCommission is defined using the async keyword.
 2.	Inside a try-catch block, the code retrieves timestamps for the start and end of yesterday using a function yesterdayTime().
@@ -277,9 +284,10 @@ In this code snippet:
 7.	If all promises are successful, the function returns an object with success set to true and a success message. Otherwise, it logs the error and returns an object with success set to false along with the error message.
 
 Example:
-distributeCommission()
-Function: betWinGo
+`distributeCommission()`
+Function: `betWinGo`
 This function handles the bet placement for the winGo game.
+```js
 const betWinGo = async (req, res) => {
     let { typeid, join, x, money } = req.body;
     let auth = req.cookies.auth;
@@ -455,7 +463,7 @@ const betWinGo = async (req, res) => {
         });
     }
 }
-
+```
 The provided code defines an asynchronous function betWinGo that handles a betting activity. 
 1.	It extracts the values of typeid, join, x, and money from the request body and reads auth from cookies.
 2.	It then checks if the typeid is one of the allowed values (1, 3, 5, or 10). If not, it returns an error message.
@@ -466,9 +474,10 @@ The provided code defines an asynchronous function betWinGo that handles a betti
 7.	Finally, based on certain conditions, it either processes the bet and returns a success response with relevant data or returns an error message if the amount is insufficient.
 
 Example:
-betWinGo(req, res)
-Function: listOrderOld
+`betWinGo(req, res)`
+Function: `listOrderOld`
 This function retrieves a list of past winGo game orders based on the game type, page number, and page limit.
+```js
 const listOrderOld = async (req, res) => {
     let { typeid, pageno, pageto } = req.body;
     if (typeid != 1 && typeid != 3 && typeid != 5 && typeid != 10) {
@@ -528,6 +537,7 @@ const listOrderOld = async (req, res) => {
         status: true
     });
 }
+```
 This code defines an asynchronous function listOrderOld that takes req and res as parameters. 
 1.	It extracts typeid, pageno, and pageto from req.body using destructuring.
 2.	It then performs checks on typeid, pageno, and pageto values. If any of the conditions fail, it returns an error response. It queries a database using the connection object to fetch user details, game data, and period information based on the provided parameters.
@@ -535,9 +545,10 @@ This code defines an asynchronous function listOrderOld that takes req and res a
 4.	If the fetched data is empty or any required data is missing, it returns an error response. Otherwise, it calculates the total number of pages and constructs a success response with game data, period, and page information.
 
 Example:
-listOrderOld(req, res)
-Function: GetMyEmerdList
+`listOrderOld(req, res)`
+Function: `GetMyEmerdList`
 This function retrieves a list of winGo game orders made by the user based on the game type, page number, and page limit.
+```js
 const GetMyEmerdList = async (req, res) => {
     let { typeid, pageno, pageto } = req.body;
 
@@ -608,7 +619,7 @@ const GetMyEmerdList = async (req, res) => {
         status: true
     });
 }
-
+```
 The provided code is an asynchronous function named GetMyEmerdList that takes two parameters: req (request) and res (response). 
 1.	It extracts the typeid, pageno, and pageto from the request body.
 2.	If the typeid is not 1, 3, 5, or 10, it returns an error response. If pageno or pageto is less than 0, it returns a response indicating no more data.
@@ -616,10 +627,11 @@ The provided code is an asynchronous function named GetMyEmerdList that takes tw
 4.	If the queried data is empty or any required data is missing, it returns an error response. Otherwise, it calculates the total number of pages based on the fetched data.
 5.	It then extracts specific properties from the fetched data, excluding some specific fields, and constructs a response JSON object containing the extracted data along with the total page count and a success status.
 Example:
-GetMyEmerdList(req, res)
+`GetMyEmerdList(req, res)`
 
-Function: Stat_listOrderOld
+Function: `Stat_listOrderOld`
 This function retrieves statistical data for past winGo game orders based on the game type, page number, and page limit.
+```js
 const Stat_listOrderOld = async (req, res) => {
     let { typeid, pageno, pageto } = req.body;
     if (typeid != 1 && typeid != 3 && typeid != 5 && typeid != 10) {
@@ -663,17 +675,18 @@ const Stat_listOrderOld = async (req, res) => {
         status: true
     });
   };
-
+```
 In this code snippet, an asynchronous function named Stat_listOrderOld is defined that takes req and res as parameters. 
 1.	It extracts typeid, pageno, and pageto from the request body. If typeid is not 1, 3, 5, or 10, it returns an error response.
 2.	Based on the typeid, a corresponding game value is assigned. Then a query is made to the database to select an amount from the wingo table where status is not 0 and game matches the assigned game value. The data is then ordered by id in descending order and limited based on pageno and pageto.
 3.	If no data is returned, an error response is sent. Additionally, if pageno, pageto, or the first element of wingo is falsy, an error response is returned as well.
 4.	Finally, if there is data available, a success response is sent with the retrieved wingo data along with a success status.
 Example:
-Stat_listOrderOld(req, res)
+`Stat_listOrderOld(req, res)`
 
-Function: addWinGo
+Function: `addWinGo`
 This function adds a new round of the winGo game with the given game type.
+```js
 const addWinGo = async (game) => {
     try {
         let join = '';
@@ -838,7 +851,7 @@ const addWinGo = async (game) => {
         }
     }
 }
-
+```
 The provided code defines an asynchronous function addWinGo that takes a parameter game.
 1.	It first checks the value of game and sets the join variable based on the condition.
 2.	The function then executes database queries using connection.query to fetch data from the database tables wingo, admin, and minutes_1 based on certain criteria.
@@ -848,10 +861,11 @@ The provided code defines an asynchronous function addWinGo that takes a paramet
 6.	The function also includes error handling using a try...catch block to log errors to the console if any.
 
 Example:
-addWinGo(game)
+`addWinGo(game)`
 
-Function: handlingWinGo1P
+Function: `handlingWinGo1P`
 This function handles the result and payout for the winGo game with 1 player.
+```js
 const handlingWinGo1P = async (typeid) => {
 
     let game = '';
@@ -1002,7 +1016,7 @@ const handlingWinGo1P = async (typeid) => {
         await connection.execute(sql, [totals, phone]);
     }
 }
-
+```
 
 The provided code is an asynchronous function in JavaScript that handles a specific scenario related to updating game results and processing bets stored in a database. Here's a breakdown of the code:
 1.	A function named handlingWinGo1P is declared with an async keyword, indicating it is an asynchronous function that can use the await keyword to handle promises.
@@ -1015,5 +1029,5 @@ The provided code is an asynchronous function in JavaScript that handles a speci
 8.	Overall, the code processes game results and bets stored in the 'minutes_1' table, updating statuses, calculating winnings, and updating user balances.
 
 Example:
-handlingWinGo1P(typeid)
+`handlingWinGo1P(typeid)`
 
