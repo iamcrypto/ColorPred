@@ -1,8 +1,8 @@
 Documentation - trxWingoController.js
 The trxWingoController.js file is responsible for handling the logic and functionality related to the TRX Wingo game in the software project. It contains functions for rendering game pages, processing bets, retrieving game results, and managing user data and commissions.
-trxWingoPage
+`trxWingoPage`
 This function renders the TRX Wingo game page.
-
+```js
 const trxWingoPage = async (req, res) => {
   return res.render("bet/trx_wingo/win.ejs");
 };
@@ -233,7 +233,7 @@ const betTrxWingo = async (req, res) => {
   }
 };
 
-
+```
 
 The provided code is an asynchronous function named betTrxWingo that handles a betting transaction. Here's a breakdown of the code:
 1.	The function expects req (request) and res (response) objects as parameters.
@@ -246,8 +246,9 @@ The provided code is an asynchronous function named betTrxWingo that handles a b
 8.	Generates HTML content based on conditions and data.
 9.	Further logic for inserting bets into the database and updating user information based on the outcome of the checks.
 
-listOrderOld
+`listOrderOld`
 This function retrieves a list of previous orders in the TRX Wingo game. It takes the game type, page number, and number of items per page as inputs and returns the corresponding list of orders.
+```js
 const listOrderOld = async (req, res) => {
   let { typeid, pageno, pageto } = req.body;
 
@@ -325,7 +326,7 @@ const listOrderOld = async (req, res) => {
     status: true,
   });
 };
-
+```
 
 This code defines an asynchronous function listOrderOld that receives req and res objects. It extracts typeid, pageno, and pageto from the request body.
 1.	The function checks if typeid is not one of the specified values (1, 3, 5, 10), it returns an error response. If pageno or pageto is less than zero, it returns a response indicating no more data is available.
@@ -333,8 +334,9 @@ This code defines an asynchronous function listOrderOld that receives req and re
 3.	The function calculates the total number of games for pagination and prepares the final response with game data, period information, pagination details, and a success status.
 4.	If certain required data is missing or if game data is not found, it returns an error response with the appropriate message.
 
-Stat_listOrderOld
+`Stat_listOrderOld`
 This function retrieves a list of previous orders' results in the TRX Wingo game. It takes the game type, page number, and number of items per page as inputs and returns the corresponding list of results.
+```js
 const Stat_listOrderOld = async (req, res) => {
   let { typeid, pageno, pageto } = req.body;
 
@@ -384,7 +386,7 @@ const Stat_listOrderOld = async (req, res) => {
     status: true,
   });
 };
-
+```
 The provided code is an async function in JavaScript that fetches and handles data based on some conditions.
 1.	It receives three parameters from the request body: typeid, pageno, pageto. It then checks if the typeid is not equal to 1, 3, 5, or 10 (specific values), it returns an error response.
 2.	Based on the typeid value, it assigns a corresponding game value from a map (TRX_WINGO_GAME_TYPE_MAP).
@@ -393,8 +395,9 @@ The provided code is an async function in JavaScript that fetches and handles da
 5.	Otherwise, it returns a success response with the obtained data.
 
 
-GetMyEmerdList
+`GetMyEmerdList`
 This function retrieves a list of the user's previous orders in the TRX Wingo game. It takes the game type, page number, and number of items per page as inputs and returns the corresponding list of orders.
+```js
 const GetMyEmerdList = async (req, res) => {
   let { typeid, pageno, pageto } = req.body;
 
@@ -477,14 +480,15 @@ const GetMyEmerdList = async (req, res) => {
     status: true,
   });
 };
-
+```
 The provided code defines an asynchronous function named GetMyEmerdList that expects req and res parameters. 
 1.	It then extracts typeid, pageno, and pageto from the request body. It checks for valid typeid values and negative pageno and pageto values.
 2.	Based on the typeid, it assigns a corresponding game value. It then queries the database to fetch user information, bets related to a specific game, and total bet length for a user in that game.
 3.	It handles different scenarios for missing data or errors. It calculates the number of pages based on the total bet length. It extracts relevant data from bet records and returns a JSON response with the bet data and pagination details.
 
-handlingTrxWingo1P
+`handlingTrxWingo1P`
 This function handles the result distribution for the TRX Wingo game with a game type of 1. It retrieves the pending game result, updates the bet results, calculates the win amounts, and updates the user balances accordingly.
+```js
 const handlingTrxWingo1P = async (typeid) => {
   try {
     let game = "";
@@ -559,6 +563,7 @@ const handlingTrxWingo1P = async (typeid) => {
     console.log(error);
   }
 };
+```
 The provided code is an asynchronous function in JavaScript that handles transactions related to a specific game based on the 'typeid' parameter. Here is a breakdown of the code:
 1.	The function receives a 'typeid' parameter that is used to determine the game.
 2.	It queries the database to retrieve the latest game data based on the 'game' determined by 'typeid'.
@@ -569,8 +574,9 @@ The provided code is an asynchronous function in JavaScript that handles transac
 7.	If any errors occur during the process, they are caught and logged to the console.
 
 
-addTrxWingo
+`addTrxWingo`
 This function adds a new TRX Wingo game to the database. It generates a new game period, retrieves the current timestamp, and inserts the game details into the database.
+```js
 const addTrxWingo = async (game) => {
   try {
     let join = "";
@@ -680,7 +686,7 @@ const addTrxWingo = async (game) => {
     } else console.log(error);
   }
 };
-
+```
 The provided code defines an asynchronous function addTrxWingo that takes a game parameter. The function performs various operations related to a game process using Tron blockchain data. Here's a breakdown of the code:
 1.	Checks the value of game and assigns a corresponding value to the join variable based on predefined mappings.
 2.	Queries the database to retrieve the latest period for a specific game.
@@ -690,8 +696,9 @@ The provided code defines an asynchronous function addTrxWingo that takes a game
 
 
 
-trxWingoPage3, trxWingoPage5, trxWingoPage10
+`trxWingoPage3`, `trxWingoPage5`, `trxWingoPage10`
 These functions are similar to trxWingoPage and render the TRX Wingo game pages with different game types.
+```js
 const trxWingoPage10 = async (req, res) => {
   return res.render("bet/trx_wingo/win10.ejs");
 };
@@ -709,9 +716,10 @@ This function renders the TRX Wingo block page, used for the admin panel or mode
 const trxWingoBlockPage = async (req, res) => {
   return res.render("bet/trx_wingo/trx_block.ejs");
 };
-
-distributeCommission
+```
+`distributeCommission`
 This function distributes commissions to users based on their bets in the TRX Wingo game. It retrieves the bets made during the previous day, calculates the commissions, and updates the user balances accordingly.
+```js
 const distributeCommission = async () => {
   try {
     const { startOfYesterdayTimestamp, endOfYesterdayTimestamp } =
@@ -758,38 +766,41 @@ const distributeCommission = async () => {
     return { success: false, message: error.message };
   }
 };
-
+```
 The provided code defines an asynchronous function named distributeCommission that will distribute commissions based on certain criteria. Here's a breakdown of the code:
 1.	The function uses try...catch to handle any errors that might occur during execution.
-2.	It destructures the startOfYesterdayTimestamp and endOfYesterdayTimestamp values from the result of calling a function yesterdayTime().
+2.	It destructures the startOfYesterdayTimestamp and endOfYesterdayTimestamp values from the result of calling a function `yesterdayTime()`.
 3.	It queries the database to fetch f1 from the level table and calculates the levels based on the fetched data.
 4.	It executes a complex SQL query to calculate total money for each phone number within a specific time range and combines the results before grouping them by phone number.
 5.	It then maps over the fetched bets and calls rosesPlus1 function for each bet, passing required parameters.
 6.	Finally, it awaits all promises to resolve and returns a success message if everything was executed successfully, or an error message if an error occurred during the process.
-isNumber(params)
+`isNumber(params)`
 This function checks if the given params is a number using a regular expression pattern. It returns true if params is a number, otherwise it returns false.
+```js
 const isNumber = (params) => {
   let pattern = /^[0-9]*\d$/;
   return pattern.test(params);
 };
- 
+ ```
 The provided code defines a function isNumber that takes a parameter params and checks if it is a number.
 1.	Inside the function, a regular expression pattern ^[0-9]*\d$ is used. This pattern allows for zero or more occurrences of digits (0-9) followed by exactly one digit at the end of the string.
 2.	The function uses the test method of the regular expression object to test if the input parameter params matches the defined pattern. It then returns the result of this test, which is a boolean indicating whether the params is a number according to the pattern.
 
-formateT(params)
+`formateT(params)`
 This function formats the given params by adding a leading zero if it is less than 10. It returns the formatted result.
+```js
 function formateT(params) {
   let result = params < 10 ? "0" + params : params;
   return result;
 }
- 
+ ```
 The given code defines a function called formatTime that takes an integer parameter params and returns a string.
 Within the function, it checks if the params value is less than 10. If true, it appends a '0' in front of the params value converted to a string using strconv.Itoa(). If false, it simply converts the params value to a string.
 Finally, the function returns the resulting string based on the conditions.
 
-timerJoin(params, addHours)
+`timerJoin(params, addHours)`
 This function joins timer components (years, months, days, hours, minutes, seconds, and AM/PM) to generate a formatted string representing the date and time. It takes an optional params parameter as a timestamp and an optional addHours parameter to add a specified number of hours to the time. If no params is provided, the current date and time are used. It returns the formatted date and time string.
+```js
 function timerJoin(params = "", addHours = 0) {
   let date = "";
   if (params) {
@@ -827,20 +838,22 @@ function timerJoin(params = "", addHours = 0) {
     ampm
   );
 }
-
+```
  The provided function timerJoin takes two parameters: params and addHours, with default values of an empty string and 0 respectively.
 It first checks if params is truthy. If it is, it converts params to a number and creates a new Date object using that value. Otherwise, it uses the current date and time to create a Date object.
 It then adds the specified number of addHours to the hours of the Date object.
 Next, it extracts the year, month, day, hour (in 12-hour format with AM/PM), minutes, and seconds from the Date object after formatting them using the formateT function (not provided in the code).
 Finally, it constructs a string combining these formatted date and time components and returns it.
 
-minutesPassedSince(time)
+`minutesPassedSince(time)`
 This function calculates the number of minutes passed since the specified time. The time parameter should be in a valid format that can be parsed by the moment library. It returns the number of minutes.
+```js
 function minutesPassedSince(time) {
   const inputTime = moment(time);
   const minutesDiff = moment().diff(inputTime, "minutes");
   return minutesDiff;
 }
+```
 Key Points:
 1.	time Parameter:
 •	This is the input passed to the function. It represents a timestamp or date that we want to calculate the difference from.
@@ -854,10 +867,11 @@ Key Points:
  
 sleep(ms)
 This function introduces a delay of ms milliseconds. It returns a promise that resolves after the specified delay.
+```js
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
- 
+ ```
 Key Points:
 1.	Purpose:
 •	The sleep function is used to pause code execution for a specified duration (in milliseconds). However, it does not block the entire program; instead, it allows asynchronous execution.
@@ -871,6 +885,7 @@ Key Points:
 •	The promise resolves after ms milliseconds, allowing asynchronous code to wait for the specified time before proceeding.
 generateResultByHash(hash)
 This function generates a result based on the given hash. It iterates through the characters in the hash from right to left and returns the first numeric character encountered. If no numeric character is found, it returns an empty string. Note that the isNumber function within this function is different from the isNumber function defined earlier in the code.
+```js
 const generateResultByHash = (hash) => {
   const hashItemList = hash.split("");
 
@@ -888,22 +903,22 @@ const generateResultByHash = (hash) => {
 
   return Result;
 };
-
+```
 The given code defines a function generateResultByHash that takes a hash as input and returns the last digit from the input string hash.
 1.	It splits the hash string into an array using split() method, then iterates over the array in reverse order. Inside the loop, it checks if the current character is a number by comparing it with a predefined NUMBER_LIST.
 2.	If a number is found, it assigns that number to the Result variable and breaks out of the loop.
 3.	Finally, it returns the last number found in the hash string. If no numbers are found, an empty string is returned.
  
-getNthMinuteSinceDayStart()
+`getNthMinuteSinceDayStart()`
 This function calculates the number of minutes passed since the start of the day. It uses the moment library to get the current time and the start of the day, and then calculates the difference in minutes. It returns the number of minutes passed.
-
+```js
 function getNthMinuteSinceDayStart() {
   const now = moment();
   const startOfDay = moment().startOf("day");
   const diff = now.diff(startOfDay, "minutes");
   return diff;
 }
-
+```
 Key Points:
 1.	now:
 o	moment() generates the current date and time as a moment object.
@@ -914,8 +929,9 @@ o	now.diff(startOfDay, "minutes") calculates the difference in minutes between t
 4.	Return Value:
 o	The function returns an integer representing how many minutes have passed since midnight.
 
-batchUpdateBetStatus(result, game)
+`batchUpdateBetStatus(result, game)`
 This function batch updates the status of bets in the trx_wingo_bets table. It takes a result and game as parameters. It retrieves valid bets based on the result using the getValidBets function, and then updates a batch of bets with the specified game, with a status of 0 (not processed), and not included in the valid bets. The batchSize parameter determines the number of bets to update in a single query. This can be adjusted based on data volume and server capacity. The function continues updating batches until no more rows are affected. It uses a database connection (connection) to execute the update queries.
+```js
 const batchUpdateBetStatus = async (result, game) => {
   const validBets = getValidBets(result);
   const batchSize = 1000; // Adjust this based on your data volume and server capacity
@@ -933,7 +949,7 @@ const batchUpdateBetStatus = async (result, game) => {
     offset += batchSize;
   }
 };
-
+```
 The provided code defines an asynchronous function batchUpdateBetStatus that takes two parameters result and game. Here's a breakdown of the code:
 1.	validBets is assigned the result of calling a function getValidBets with the result parameter.
 2.	batchSize is set to 1000 to determine the number of rows to update in each batch.
@@ -942,9 +958,10 @@ The provided code defines an asynchronous function batchUpdateBetStatus that tak
 5.	If no rows are affected by the update (indicating no more rows to update), the loop breaks.
 6.	The offset is incremented by batchSize after each batch update.
 Example:
-await batchUpdateBetStatus("8", "game123");
-getValidBets(result)
+`await batchUpdateBetStatus("8", "game123");`
+`getValidBets(result)`
 This function generates valid bets based on the given result. It converts the result to a number, and then generates an array of base valid bets. The base valid bets include the result itself, "d" if the result is even, "x" if the result is odd, and "t" if the result is 0 or 5. Additional valid bets are added based on the value of the result (e.g., "n" if the result is less than or equal to 4). The function returns the array of valid bets.
+```js
 const getValidBets = (result) => {
   result = Number(result);
 
@@ -961,7 +978,7 @@ const getValidBets = (result) => {
   return baseValidBets;
 };
 
- 
+```
 The provided code defines a function getValidBets that takes a single parameter result. Inside the function:
 1.	The result parameter is converted to a number using Number(result).
 2.	An array baseValidBets is initialized with a single element which is the string representation of the result.
@@ -971,9 +988,10 @@ The provided code defines a function getValidBets that takes a single parameter 
 6.	Finally, the function returns the baseValidBets array.
 
 Example:
-console.log(getValidBets("7")); // Output: ["7", "x", "n"]
+`console.log(getValidBets("7")); // Output: ["7", "x", "n"]`
 calculateWinAmount(bet, result, total)
 This function calculates the win amount for a given bet, result, and total amount. The function evaluates different conditions based on the value of the bet and the result to determine the win amount. The win amount is returned as a number. Note that the function assumes bet and result are strings representing single characters.
+```js
  const calculateWinAmount = (bet, result, total) => {
   let winAmount = 0;
   if (bet == "l" || bet == "n") {
@@ -1048,7 +1066,7 @@ This function calculates the win amount for a given bet, result, and total amoun
   }
   return winAmount;
 };
-
+```
 
 
 The provided code defines a function calculateWinAmount that takes three parameters: bet, result, and total. It calculates the win amount based on these inputs and returns the calculated value.
@@ -1057,13 +1075,14 @@ The conditions check for various combinations of bet and result, assigning the a
 Overall, the function efficiently evaluates the win amount based on the input parameters and returns the final result.
      
 Example:
-console.log(calculateWinAmount("1", "1", 10)); // Output: 90
-console.log(calculateWinAmount("x", "1", 10)) // Output: 20
+`console.log(calculateWinAmount("1", "1", 10)); // Output: 90`
+`console.log(calculateWinAmount("x", "1", 10)) // Output: 20`
 
 
-rosesPlus 
+`rosesPlus `
 rosesPlus is an asynchronous function that takes two parameters: auth and money. It retrieves data from the level table and the users table using SQL queries.
 This function then performs a series of operations to calculate and update the roses_f field for certain users in the database based on their user level and total money. It also updates the money field for certain users and inserts data into the roses and turn_over tables.
+```js
 const rosesPlus = async (auth, money) => {
   const [level] = await connection.query("SELECT * FROM level ");
 
@@ -1134,13 +1153,13 @@ const rosesPlus = async (auth, money) => {
     }
   }
 };
-
+```
 This code defines an async function rosesPlus which takes two parameters auth and money. Inside the function, it performs a series of database queries using an object called connection.
 1.	First, it retrieves a record from the level table and stores it in the level variable. Then, it retrieves user information based on the provided auth token from the users table and stores it in the userInfo variable. It also retrieves information about a user (referred to as f1) based on the invite code from another query.
 2.	The code checks if the total money of the user is greater than or equal to 100 and if there is a f1 user. If these conditions are met, it iterates through levels and performs calculations to update the user's rosesF balance, make database updates, and insert new records into the database.
 3.	Finally, the code continues to query for the next invited user (fNext) and repeats the process until there are no more users to process.
 Here is an example usage of the rosesPlus function:
-
+```js
       const auth = 'user-token';
       const money = 100;
       rosesPlus(auth, money)
@@ -1150,11 +1169,11 @@ Here is an example usage of the rosesPlus function:
         .catch((error) => {
           console.error('An error occurred:', error);
         });
-    
-rosesPlus1
+ ```   
+`rosesPlus1`
 rosesPlus1 is an asynchronous function that takes three parameters: phone, money, and levels. It also has an optional parameter timeNow.
 This function retrieves data from the users table using an SQL query and performs a series of operations to calculate commissions for referrers based on the provided levels array and money parameter. It inserts commission data into the commissions table and updates the money field for certain users in the database.
-
+```js
 const rosesPlus1 = async (phone, money, levels = [], timeNow = "") => {
   try {
     const [userResult] = await connection.query(
@@ -1224,13 +1243,13 @@ const rosesPlus1 = async (phone, money, levels = [], timeNow = "") => {
   }
 };
 
-
+```
 The provided code defines an asynchronous function named rosesPlus1 that takes phone, money, levels, and timeNow as parameters. 
 1.	It tries to fetch user details based on phone from a database table using a SQL SELECT query. If the user exists, it calculates commissions based on the provided levels and money values.
 2.	It iterates over each level, fetches the referrer details, generates a commission ID, and prepares data to insert commissions and update user balances accordingly in the database. Finally, it returns a success message if the process completes without errors.
 3.	In case of any errors during the execution (like database connection errors), it catches the error, logs it, and returns an object with a failure message containing the error message.
 Here is an example usage of the rosesPlus1 function:
-
+```js
       const phone = 'user-phone';
       const money = 100;
       const levels = [0.1, 0.2, 0.3, 0.4, 0.5];
@@ -1257,13 +1276,14 @@ export const TRX_WINGO_GAME_TYPE_MAP = {
   MIN_5: "trx_wingo5",
   MIN_10: "trx_wingo10",
 };
-
+```
 Variables
-GameRepresentationIds
+`GameRepresentationIds`
 This variable imports the game representation IDs used in the project.
 import GameRepresentationIds from "../constants/game_representation_id.js";
 generateCommissionId, generatePeriod, yesterdayTime
 These variables import helper functions used in the code.
+```js
 import { generateCommissionId,
   generatePeriod,
   yesterdayTime, } from "../helpers/games.js";
@@ -1273,5 +1293,5 @@ import moment from "moment";
 import connection from "../config/connectDB.js";
 import axios from "axios";
 import _ from "lodash";
-
+```
 
