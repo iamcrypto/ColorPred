@@ -1,6 +1,6 @@
 #Create VPC
 Under the region where you choose to create your vertual private cloud give it a name tag for future refference
-Asign ipv4 address
+Assign ipv4 address
 Create 2 Subnets under your VPC
 Create route table under the subnets
 Configure Internet getway for routetable to access your resources and set them to target under the same VPC
@@ -17,7 +17,7 @@ Under the same vpc and subnets create ec2 instance with the existing security gr
 Create Load balancer from load balancer section under same vpc as before, which you need to create ec2 instance under the same ELB.
 #Create EC2 instance under the same ELB under VPC in the region you opted to create vpc where mariadb database instance located .
 Using Ubuntu:
-# EC2 instance Comfiguration
+# EC2 instance Configuration
 Select the ubuntu image in the region for which you have opted for VPC subnets and internet gateway and Elastic Load Balancer
 #Allow Custoom ports for http and https access: port 80 and port 443 and port 22 for ssh.(You can allow other ports and redirect there using proxy in Nginx.
 Go to security group-> Actions edit invound and outbound rules add rules the choose http, https, ssh and set custom allow ip 0.0.0.0/0
