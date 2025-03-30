@@ -9,6 +9,7 @@ Parameters
 •	next (function): The callback function to be invoked if the token is valid and the user's account status is active.
 Returns
 This function does not have a return value.
+```js
 const middlewareController = async(req, res, next) => {
     // xác nhận token
     const auth = req.cookies.auth;
@@ -28,7 +29,7 @@ const middlewareController = async(req, res, next) => {
         return res.redirect("/login");
     }
 }
-
+```
 The given code defines a middleware function named middlewareController that checks if a token is present in the request cookies. 
 1.	If the token is missing, it redirects the user to the login page. It then tries to execute a SELECT query to retrieve user details based on the provided token. If the query does not return any rows, it clears the 'auth' cookie and ends the response.
 2.	If the token matches the one in the database and the user status is '1', it calls the next middleware function. Otherwise, it redirects to the login page. If an error occurs during the process, it also redirects to the login page.
