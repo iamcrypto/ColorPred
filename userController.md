@@ -3,21 +3,24 @@ This file serves as a controller for managing various users features within the 
 Functions Overview
 The userController.js file contains several functions related to user authentication and information retrieval. It uses an external API to send verification codes via SMS, interacts with a MySQL database, and handles user-related operations like changing the username. The code is written in JavaScript and designed to work in the context of a web server. Also this code file contains several functions related to user authentication and account management, as well as functions to check and manage referrals. It is primarily used in a software project to handle password changes, referral calculations, and information retrieval regarding a user's team and promotions.
 This code file consists of several functions related to payment, recharge, bank management, withdrawal, balance transfer, and transaction history. Let's go through each function in detail.
-Function: randomNumber(min, max)
+Function: `randomNumber(min, max)`
 This function generates a random number within a specified range.
+```js
 const randomNumber = (min, max) => {
     return String(Math.floor(Math.random() * (max - min + 1)) + min);
 }
+```
 Parameters:
 •	min: The minimum value of the range (inclusive).
 •	max: The maximum value of the range (inclusive).
 Return Value:
 A string representation of the generated random number.
 Example Usage:
-const otp = randomNumber(100000, 999999);
-console.log(otp); // Output: "512345"
-Function: verifyCode(req, res)
+`const otp = randomNumber(100000, 999999);`
+`console.log(otp); // Output: "512345"`
+Function: `verifyCode(req, res)`
 This function verifies the authenticity of a user's account by checking the provided authentication token and sending a verification code via SMS.
+```js
 const verifyCode = async (req, res) => {
     let auth = req.cookies.auth;
     let now = new Date().getTime();
@@ -54,7 +57,7 @@ const verifyCode = async (req, res) => {
         });
     }
 }
-
+```
 The provided code is an asynchronous function named verifyCode that takes req and res as parameters. It performs the following tasks:
 1.	Extracts the auth value from request cookies and sets the current timestamp and future timestamp.
 2.	Generates a random OTP in the range of 100000 to 999999.
@@ -71,15 +74,16 @@ Return Value:
 The function returns a JSON object as the server's response to the client.
 Example Usage:
 // Example Express route
-app.post('/verify', verifyCode);
-Function: aviator(req, res)
+`app.post('/verify', verifyCode);`
+Function: `aviator(req, res)`
 This function redirects the user to a URL based on their authentication token.
-
+```js
 const aviator = async (req, res) => {
     let auth = req.cookies.auth;
     res.redirect(`https://247cashwin.cloud/theninja/src/api/userapi.php?action=loginandregisterbyauth&token=${auth}`);
     //res.redirect(`https://jetx.asia/#/jet/loginbyauth/${auth}`);
 }
+```
 In this code snippet, a function aviator is defined using an arrow function syntax. 
 1.	This function is asynchronous (declared with async) which means it can work with promises and allows the use of await inside it.
 2.	The function takes req and res as parameters, assuming it is from an Express route handler. It accesses the auth cookie from the req object using req.cookies.auth.
@@ -92,9 +96,10 @@ Return Value:
 None
 Example Usage:
 // Example Express route
-app.get('/redirect', aviator);
-Function: userInfo(req, res)
+`app.get('/redirect', aviator);`
+Function: `userInfo(req, res)`
 This function retrieves user information based on their authentication token.
+```js
 const userInfo = async (req, res) => {
     let auth = req.cookies.auth;
 
@@ -143,7 +148,7 @@ const userInfo = async (req, res) => {
     });
 
 }
-
+```
 The code defines an asynchronous function named userInfo that receives req (request) and res (response) as parameters.
 1.	It checks if the auth cookie is present in the request. If not, it returns a JSON response with a 'Failed' message, status as false, and a timestamp.
 2.	It then queries the database to fetch data about a user based on the token stored in the auth cookie. If no user data is found, it returns a similar 'Failed' JSON response.
@@ -157,9 +162,10 @@ Return Value:
 The function returns a JSON object as the server's response to the client.
 Example Usage:
 // Example Express route
-app.get('/user', userInfo);
-Function: changeUser(req, res)
+`app.get('/user', userInfo);`
+Function: `changeUser(req, res)`
 This function allows the user to change their username based on their authentication token.
+```js
 const changeUser = async (req, res) => {
     let auth = req.cookies.auth;
     let name = req.body.name;
@@ -191,7 +197,7 @@ const changeUser = async (req, res) => {
     }
 
 }
-
+```
 This code defines an asynchronous function changeUser that takes the req and res objects. It extracts auth, name, and type from the request body. 
 1.	It then queries the database to find a user with the given token (auth).
 2.	If the query is unsuccessful or either name or type are missing, it returns a JSON response with a failure message, status, and a timestamp.
@@ -204,9 +210,10 @@ Return Value:
 The function returns a JSON object as the server's response to the client.
 Example Usage:
 // Example Express route
-app.post('/change', changeUser);
-Function: changePassword
+`app.post('/change', changeUser);`
+Function: `changePassword`
 This function allows users to change their password by accepting their current password, new password, and authentication token. It performs the following steps:
+```js
 const changePassword = async (req, res) => {
     let auth = req.cookies.auth;
     let password = req.body.password;
@@ -252,27 +259,28 @@ const changePassword = async (req, res) => {
     });
 
 }
-
+```
 1.	Checks if the current password and new password are provided. If either is missing, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-•	{
+•	`{
 •	    "message": "Failed",
 •	    "status": false,
 •	    "timeStamp": [current-timestamp]
-•	}
+•	}`
 2.	Queries the database to find a user with the provided authentication token and the current password. If no user is found, the function returns a response with the message "Incorrect password", status "false", and a timestamp. Example: 
-•	{
+•	`{
 •	    "message": "Incorrect password",
 •	    "status": false,
 •	    "timeStamp": [current-timestamp]
-•	}
+•	}`
 3.	Updates the user's password in the database with the new password and generates a new OTP (One-Time Password). Returns a response with the message "Password modification successful", status "true", and a timestamp. Example: 
-•	{
+•	`{
 •	    "message": "Password modification successful",
 •	    "status": true,
 •	    "timeStamp": [current-timestamp]
-•	}
+•	}`
 Function: checkInHandling
 This function handles the check-in process for users by accepting the authentication token and data. It performs the following steps:
+```js
 const checkInHandling = async (req, res) => {
     let auth = req.cookies.auth;
     let data = req.body.data;
@@ -491,61 +499,66 @@ const checkInHandling = async (req, res) => {
     }
 
 }
-
+```
 1.	Checks if the authentication token is missing. If so, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-•	{
+•	`{
 •	    "message": "Failed",
 •	    "status": false,
 •	    "timeStamp": [current-timestamp]
-•	}
+•	}`
 2.	Queries the database to find the user with the provided authentication token. If no user is found, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-•	{
+•	`{
 •	    "message": "Failed",
 •	    "status": false,
 •	    "timeStamp": [current-timestamp]
-•	}
+•	}`
 3.	Checks if the data parameter is missing. If so, queries the database to fetch point_list data associated with the user's phone number and returns a response with the message "No More Data", the fetched point_list data, status "true", and a timestamp. Example: 
-•	{
+•	`{
 •	    "message": "No More Data",
 •	    "datas": [point-list-data],
 •	    "status": true,
 •	    "timeStamp": [current-timestamp]
-•	}
+•	}`
 4.	Checks if the data parameter is provided. Based on the data value, the function performs different actions. The following cases are handled:
 o	If data is equal to 1, checks the user's available money and the total1 value from the point_list data. If the user has enough money and the total1 value is nonzero, updates the user's money and point_list data, and returns a response with the message "You just received ₹ [point_list.total1].00", status "true", and a timestamp. If the user does not have enough money, returns a response with the message "Please Recharge ₹ 300 to claim gift.", status "false", and a timestamp. If the total1 value is zero, returns a response with the message "You have already received this gift", status "false", and a timestamp. Example positive response: 
-o	{
-	"message": "You just received ₹ [point_list.total1].00",
-	"status": true,
-	"timeStamp": [current-timestamp]
-	}
-	Example negative response (insufficient money): 
-	{
-•	"message": "Please Recharge ₹ 300 to claim gift.",
-•	"status": false,
-•	"timeStamp": [current-timestamp]
-	}
-	Example negative response (already received gift): 
-	{
-•	"message": "You have already received this gift",
-•	"status": false,
-•	"timeStamp": [current-timestamp]
-	}
-o	If data is equal to 2, performs similar checks and updates for total2 value.
-o	If data is equal to 3, performs similar checks and updates for total3 value.
-o	If data is equal to 4, performs similar checks and updates for total4 value.
-o	If data is equal to 5, performs similar checks and updates for total5 value.
-o	If data is equal to 6, performs similar checks and updates for total6 value.
-o	If data is equal to 7, performs similar checks and updates for total7 value.
-Function: formateT
+```	
+ {
+	"message": "You just received ₹ [point_list.total1].00",
+	"status": true,
+	"timeStamp": [current-timestamp]
+	}
+	Example negative response (insufficient money): 
+	{
+	"message": "Please Recharge ₹ 300 to claim gift.",
+	"status": false,
+	"timeStamp": [current-timestamp]
+	}
+	Example negative response (already received gift): 
+	{
+	"message": "You have already received this gift",
+	"status": false,
+	"timeStamp": [current-timestamp]
+	}
+	If data is equal to 2, performs similar checks and updates for total2 value.
+	If data is equal to 3, performs similar checks and updates for total3 value.
+	If data is equal to 4, performs similar checks and updates for total4 value.
+	If data is equal to 5, performs similar checks and updates for total5 value.
+	If data is equal to 6, performs similar checks and updates for total6 value.
+	If data is equal to 7, performs similar checks and updates for total7 value.
+```
+Function: `formateT`
 This function formats a parameter by adding a leading zero if it is less than 10. The formatted parameter is returned as a string.
+```js
 function formateT(params) {
     let result = (params < 10) ? "0" + params : params;
     return result;
 }
+```
 Example:
-formateT(2); // Returns "02"
-Function: timerJoin
+`formateT(2); // Returns "02"`
+Function: `timerJoin`
 This function formats a timestamp parameter and adds a certain number of hours to it. The formatted timestamp is returned as a string in the format "yyyy-mm-dd hh:mm:ss AM/PM". If the parameter is not provided, the function uses the current timestamp. The additional hours can be specified using the addHours parameter, which defaults to 0 if not provided.
+```js
 function timerJoin(params = '', addHours = 0) {
     let date = '';
     if (params) {
@@ -569,7 +582,7 @@ function timerJoin(params = '', addHours = 0) {
 
     return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
 }
-
+```
 This JavaScript function timerJoin takes two parameters: params (default value '') and addHours (default value 0). It calculates a new date based on the provided parameters and adds hours to it. Then, it formats the date components (year, month, day, hour, minute, second) and returns a formatted date string.
 Explanation of the code:
 1.	If params is provided, it converts it to a number and creates a new date, otherwise, it creates a new date with the current time.
@@ -579,9 +592,10 @@ Explanation of the code:
 5.	Returns the formatted date string in the format: YYYY-MM-DD HH:MM:SS AM/PM.
 6.	The code includes a helper function formatT to add leading zeros to single-digit values for proper formatting.
 Example:
-timerJoin(1626450000000, 2); // Returns "2021-07-16 08:40:00 AM"
+`timerJoin(1626450000000, 2);` // Returns "2021-07-16 08:40:00 AM"
 Function: timerJoin1
 This function is similar to the timerJoin function but returns only the date portion of the formatted timestamp in the format "yyyy-mm-dd".
+```js
 function timerJoin1(params = '', addHours = 0) {
     let date = '';
     if (params) {
@@ -605,7 +619,7 @@ function timerJoin1(params = '', addHours = 0) {
 
     return years + '-' + months + '-' + days;
 }
-
+```
 The given code defines a function timerJoin1 that takes two parameters: params (optional, default value is an empty string) and addHours (optional, default value is 0).
 Inside the function:
 1.	If params is provided, it converts params to a Number and creates a new Date object with that value. Otherwise, it creates a Date object with the current date and time.
@@ -615,9 +629,10 @@ Inside the function:
 5.	Formats the minutes and seconds into two digits each.
 6.	Returns the formatted date in the format 'YYYY-MM-DD'.
 Example:
-timerJoin1(1626450000000, 2); // Returns "2021-07-16"
-Function: promotion
+`timerJoin1(1626450000000, 2); `// Returns "2021-07-16"
+Function: `promotion`
 This function retrieves and calculates various promotion-related data for a user based on the authentication token. It performs the following steps:
+```js
 const promotion = async (req, res) => {
     let auth = req.cookies.auth;
     if (!auth) {
@@ -773,42 +788,43 @@ const promotion = async (req, res) => {
     });
 
 }
-
+```
 
 1.	Checks if the authentication token is missing. If so, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-•	{
-•	    "message": "Failed",
-•	    "status": false,
-•	    "timeStamp": [current-timestamp]
-•	}
+	`{
+	    "message": "Failed",
+	    "status": false,
+	    "timeStamp": [current-timestamp]
+	}`
 2.	Queries the database to find the user with the provided authentication token. If no user is found, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-•	{
-•	    "message": "Failed",
-•	    "status": false,
-•	    "timeStamp": [current-timestamp]
-•	}
+	`{
+	    "message": "Failed",
+	    "status": false,
+	    "timeStamp": [current-timestamp]
+	}`
 3.	Queries the database to fetch the level data for promotions.
 4.	Calculates and retrieves various promotion-related data, such as the user's direct referrals (f1s), total direct referrals (total_f), direct referrals today (f1_today), total referrals today (f_all_today), and rose-related data (roses_f1, roses_f, roses_all, roses_today).
 5.	Returns a response with the fetched data and calculated values. Example: 
-•	{
-•	    "message": "Receive success",
-•	    "level": [level-data],
-•	    "info": [user-data],
-•	    "status": true,
-•	    "invite": {
-•	        "f1": [f1-data],
-•	        "total_f": [selectedData-length],
-•	        "f1_today": [f1_today],
-•	        "f_all_today": [f_all_today],
-•	        "roses_f1": [user-roses_f1],
-•	        "roses_f": [user-roses_f],
-•	        "roses_all": [rosesAdd],
-•	        "roses_today": [user-roses_today]
-•	    },
-•	    "timeStamp": [current-timestamp]
-•	}
-Function: myTeam
+	`{
+	    "message": "Receive success",
+	    "level": [level-data],
+	    "info": [user-data],
+	    "status": true,
+	    "invite": {
+	        "f1": [f1-data],
+	        "total_f": [selectedData-length],
+	        "f1_today": [f1_today],
+	        "f_all_today": [f_all_today],
+	        "roses_f1": [user-roses_f1],
+	        "roses_f": [user-roses_f],
+	        "roses_all": [rosesAdd],
+	        "roses_today": [user-roses_today]
+	    },
+	    "timeStamp": [current-timestamp]
+	}`
+Function: `myTeam`
 This function retrieves information about the user's team based on the authentication token. It performs the following steps:
+```js
 const myTeam = async (req, res) => {
     let auth = req.cookies.auth;
     if (!auth) {
@@ -836,30 +852,31 @@ const myTeam = async (req, res) => {
     });
 
 }
-
+```
 1.	Checks if the authentication token is missing. If so, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-2.	{
-3.	    "message": "Failed",
-4.	    "status": false,
-5.	    "timeStamp": [current-timestamp]
-}
+	`{
+	    "message": "Failed",
+	    "status": false,
+	    "timeStamp": [current-timestamp]
+        }`
 6.	Queries the database to find the user with the provided authentication token. If no user is found, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-7.	{
-8.	    "message": "Failed",
-9.	    "status": false,
-10.	    "timeStamp": [current-timestamp]
-}
+	`{
+	    "message": "Failed",
+	    "status": false,
+	    "timeStamp": [current-timestamp]
+         }`
 11.	Queries the database to fetch the level data for promotions.
 12.	Returns a response with the fetched data and calculated values. Example: 
-13.	{
-14.	    "message": "Receive success",
-15.	    "level": [level-data],
-16.	    "info": [user-data],
-17.	    "status": true,
-18.	    "timeStamp": [current-timestamp]
-}
+	`{
+	    "message": "Receive success",
+	    "level": [level-data],
+	    "info": [user-data],
+	    "status": true,
+	    "timeStamp": [current-timestamp]
+        }`
 Function: listMyTeam
 This function retrieves a list of users in the user's team based on the authentication token. It performs the following steps:
+```js
 const listMyTeam = async (req, res) => {
     let auth = req.cookies.auth;
     if (!auth) {
@@ -933,31 +950,33 @@ const listMyTeam = async (req, res) => {
     });
 
 }
+```
 1.	Checks if the authentication token is missing. If so, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-•	{
-•	"message": "Failed",
-•	"status": false,
-•	"timeStamp": [current-timestamp]
-•	}
+	`{
+	"message": "Failed",
+	"status": false,
+	"timeStamp": [current-timestamp]
+	}`
 2.	Queries the database to find the user with the provided authentication token. If no user is found, the function returns a response with the message "Failed", status "false", and a timestamp. Example: 
-•	{
-•	"message": "Failed",
-•	"status": false,
-•	"timeStamp": [current-timestamp]
-•	}
+	`{
+	"message": "Failed",
+	"status": false,
+	"timeStamp": [current-timestamp]
+	}`
 3.	Queries the database to fetch the users in the user's level-1 team (f1), the recently joined members (mem), and the total roses received (total_roses). Also, defines an empty array selectedData.
 4.	Returns a response with the fetched data and the selectedData array. The selectedData array contains information about users in the user's team in a hierarchical structure. Example: 
-•	{
-•	"message": "Receive success",
-•	"f1": [selectedData-for-level-1],
-•	"f1_direct": [f1-data],
-•	"mem": [newMem],
-•	"total_roses": [total_roses],
-•	"status": true,
-•	"timeStamp": [current-timestamp]
-•	}
-wowpay()
+	`{
+	"message": "Receive success",
+	"f1": [selectedData-for-level-1],
+	"f1_direct": [f1-data],
+	"mem": [newMem],
+	"total_roses": [total_roses],
+	"status": true,
+	"timeStamp": [current-timestamp]
+	}`
+`wowpay()`
 This function handles the payment process. It retrieves the authorization token and money amount from the request. Currently, the code for fetching the user's mobile number from the database using the auth token is missing.
+```js
 const wowpay = async (req, res) => {
     let auth = req.cookies.auth;
     let money = req.body.money;
@@ -966,12 +985,13 @@ const wowpay = async (req, res) => {
 
     // Your existing controller code here
 };
-
+```
 After fetching the user's mobile number, there is existing controller code that will handle the payment process.
 Example usage:
-wowpay(req, res);
-recharge()
+`wowpay(req, res);`
+`recharge()`
 This function handles the recharge process. It retrieves the authorization token, money amount, type, and typeid from the request. It also retrieves the minimum money value from the environment variables.
+```js
 const recharge = async (req, res) => {
     let auth = req.cookies.auth;
     let money = req.body.money;
@@ -1128,7 +1148,7 @@ const recharge = async (req, res) => {
         });
     }
 }
-
+```
 	
 The function performs several checks to ensure the validity of the request:
 •	Checks if the type is not equal to 'cancel' and the auth or money value is missing or less than the minimumMoney value, it returns a failed response.
@@ -1140,6 +1160,7 @@ Example usage:
 recharge(req, res);
 cancelRecharge()
 This function cancels a recharge order. It retrieves the authorization token from the request. If the token is missing, it returns a failed response.
+```js
 const cancelRecharge = async (req, res) => {
     try {
         let auth = req.cookies.auth;
@@ -1188,7 +1209,7 @@ const cancelRecharge = async (req, res) => {
         })
     }
 }
-
+```
 The provided code defines an asynchronous function named cancelRecharge that handles canceling pending recharges for a user based on authorization information.
 Here's a breakdown of the code:
 1.	The function checks for the presence of an auth cookie in the request object.
@@ -1202,6 +1223,7 @@ Example usage:
 cancelRecharge(req, res);
 addBank()
 This function handles the addition of a bank account. It retrieves the authorization token, bank account details, and tinh from the request.
+```js
 const addBank = async (req, res) => {
     let auth = req.cookies.auth;
     let name_bank = req.body.name_bank;
@@ -1265,7 +1287,7 @@ const addBank = async (req, res) => {
     }
 
 }
-
+```
 
 The function performs basic validations to ensure all required fields are provided. If any required field is missing, it returns a failed response.
 This code defines an asynchronous function addBank that handles a POST request to add bank details to a database. It retrieves necessary data from the request object, validates the input, performs database operations, and sends back appropriate responses based on the database queries' results.
@@ -1280,9 +1302,10 @@ Here's a breakdown of the code:
 •	Inserts new bank details if no existing entries are found for both location and phone number.
 •	Updates the bank details if an existing entry matches the phone number.
 Example usage:
-addBank(req, res);
-infoUserBank()
+`addBank(req, res);`
+`infoUserBank()`
 This function retrieves the user's bank account information. It retrieves the authorization token and bank account type (e.g., "Bank" or "Pi") from the request.
+```js
 const infoUserBank = async (req, res) => {
     let auth = req.cookies.auth;
     let b_type = "Bank";
@@ -1395,7 +1418,7 @@ const infoUserBank = async (req, res) => {
         timeStamp: timeNow,
     });
 }
-
+```
 
 The function fetches user data from the database using the auth token and performs necessary calculations on the user's recharge and betting data.
 This code snippet defines an asynchronous function infoUserBank that retrieves and processes user bank information based on the provided request and response objects.
@@ -1409,9 +1432,10 @@ Here's a brief explanation of the code:
 7.	Based on the b_type variable, queries user bank information accordingly.
 8.	Returns a JSON response with the fetched user bank data, user information, result, and status.
 Example usage:
-infoUserBank(req, res);
-withdrawal3()
+`infoUserBank(req, res);`
+`withdrawal3()`
 This function handles the withdrawal process. It retrieves the authorization token, withdrawal amount, and password from the request.
+```js
 const withdrawal3 = async (req, res) => {
     let auth = req.cookies.auth;
     let money = req.body.money;
@@ -1566,14 +1590,16 @@ const withdrawal3 = async (req, res) => {
     }
 
 }
+```
 The function performs several checks to ensure the validity of the request:
 •	Checks if the auth, money, or password values are missing, or if the money is less than 299, it returns a failed response.
 •	Fetches user data from the database using the auth token and checks if the user exists. If not, it returns a failed response.
 It calculates the remaining balance by subtracting the withdrawal amount from the user's money. If the remaining balance is greater than or equal to 0, it updates the user's money value and inserts a new record into the withdraw table. It then returns a success response along with the updated money value.
 Example usage:
-withdrawal3(req, res);
-transfer()
+`withdrawal3(req, res);`
+`transfer()`
 This function handles the balance transfer process. It retrieves the authorization token, transfer amount, and receiver's phone number from the request.
+```js
 const transfer = async (req, res) => {
     let auth = req.cookies.auth;
     let amount = req.body.amount;
@@ -1733,7 +1759,7 @@ const transfer = async (req, res) => {
         });
     }
 }
-
+```
 
 The function performs validation checks to ensure that the sender has sufficient balance and the receiver's phone number is valid.
 If the checks pass, it subtracts the transfer amount from the sender's balance and adds it to the receiver's balance. It also inserts records into the balance_transfer, recharge, and withdraw tables, depending on the transfer type. If the transfer type requires admin approval, it returns a response indicating that the transfer is waiting for admin approval. Otherwise, it returns a success response.
@@ -1741,6 +1767,7 @@ Example usage:
 transfer(req, res);
 transferHistory()
 This function retrieves the balance transfer history for the user. It retrieves the authorization token from the request.
+```js
 const transferHistory = async (req, res) => {
     let auth = req.cookies.auth;
 
@@ -1765,11 +1792,13 @@ const transferHistory = async (req, res) => {
         });
     }
 }
+```
 The function fetches user data from the database using the auth token and retrieves both sent and received transfer records from the balance_transfer table. If there are any records, it returns a success response along with the transfer history data. Otherwise, it returns a response indicating that there is no available transfer history.
 Example usage:
-transferHistory(req, res);
-Function: recharge2
+`transferHistory(req, res);`
+Function: `recharge2`
 This function handles the recharge process. It takes a request (req) and response (res) object as parameters. It first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it queries the database to retrieve the user's phone, code, and invite information. It then checks if there is any pending recharge for the user. If there is a pending recharge, it returns a JSON response with the recharge details. Otherwise, it returns a 'Failed' message in a JSON response.
+```js
 const recharge2 = async (req, res) => {
     let auth = req.cookies.auth;
     let money = req.body.money;
@@ -1807,15 +1836,16 @@ const recharge2 = async (req, res) => {
         });
     }
 }
-
+```
 This code defines an asynchronous function recharge2 that handles a POST request. It first gets the authentication token and money amount from the request object. 
 1.	If there is no authentication token, it returns a failure response.
 2.	Then it queries the database to retrieve user information based on the token. If no user is found, it returns a failure response.
 3.	It further queries the database for any pending recharges and bank recharge information. If a recharge exists, it returns a success response with the recharge details and bank recharge information. Otherwise, it returns a failure response.
 4.	There are some issues in the code such as a syntax error in the SQL query for bank_recharge where there is a typo in the query string. It should be SELECT * FROM bank_recharge WHERE phone = ?.
 
-Function: listRecharge
+Function: `listRecharge`
 This function retrieves the recharge history of a user. It takes a request (req) and response (res) object as parameters. It first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it queries the database to retrieve the user's phone, code, and invite information. It then queries the database to retrieve the recharge history of the user and returns it in a JSON response.
+```js
 const listRecharge = async (req, res) => {
     let auth = req.cookies.auth;
     if (!auth) {
@@ -1842,7 +1872,7 @@ const listRecharge = async (req, res) => {
         timeStamp: timeNow,
     });
 }
-
+```
 The provided code is an asynchronous function in JavaScript. It checks for authentication using a cookie named 'auth' from the request object. 
 1.	If authentication fails (no 'auth' cookie), it returns a JSON response with a 'Failed' message, status 'false', and a timestamp.
 2.	Then it queries the database to retrieve user data based on the received 'auth' token and extracts phone, code, and invite information. If the user data is not found, it returns a similar 'Failed' JSON response.
@@ -1850,6 +1880,7 @@ The provided code is an asynchronous function in JavaScript. It checks for authe
 4.	In the explanation, 'timeNow' variable is used but not defined in the provided code snippet. You may need to define or import it from another module for the code to work correctly.
 Function: search
 This function searches for a user based on their phone number. It takes a request (req) and response (res) object as parameters. Similar to other functions, it first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it queries the database to retrieve the user's phone, code, invite, and level information. Based on the user's level, it either retrieves the user's information or returns a 'Failed' message in a JSON response.
+```js
 const search = async (req, res) => {
     let auth = req.cookies.auth;
     let phone = req.body.phone;
@@ -1910,7 +1941,7 @@ const search = async (req, res) => {
         });
     }
 }
-
+```
 The provided code is an asynchronous function (search) that handles a request and response objects. Here's a breakdown of the code:
 1.	It extracts 'auth' from cookies in the request and 'phone' from the request body.
 2.	If 'auth' does not exist, it returns a JSON response with a 'Failed' message, false status, and 'timeNow' timestamp.
@@ -1922,6 +1953,7 @@ The provided code is an asynchronous function (search) that handles a request an
 8.	If the user level is neither 1 nor 2, it returns a generic failed response.
 Function: listWithdraw
 This function retrieves the withdrawal history of a user. It takes a request (req) and response (res) object as parameters. Similar to other functions, it first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it queries the database to retrieve the user's phone, code, and invite information. It then queries the database to retrieve the withdrawal history of the user and returns it in a JSON response.
+```js
 const listWithdraw = async (req, res) => {
     let auth = req.cookies.auth;
     if (!auth) {
@@ -1948,7 +1980,7 @@ const listWithdraw = async (req, res) => {
         timeStamp: timeNow,
     });
 }
-
+```
 In this code snippet, a function listWithdraw is defined as an asynchronous function that takes two parameters req and res which represent the request and response objects respectively.
 1.	The function first extracts the auth value from the cookies of the request. If auth is falsy, a response with a failure message is sent back containing a status of false and a timestamp timeNow.
 2.	Then it queries the database to fetch user information based on the token received. If no user is found, it returns a similar failure response as before.
@@ -1956,6 +1988,7 @@ In this code snippet, a function listWithdraw is defined as an asynchronous func
 4.	Finally, if all operations are successful, it sends a response with a message 'Receive success', the fetched recharge data in datas field, a status of true, and also includes the timestamp timeNow.
 Function: getnotificationCount
 This function retrieves the count of unread notifications of a user. It takes a request (req) and response (res) object as parameters. Similar to other functions, it first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it queries the database to retrieve the user's information. It then queries the database to retrieve the count of unread notifications of the user and returns it in a JSON response.
+```js
 const getnotificationCount = async (req, res) => {
     let auth = req.cookies.auth;
     if (!auth) {
@@ -1977,15 +2010,16 @@ const getnotificationCount = async (req, res) => {
             N_Count: countNot,
         });
 }
-
+```
 The given code defines an asynchronous function named getNotificationCount that takes req (request) and res (response) as parameters. 
 1.	It first checks if the auth cookie exists in the request. If not, it returns a JSON response with a failure message, status 'false', current timestamp, and notification count '0'.
 2.	Then, it queries the database to get the user information based on the token extracted from the cookie. Subsequently, it queries the database to count the number of unread notifications for the user.
 3.	Finally, it constructs a success JSON response including a success message, status 'true', and the count of unread notifications retrieved from the database.
 4.	Make sure that the timeNow variable is defined and accessible within the scope of this function.
 
-Function: useRedenvelope
+Function: `useRedenvelope`
 This function handles the usage of a redemption code (redenvelope). It takes a request (req) and response (res) object as parameters. It checks if the user is authenticated and the redemption code is provided in the request. If the user is not authenticated or the redemption code is not provided, it returns a JSON response with a 'Failed' message. If the user is authenticated and the redemption code is provided, it queries the database to retrieve the user's phone, code, and invite information. It then queries the database to retrieve the redemption code information. Based on the status of the redemption code, it updates the status, user's money, and inserts a record into the redenvelopes_used table. It returns a JSON response with a success or failure message.
+```js
 const useRedenvelope = async (req, res) => {
     let auth = req.cookies.auth;
     let code = req.body.code;
@@ -2037,7 +2071,7 @@ const useRedenvelope = async (req, res) => {
         }
     }
 }
-
+```
 The code defines an asynchronous function useRedenvelope that takes req (request) and res (response) as parameters.
 1.	It checks for the presence of authentication and a code in the request. If either is missing, it returns a response with 'Failed', false status, and the current timestamp.
 2.	It then queries the database to fetch user information based on the authentication token.
@@ -2047,8 +2081,9 @@ The code defines an asynchronous function useRedenvelope that takes req (request
 6.	Otherwise, it proceeds to check the status of the red envelope. If the status is 0, it updates the red envelope status, adds money to the user's account, records the usage in another table, and returns a success response with the added money amount.
 7.	If the status is not 0, it returns a response stating that the gift code is already used.
 
-Function: callback_bank
+Function: `callback_bank`
 This function handles the callback from a bank transaction. It takes transaction details as parameters and updates the recharge status and user's money in the database accordingly. It returns a JSON response with a success or failure message.
+```js
 const callback_bank = async (req, res) => {
     let transaction_id = req.body.transaction_id;
     let client_transaction_id = req.body.client_transaction_id;
@@ -2082,14 +2117,16 @@ const callback_bank = async (req, res) => {
         });
     }
 }
+```
 The provided code defines an asynchronous function callback_bank that takes req and res as parameters. 
 1.	It retrieves various data from the request body such as transaction_id, client_transaction_id, amount, requested_datetime, expired_datetime, payment_datetime, and status.
 2.	If transaction_id is falsy, it returns a JSON response with a message 'Failed', status as false, and a timeStamp value.
 3.	If the status is equal to 2, it performs a series of database operations by updating the 'recharge' table, selecting data based on client_transaction_id, and updating the 'users' table accordingly. It then returns a JSON response with message 0 and a status of true.
 4.	Otherwise, if the status is not equal to 2, it updates the 'recharge' table with status 2 where id is undefined (should likely be corrected to client_transaction_id). It then returns a JSON response indicating the 'Cancellation successful', status as true, and includes some recharge data.
 
-Function: confirmRecharge
+Function: `confirmRecharge`
 This function handles the confirmation of a recharge. It takes a request (req) and response (res) object as parameters. It checks if the user is authenticated and the required parameters (client_txn_id) are provided in the request. If the user is not authenticated or the required parameters are not provided, it returns a JSON response with a 'Failed' message. If the user is authenticated and the required parameters are provided, it queries the database to retrieve the user's phone, code, and invite information. It then queries an external API to check the status of the recharge. Based on the status of the recharge, it updates the recharge status, user's money, and returns a JSON response with a success or failure message.
+```js
 const confirmRecharge = async (req, res) => {
     let auth = req.cookies.auth;
     //let money = req.body.money;
@@ -2200,7 +2237,7 @@ const confirmRecharge = async (req, res) => {
         });
     }
 }
-
+```
 The provided code defines an asynchronous function confirmRecharge that handles the confirmation of a recharge process. Here is a breakdown of the code:
 1.	The function extracts the auth and client_txn_id from the request object.
 2.	It then checks if the client_txn_id is provided and returns an error response if it's missing.
@@ -2218,17 +2255,19 @@ o	Checks if the API data matches the recharge data and processes accordingly:
 o	If the data does not match, it returns a mismatch response.
 8.	If there is no recharge data found, it returns a failure response.
 
-Function: confirmUSDTRecharge
+Function: `confirmUSDTRecharge`
 This function is commented out and not used in the code. It seems to be a work-in-progress or a future implementation for confirming USDT recharges. It is similar to the confirmRecharge function but appears to handle USDT-specific data.
+```js
 const confirmUSDTRecharge = async (req, res) => {
     console.log(res?.body)
     console.log(res?.query)
     console.log(res?.cookies)
 }
 
-
-Function: updateRecharge
+```
+Function: `updateRecharge`
 This function handles the updating of a recharge. It takes a request (req) and response (res) object as parameters. It checks if the user is authenticated, the required parameters (money and order_id) are provided, and the input data is valid. If the user is not authenticated, the required parameters are not provided, or the input data is not valid, it returns a JSON response with a 'Failed' message. If all the conditions are met, it queries the database to update the UTR (Unique Transaction Reference) of the recharge. It returns a JSON response with a success message.
+```js
 const updateRecharge = async (req, res) => {
     let auth = req.cookies.auth;
     let money = req.body.money;
@@ -2271,14 +2310,15 @@ const updateRecharge = async (req, res) => {
         });
     }
 }
-
+```
 The given code is an asynchronous function named updateRecharge that takes req and res as parameters. 
 1.	It extracts values from req like auth, money, order_id, and data.
 2.	It then queries the database to fetch user information based on the given auth. If the user is not found, it returns a JSON response indicating 'user not found'.
 3.	Next, it queries the database to check if the given data (UTR) exists in the recharge table. If it doesn't exist, it updates the recharge table with the new UTR and returns a success message. If the UTR already exists, it returns a message stating that it is already in use.
 
-Function: getnotifications
+Function: `getnotifications`
 This function retrieves the notifications of a user. It takes a request (req) and response (res) object as parameters. Similar to other functions, it first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it queries the database to retrieve the user's information. It then queries the database to retrieve the user's notifications and returns them in a JSON response.
+```js
 const getnotifications = async (req, res) => {
     let auth = req.cookies.auth;
     let [user] = await connection.query('SELECT * FROM users WHERE `token` = ?', [auth]);
@@ -2299,15 +2339,16 @@ const getnotifications = async (req, res) => {
         rows: rows
     })
 };
-
+```
 The given code defines an asynchronous function getnotifications that takes two parameters req and res, presumably representing request and response objects.
 1.	It retrieves an authentication token from the request cookies and queries the database table users to find a user corresponding to that token.
 2.	Then, it queries the notification table to fetch notifications for the user found, ordered by id in descending order.
 3.	If no rows are returned, it responds with a JSON object containing a message 'Failed' and a status of false.
 4.	Otherwise, it responds with a JSON object containing a message 'Success', a status of true, an empty data object, and the retrieved rows from the query.
 
-Function: updatenotifications
+Function: `updatenotifications`
 This function updates the read status of notifications for a user. It takes a request (req) and response (res) object as parameters. Similar to other functions, it first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it updates the read status of the notifications in the database and returns a JSON response with a success message.
+```js
 const updatenotifications = async (req, res) => {
     let auth = req.cookies.auth;
     let [user] = await connection.query('SELECT * FROM users WHERE `token` = ?', [auth]);
@@ -2317,14 +2358,15 @@ const updatenotifications = async (req, res) => {
         status: true,
         });
 };
-
+```
 In this code snippet, an async function updatenotifications is defined with two parameters req and res, which represent the request and response objects respectively.
 1.	The function first extracts the auth token from the request cookies. Then it queries the database to fetch a user based on the provided token using a prepared statement. The user data is stored in the user variable.
 2.	Subsequently, the code executes an SQL UPDATE statement to set the isread field to 1 for notifications where the recipient matches the user's ID and the isread field is currently 0.
 3.	Finally, a JSON response with a message 'Updated' and a status true is sent back with a 200 status code.
 
-Function: xpgain_value
+Function: `xpgain_value`
 This function calculates the XP (Experience Points) gain of a user. It takes a request (req) and response (res) object as parameters. Similar to other functions, it first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it queries the database to retrieve the user's information. It then calculates the XP gain value based on the user's staking activities and betting activities (minutes_1, result_k3, trx_wingo_bets). It returns a JSON response with the XP value, user's level, and status.
+```js
 const xpgain_value = async (req, res) => {
     let auth = req.cookies.auth;
     let xp_gain_val = 0;
@@ -2365,6 +2407,7 @@ const xpgain_value = async (req, res) => {
     });
 
 };
+```
 The provided code is an asynchronous function in JavaScript using the `async` keyword. It calculates the total experience points gained by a user based on various queries to databases and then returns a JSON response containing information such as experience value, level, status, language, and user stake.
 Here is a breakdown of the code:
 1.	It first retrieves the authentication token from the request cookies.
@@ -2373,8 +2416,9 @@ Here is a breakdown of the code:
 4.	Calculates the total XP gained by summing up the individual XP values.
 5.	Returns a JSON response with the calculated values and other user information.
 
-Function: getlang_datacall
+Function: `getlang_datacall`
 This function retrieves language data based on the language code provided in the request. It takes a request (req) and response (res) object as parameters. It retrieves the language code from the cookie and uses it to retrieve the corresponding language data. It returns a JSON response with the language data.
+```js
 const getlang_datacall = async (req, res) => {
     let lang_code = req.cookies.lang;
     var lang_data = getlang_data(lang_code);
@@ -2384,7 +2428,7 @@ const getlang_datacall = async (req, res) => {
         data:lang_data,
     });
 }
-
+```
 The provided code is a JavaScript function that uses the async/await syntax to handle asynchronous operations. Here's a breakdown of the code:
 1.	const getlang_datacall = async (req, res) => {: Declares an async function getlang_datacall that takes req and res as parameters.
 2.	let lang_code = req.cookies.lang;: Retrieves the value of lang from cookies and assigns it to lang_code.
@@ -2392,6 +2436,7 @@ The provided code is a JavaScript function that uses the async/await syntax to h
 4.	return res.status(200).json({ message: 'Successful', status: true, data: lang_data });: Constructs a JSON response with a message, status, and data extracted using lang_data and sends it back with a 200 status.
 Function: getmybets
 This function retrieves the betting details of a user. It takes a request (req) and response (res) object as parameters. Similar to other functions, it first checks if the user is authenticated by checking the auth cookie in the request. If the user is not authenticated, it returns a JSON response with a 'Failed' message. If the user is authenticated, it retrieves the user's phone number from the database. It then queries the database to retrieve the betting details (money, count, win amount) for different bet types (minutes_1, result_k3, result_5d, trx_wingo_bets) based on the specified data type (day, yesterday, week, month). It calculates the total bet amount, total win amount, and win/loss label. It returns a JSON response with the betting details.
+```js
 const getmybets = async (req, res) => {
     let auth = req.cookies.auth;
     let type = req.body.data_type;
@@ -2576,7 +2621,7 @@ const getmybets = async (req, res) => {
         no_of_bets:wing_betting_list.length + k3_betting_list.length + d5_betting_list.length + trx_betting_list.length
     });
 }
-
+```
 This code defines an asynchronous function getmybets that handles a GET request to retrieve betting information based on different data types.
 1.	It first extracts the authorization token and data type from the request object. If there is no authorization token, it returns a 'Failed' message as JSON with a status of false.
 2.	The function then queries a database based on the data type provided to fetch betting information such as bet amounts, win amounts, and counts. The time is calculated based on the data type (today, yesterday, week, or month).
