@@ -38,7 +38,7 @@ Dependencies:
         "@babel/core": "7.15.5",
         "@babel/node": "7.15.4",
         "@babel/preset-env": "7.15.6",
-        "92lottery": "file:",
+        "cloudscape": "file:",
         "axios": "^1.6.7",
         "babel-core": "^7.0.0-bridge.0",
         "body-parser": "^1.20.2",
