@@ -2,14 +2,16 @@ k3Controller.js Documentation
 Overview
 The k3Controller.js file is a module that handles the logic for the K3 game in a software project. It includes functions for rendering the K3 page, validating and processing bets, generating random numbers, and distributing commissions.
 Functions
-K3Page
+`K3Page`
 A function that renders the K3 page.
-
+```js
 const K3Page = async (req, res) => {
     return res.render("bet/k3/k3.ejs");
 }
+```
 betK3
 A function that processes a bet for the K3 game.
+```js
 const betK3 = async (req, res) => {
     try {
         let { listJoin, game, gameJoin, xvalue, money } = req.body;
@@ -153,13 +155,14 @@ const betK3 = async (req, res) => {
     } catch (error) {
     }
 }
-
+```
 The provided code is an async function betK3 which handles placing bets in a gaming application. 
 1.	It extracts required data from the request body and user cookies, performs database queries to retrieve necessary information, calculates the total amount based on the selected game type and input values, deducts the bet amount from user's balance, and updates the database accordingly.
 2.	It also handles error scenarios where the required data is not found or the user's balance is insufficient for the bet amount. The code structure includes try-catch blocks to handle exceptions that may occur during the process.
 3.	However, the code has references to external functions like formateT(), connection.query(), and rosesPlus(), which are not defined in the provided snippet.
 addK3
 A function that adds a new K3 game result.
+```js
 const addK3 = async (game) => {
     try {
         let join = '';
@@ -217,7 +220,7 @@ const addK3 = async (game) => {
     }
 }
 
-
+```
 The given code defines an asynchronous function addK3 that takes a game parameter. Inside the function:
 1.	A series of conditional statements determine the value of join based on the input game.
 2.	Various database queries are made using connection.query and connection.execute to retrieve and update data.
@@ -227,6 +230,7 @@ The given code defines an asynchronous function addK3 that takes a game paramete
 6.	An error handling block is present but currently empty. This code snippet is dependent on external functions or objects like makeid, GameRepresentationIds, and generatePeriod. It is assumed that these are defined elsewhere in the codebase.
 handlingK3
 A function that processes the K3 game results.
+```js
 const handlingK3 = async (typeid) => {
 
     let game = Number(typeid);
@@ -235,6 +239,7 @@ const handlingK3 = async (typeid) => {
 
     await plusMoney(game);
 }
+```
 There is a syntax error in the provided code. The arrow function syntax is used which might not be compatible with the entire codebase.
 1.	To fix this, it is safer to convert the function to a regular async function.
 2.	In the corrected code:
@@ -245,6 +250,7 @@ There is a syntax error in the provided code. The arrow function syntax is used 
 
 listOrderOld
 A function that retrieves a list of old K3 game orders.
+```js
 const listOrderOld = async (req, res) => {
     let { gameJoin, pageno, pageto } = req.body;
     let auth = req.cookies.auth;
@@ -296,7 +302,7 @@ const listOrderOld = async (req, res) => {
         status: true
     });
 }
-
+```
 This code defines an asynchronous function listOrderOld that takes req and res as parameters. 
 1.	It extracts gameJoin, pageno, and pageto from the request body and auth from cookie.
 2.	It checks if gameJoin is one of '1', '3', '5', or '10', and if pageno and pageto are greater than 0. If not, it returns a JSON response with specific messages.
@@ -304,6 +310,7 @@ This code defines an asynchronous function listOrderOld that takes req and res a
 4.	Finally, the function calculates the total number of pages based on the fetched data and returns a JSON response with the appropriate data, including game details, periods, and status.
 GetMyEmerdList
 A function that retrieves the list of K3 game orders for the logged-in user.
+```js
 const GetMyEmerdList = async (req, res) => {
     let { gameJoin, pageno, pageto } = req.body;
     let auth = req.cookies.auth;
@@ -360,7 +367,7 @@ const GetMyEmerdList = async (req, res) => {
         status: true
     });
 }
-
+```
 The provided code is an asynchronous function named GetMyEmerdList that fetches and processes data based on the request body and cookies. 
 Here is an explanation of the code:
 1.	It extracts gameJoin, pageno, and pageto from the request body and auth from the cookies.
@@ -372,6 +379,7 @@ Here is an explanation of the code:
 
 distributeCommission
 A function that distributes commissions to users based on their K3 game bets.
+```js
   const distributeCommission = async () => {
       try {
         const { startOfYesterdayTimestamp, endOfYesterdayTimestamp } =
@@ -418,7 +426,7 @@ A function that distributes commissions to users based on their K3 game bets.
         return { success: false, message: error.message };
       }
     };
-
+```
 The provided code defines an asynchronous function distributeCommission that is responsible for distributing commissions. Here's a breakdown of its functionality:
 1.	It retrieves startOfYesterdayTimestamp and endOfYesterdayTimestamp using a function yesterdayTime.
 2.	It queries the database for f1 from a table called level and extracts it into levelResult array. Then it maps a new array levels by dividing each f1 value by 100.
@@ -433,11 +441,12 @@ Parameters:
 •	params: The parameter to be checked for number validity.
 Return Value:
 A boolean value indicating whether the parameter is a number or not.
+```js
 const isNumber = (params) => {
     let pattern = /^[0-9]*\d$/;
     return pattern.test(params);
 }
-
+```
 The provided code defines a function isNumber that takes a single parameter params and checks if the input is a number. Here's a breakdown of the code:
 1.	const isNumber = (params) => { ... }: This line defines an arrow function called isNumber that takes a parameter params.
 2.	let pattern = /^[0-9]*\d$/;: This line declares a regular expression pattern that matches a number. The pattern /^[0-9]*\d$/ checks if the input contains only numeric characters.
@@ -460,14 +469,14 @@ The provided code defines a function called formateT that takes an integer param
 7.	Changed the logic to convert params to a string using strconv.Itoa method.
         
     
-timerJoin(params = '', addHours = 0)
+`timerJoin(params = '', addHours = 0)`
 This function generates a formatted date and time string. It takes an optional parameter representing a timestamp and an optional parameter representing the number of hours to be added to the current time. If no parameters are provided, the current date and time are used.
 Parameters:
 •	params (optional): The timestamp to be used for generating the date and time.
 •	addHours (optional): The number of hours to be added to the date and time.
 Return Value:
 A string representing the formatted date and time in the format 'YYYY-MM-DD HH:MM:SS AM/PM'.
-
+```js
 function timerJoin(params = '', addHours = 0) {
     let date = '';
         if (params) {
@@ -492,19 +501,19 @@ function timerJoin(params = '', addHours = 0) {
         return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
     }
 
-
+```
 The given code defines a function timerJoin that takes two parameters: params (which defaults to an empty string) and addHours (which defaults to 0).
 1.	It then initializes a variable date to an empty string. If params is provided, it converts params to a number and creates a new Date object using that value. If params is not provided, it creates a new Date object with the current date and time.
 2.	The function then adds the number of hours specified by addHours to the date. It extracts the year, month, day, hours (in 12-hour format with AM/PM), minutes, and seconds from the date.
 3.	Finally, it formats these components and returns a string representing the date and time in the format: YYYY-MM-DD HH:MM:SS AM/PM.
         
     
-rosesPlus(auth, money)
+`rosesPlus(auth, money)`
 This function performs a series of database queries and updates to calculate and update the 'roses' value for a user based on their 'money' value and a hierarchical structure determined by user invitations and levels. The function first fetches the 'level' data from the database. Then it fetches the user information based on the provided authentication token. It calculates and updates the 'roses' values for the user and their respective levels of invitations.
 Parameters:
 •	auth: The authentication token of the user.
 •	money: The money value associated with the user.
-
+```js
 const rosesPlus = async (auth, money) => {
     const [level] = await connection.query('SELECT * FROM level ');
     let level0 = level[0];
@@ -547,7 +556,7 @@ const rosesPlus = async (auth, money) => {
         }
     }
 }
-•	
+```	
 
 Example:
         
@@ -562,7 +571,7 @@ The provided code defines an asynchronous function rosesPlus that takes two para
 
         
     
-validateBet(join, list_join, x, money, game)
+`validateBet(join, list_join, x, money, game)`
 This function validates a user's bet based on several conditions. It checks if the 'join' parameter is one of the allowed values ('a', 'b', 'c', 'd', 'e', 'total'). It also checks the length of the 'list_join' parameter, ensuring it does not exceed 10 characters. Additionally, it verifies if the 'x' parameter and the 'money' parameter are numbers, and if the 'game' parameter is one of the allowed values ('1', '3', '5', '10'). If any of these conditions fail, the function returns false. Otherwise, it checks the content of the 'list_join' parameter, validating it based on whether it contains only numbers or specific characters ('c', 'l', 'b', 's').
 Parameters:
 •	join: The type of bet the user wants to place.
@@ -572,6 +581,7 @@ Parameters:
 •	game: The specific game the user wants to participate in.
 Return Value:
 A boolean value indicating whether the bet is valid or not.
+```js
 const validateBet = async (join, list_join, x, money, game) => {
     let checkJoin = isNumber(list_join);
     let checkX = isNumber(x);
@@ -606,6 +616,7 @@ const validateBet = async (join, list_join, x, money, game) => {
 
     return true;
 }
+```
 In the provided code snippet, there is a JavaScript function validateBet defined using async arrow function syntax. 
 1.	This function takes five parameters: join, list_join, x, money, and game.
 2.	The function first checks if the parameters meet certain conditions to determine the validity of a bet. It uses helper functions like isNumber (not defined in the snippet) to check if list_join and x are numbers, then performs various checks based on the values of join, game, and money.
@@ -622,7 +633,7 @@ Parameters:
 •	length (number): The length of the ID to be generated.
 Returns:
 A string representing the randomly generated ID.
-
+```js
 function makeid(length) {
     var result = '';
     var characters = '123456';
@@ -632,17 +643,19 @@ function makeid(length) {
     }
     return result;
 }
+```
 In this code snippet, a function named makeid is defined that takes a parameter length indicating the desired length of the generated ID. 
 1.	The function generates a random ID using characters 123456.
 2.	The code uses the math/rand package to generate random numbers. It initializes the random number generator with a seed based on the current time to ensure different results on each run.
 3.	Inside the loop, the function randomly selects a character from the characters string and appends it to the result string. Finally, the generated random ID is returned.
 
-funHanding(game)
+`funHanding(game)`
 This asynchronous function handles the game logic for the specified game. It retrieves the latest game data from the database, updates the game result, and performs various calculations based on the game rules.
 Parameters:
 •	game (number): The identifier of the game.
 Returns:
 This function does not have a return value.
+```js
 async function funHanding(game) {
     const [k5d] = await connection.query(`SELECT * FROM k3 WHERE status != 0 AND game = ${game} ORDER BY id DESC LIMIT 1 `);
     let k5dInfo = k5d[0];
@@ -1016,7 +1029,7 @@ async function funHanding(game) {
         }   
     }
 }
-
+```
 The code defines an asynchronous function that processes game results from a database. Here's a simple breakdown:
 1.	It retrieves the latest game result from the database.
 2.	It updates the result in another table based on the game's status.
@@ -1027,12 +1040,13 @@ o	It updates the status of bets in the database depending on whether they win or
 5.	The function handles various game scenarios like two same numbers, three same numbers, and different numbers, updating the status accordingly.
 6.	Overall, it processes bets and results, updating the database based on the game's logic.
 
-plusMoney(game)
+`plusMoney(game)`
 This asynchronous function calculates and adds the prize money to the user's account for the specified game. It retrieves the game data from the database and performs calculations based on the game type and user's bets.
 Parameters:
 •	game (number): The identifier of the game.
 Returns:
 This function does not have a return value.
+```js
 async function plusMoney(game) {
     const [order] = await connection.execute(`SELECT id, phone, bet, price, money, fee, amount, result, typeGame FROM result_k3 WHERE status = 0 AND game = ${game} `);
     for (let i = 0; i < order.length; i++) {
@@ -1301,14 +1315,14 @@ async function plusMoney(game) {
         }
     }
 }
-
+```
 The provided code defines an asynchronous function named plusMoney which takes a parameter game.
 1.	It retrieves data from a database table named result_k3 with specific conditions and processes each row of the retrieved data based on the typeGame field.
 2.	Inside the function, there are conditional blocks for different types of games like 'total', 'two-same', 'three-same', and 'unlike'. Each block contains specific calculations and conditions to update the nhan_duoc variable.
 3.	The code also includes multiple loops and conditions to handle different scenarios of the game types and calculate the winnings accordingly. It updates the database tables result_k3 and users with the calculated winnings for each order.
 4.	There are some issues in the code such as undefined isNumber function, and repeated variable names within nested loops that need to be addressed.
 
-rosesPlus1(phone, money, levels = [], timeNow = "")
+`rosesPlus1(phone, money, levels = [], timeNow = "")`
 This asynchronous function calculates and adds bonuses to the user's account based on a referral system. It calculates commissions for the specified levels and updates the users' balances accordingly.
 Parameters:
 •	phone (string): The phone number of the user.
@@ -1317,6 +1331,7 @@ Parameters:
 •	timeNow (string): Optional. The current time in a specific format.
 Returns:
 An object with properties success (boolean) and message (string) indicating the success status and any error message.
+```js
 const rosesPlus1 = async (phone, money, levels = [], timeNow = "") => {
     try {
       const [userResult] = await connection.query(
@@ -1385,7 +1400,7 @@ const rosesPlus1 = async (phone, money, levels = [], timeNow = "") => {
       return { success: false, message: error.message };
     }
   };
-
+```
 This code defines an asynchronous function rosesPlus1 that calculates commissions and updates user balances based on a given set of levels and monetary values.
 Here is a breakdown of the code:
 1.	It receives parameters phone, money, levels, and timeNow with default values.
@@ -1399,6 +1414,7 @@ Here is a breakdown of the code:
 Variables
 priceGet
 An object that stores the prize money for different game types and options. It provides easy access to the prize money based on specific keys.
+```js
 const priceGet = {
     total: {
         't3': 207.36,
@@ -1437,7 +1453,7 @@ const priceGet = {
     }
 }
 
-
+```
 Note: The above code is provided as a sample and may not reflect the actual functionality of the code in the project. Modify the documentation accordingly to match the actual code implementation.
 
 
