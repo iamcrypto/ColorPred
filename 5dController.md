@@ -1,42 +1,53 @@
 K5D Controller Documentation
 This code file is responsible for handling the K5D game functionality. It includes functions to render different pages, validate bets, handle game results, and distribute commissions.
 Functions
-•	K5DPage
+	`K5DPage`
 A function that renders the K5D page for betting.
+```js
 const K5DPage = async (req, res) => {
     return res.render("bet/5d/5d.ejs"); 
 }
-•	K5DPage3
+```
+	K5DPage3
 A function that renders the K5D3 page for betting.
+```js
 const K5DPage3 = async (req, res) => {
     return res.render("bet/wingo/win3.ejs");
 }
-•	K5DPage5
+```
+	K5DPage5
 A function that renders the K5D5 page for betting.
-
+```js
 const K5DPage5 = async (req, res) => {
     return res.render("bet/wingo/win5.ejs");
 }
-
-•	K5DPage10
+```
+	K5DPage10
 A function that renders the K5D10 page for betting.
+```js
 const K5DPage10 = async (req, res) => {
     return res.render("bet/wingo/win10.ejs");
 }
-•	isNumber
+```
+	isNumber
 A function that checks if the provided parameter is a number.
+```js
 const isNumber = (params) => {
     let pattern = /^[0-9]*\d$/;
     return pattern.test(params);
 }
-•	formateT
+```
+	formateT
 A function that formats a number by adding a leading zero if it is less than 10.
+```js
 function formateT(params) {
     let result = (params < 10) ? "0" + params : params;
     return result;
     }
-•	timerJoin
+```
+	timerJoin
 A function that returns a formatted date and time with an optional additional number of hours.
+```js
 function timerJoin(params = '', addHours = 0) {
         let date = '';
         if (params) {
@@ -60,14 +71,15 @@ function timerJoin(params = '', addHours = 0) {
     
         return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
     }
-
+```
 The provided code defines a function named timerJoin that takes two parameters: params (defaulted to an empty string) and addHours (defaulted to 0).
 1.	It then constructs a date based on the params value if provided (as a number representing milliseconds since the Unix Epoch) or the current date if params is empty. It adds addHours to the hour component of the date.
 2.	Next, it extracts the year, month, day, hour (in 12-hour format with AM/PM), minutes, and seconds from the date object. Leading zeros are added to ensure the correct format.
 3.	Finally, it returns a formatted string representing the date in the format: YYYY-MM-DD HH:MM:SS AM/PM.
 
-•	rosesPlus
+	`rosesPlus`
 A function that distributes commission to users based on their betting activity.
+```js
 const rosesPlus = async (auth, money) => {
     const [level] = await connection.query('SELECT * FROM level ');
     let level0 = level[0];
@@ -111,7 +123,7 @@ const rosesPlus = async (auth, money) => {
         }
     }
 }
-
+```
 The given code defines an asynchronous function rosesPlus that takes two parameters auth and money.
 1.	Inside the function, multiple database queries are made to fetch user and level information from the database using the provided connection. Based on the value of money, certain calculations are performed to update the roses and money values for users in the database.
 2.	Here's a brief breakdown of the code:
@@ -121,8 +133,9 @@ The given code defines an asynchronous function rosesPlus that takes two paramet
 6.	Multiple nested queries are executed to update the roses and money for a chain of users (f1, f2, f3, f4) based on invite relationships.
 7.	The code logic seems to handle referral-based rewards ensuring that users receive roses and money based on their invite hierarchy and the amount of money being transacted (checking if it's greater than or equal to 10000).
 
-validateBet
+`validateBet`
 A function that validates a bet by checking if the provided parameters are correct.
+```js
 const validateBet = async (join, list_join, x, money, game) => {
     let checkJoin = isNumber(list_join);
     let checkX = isNumber(x);
@@ -157,6 +170,7 @@ const validateBet = async (join, list_join, x, money, game) => {
 
     return true;
 }
+```
 The given code defines an asynchronous function named validateBet that takes five parameters: join, list_join, x, money, and game.
 It performs validation checks based on the conditional statements in the function and returns true if all the checks pass, otherwise false.
 Here are the main checks performed:
@@ -166,8 +180,9 @@ Here are the main checks performed:
 4.	Validates if money and game are specific predefined values.
 The function utilizes a helper function isNumber() to check if the elements in list_join are numeric.
 
-betK5D
+`betK5D`
 A function that handles the betting process for the K5D game.
+```js
 const betK5D = async (req, res) => {
     try {
         let { join, list_join, x, money, game } = req.body;
@@ -239,7 +254,7 @@ const betK5D = async (req, res) => {
         if (error) console.log(error);
     }
 }
-
+```
 betK5D is an asynchronous function that handles a betting operation. It receives req (request) and res (response) objects. 
 1.	The function first extracts join, list_join, x, money, and game from the request body, as well as the auth cookie from the request.
 2.	It then validates the bet using the validateBet function. If the bet is invalid, it returns a response with a message 'Invalid bet' and status false.
@@ -252,6 +267,7 @@ betK5D is an asynchronous function that handles a betting operation. It receives
 
 •	listOrderOld
 A function that retrieves the list of old orders for a specific game and page range.
+```js
 const listOrderOld = async (req, res) => {
     let { gameJoin, pageno, pageto } = req.body;
     let auth = req.cookies.auth;
@@ -303,7 +319,7 @@ const listOrderOld = async (req, res) => {
         status: true
     });
 }
-
+```
 This code defines an asynchronous function listOrderOld that handles HTTP requests. 
 
 1.	It extracts gameJoin, pageno, and pageto from the request body and retrieves auth from cookies.
@@ -311,8 +327,9 @@ This code defines an asynchronous function listOrderOld that handles HTTP reques
 3.	If certain conditions are not met (like no data or missing parameters), appropriate error responses are sent.
 4.	The final response includes game data, periods, and status based on the query results.
 
-Stat_listOrderOld
+`Stat_listOrderOld`
 A function that retrieves statistical data for the list of old orders for a specific game and page range.
+```js
 const Stat_listOrderOld = async (req, res) => {
     let { gameJoin, pageno, pageto } = req.body;
     let checkGame = ['1', '3', '5', '10'].includes(String(gameJoin));
@@ -344,6 +361,7 @@ const Stat_listOrderOld = async (req, res) => {
         status: true
     });
   };
+```
 The given code defines an asynchronous function Stat_listOrderOld that takes two arguments req and res. 
 1.	It extracts the values of gameJoin, pageno, and pageto from the request body.
 2.	It checks if the gameJoin value is one of '1', '3', '5', or '10', and converts gameJoin to a number. Then it queries a database table 'd5' to fetch results where status is not 0 and the game matches the provided number, ordered by id in descending order with pagination defined by pageno and pageto.
@@ -354,6 +372,7 @@ The given code defines an asynchronous function Stat_listOrderOld that takes two
 •	GetMyEmerdList
 
 A function that retrieves the user's list of emerald orders for a specific game and page range.
+```js
 const GetMyEmerdList = async (req, res) => {
     let { gameJoin, pageno, pageto } = req.body;
     let auth = req.cookies.auth;
@@ -410,7 +429,7 @@ const GetMyEmerdList = async (req, res) => {
         status: true
     });
 }
-
+```
 This code defines an asynchronous function GetMyEmerdList that takes req and res as parameters.
 1.	It extracts gameJoin, pageno, and pageto from req.body and assigns req.cookies.auth to auth.
 2.	It then checks the values of gameJoin, pageno, and pageto against certain conditions and returns a response with an error message if the conditions are not met.
@@ -418,6 +437,7 @@ This code defines an asynchronous function GetMyEmerdList that takes req and res
 4.	Maps the result data to extract specific fields and returns a JSON response with the extracted data along with the total number of pages.
 •	 add5D
 A function that adds a new 5D result to the database for a specific game.
+```js
 const add5D = async(game) => {
     try {
         let join = '';
@@ -475,7 +495,7 @@ const add5D = async(game) => {
         }
     }
 }
-
+```
 The provided code defines an asynchronous function add5D that takes a parameter game. Inside the function, it performs various operations related to updating and inserting data into a database using queries.
 Here is a breakdown of the code:
 1.	It sets the variable join based on the value of game.
@@ -488,6 +508,7 @@ Here is a breakdown of the code:
 
 •	handling5D
 A function that handles the result of a 5D game by updating the status of bets and distributing the winnings.
+```js
 async function funHanding(game) {
     const [k5d] = await connection.query(`SELECT * FROM d5 WHERE status != 0 AND game = ${game} ORDER BY id DESC LIMIT 1 `);
     let k5dInfo = k5d[0];
@@ -672,7 +693,7 @@ async function funHanding(game) {
         };
     }
 }
-
+```
  The code defines an asynchronous function funHanding that processes game results from a database.
 1.	It fetches the latest game result from the d5 table using a SQL query.
 2.	It updates the result_5d table with this result.
@@ -685,6 +706,7 @@ async function funHanding(game) {
 Overall, the function handles results and updates the status of various bets based on the game outcomes.
  distributeCommission
 A function that distributes commissions to users based on their betting activity.
+```js
 const distributeCommission = async () => {
       try {
         const { startOfYesterdayTimestamp, endOfYesterdayTimestamp } =
@@ -733,7 +755,7 @@ const distributeCommission = async () => {
     };
 
 
-
+```
 In the provided code snippet:
 1.	We have an asynchronous function distributeCommission that handles commission distribution logic.
 2.	The function retrieves timestamps from the yesterdayTime function and level data from the database.
@@ -748,6 +770,7 @@ Parameters:
 •	length: The desired length of the generated string.
 Return Value:
 The generated random string.
+```js
 function makeid(length) {
     var result = '';
     var characters = '0123456789';
@@ -757,7 +780,7 @@ function makeid(length) {
     }
     return result;
 }
-
+```
 Here's a breakdown of the code:
 1.	var result string: Declares an empty string variable to store the generated ID.
 2.	var characters = "0123456789": Defines the characters that can be used in the ID.
@@ -767,7 +790,7 @@ Here's a breakdown of the code:
 6.	result += string(characters[rand.Intn(charactersLength)]): Picks a random character from 'characters' and appends it to the 'result' string.
 7.	return result: Returns the generated ID after the loop completes.
     
-rosesPlus1(phone, money, levels = [], timeNow = "")
+`rosesPlus1(phone, money, levels = [], timeNow = "")`
 This function calculates and inserts commissions based on a user's referral levels and the amount of money they have.
 Parameters:
 •	phone: The phone number of the user.
@@ -778,6 +801,7 @@ Return Value:
 An object with the following properties:
 •	success: A boolean value indicating whether the commissions calculation and insertion were successful.
 •	message: A message indicating the status of the operation.
+```js
 const rosesPlus1 = async (phone, money, levels = [], timeNow = "") => {
     try {
       const [userResult] = await connection.query(
@@ -847,7 +871,7 @@ const rosesPlus1 = async (phone, money, levels = [], timeNow = "") => {
     }
   };
 
-      
+  ```    
   
 In the provided code snippet, an asynchronous function rosesPlus1 is defined with four parameters: phone, money, levels (with a default value of an empty array), and timeNow (with a default value of an empty string).
 1.	The function executes a series of operations to calculate and insert commissions for a referral system. It first retrieves user information from a database table 'users' based on the provided phone. If the user exists and is verified, it proceeds to calculate commissions based on the specified levels and money amount.
@@ -858,6 +882,7 @@ handling5D(typeid)
 This function handles the processing and updating of results related to a 5D game.
 Parameters:
 •	typeid: The ID of the game.
+```js
 const handling5D = async(typeid) => {
 
     let game = Number(typeid);
@@ -887,7 +912,7 @@ const handling5D = async(typeid) => {
     }
 }
 
-      
+```      
     
 This code defines an asynchronous function handling5D that takes a parameter typeid.
 1.	It converts the typeid to a number and then awaits the execution of a function funHanding passing the game as argument.
