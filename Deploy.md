@@ -149,6 +149,8 @@ To start the application, run the below command in the terminal:
 ```bash
 npm start
 ```
+To check the Deployment:
+open the url to ELB in any browsers address Bar.
 
 
  
