@@ -3,16 +3,19 @@ This code file contains functions related to payment handling in the software pr
 Variables
 timeNow
 A variable that stores the current timestamp using the `Date.now()` function.
-let timeNow = Date.now();
+let `timeNow = Date.now();`
 PaymentStatusMap
 An object that maps payment statuses to their corresponding codes. The available payment statuses are:
+```js
 const PaymentStatusMap = {
     PENDING: 0,
     SUCCESS: 1,
     CANCELLED: 2
 }
-PaymentMethodsMap
+```
+`PaymentMethodsMap`
 An object that maps payment methods to their corresponding codes. The available payment methods are:
+```js
 const PaymentMethodsMap = {
     UPI_GATEWAY: "upi_gateway",
     UPI_MANUAL: "upi_manual",
@@ -20,11 +23,13 @@ const PaymentMethodsMap = {
     WOW_PAY: "wow_pay",
     USDT: "usdt",
 }
+```
 Functions
-initiateUPIPayment
+`initiateUPIPayment`
 A function that initiates a UPI payment.
-Parameters: req (Request object), res (Response object)
+Parameters: `req (Request object)`, `res (Response object)`
 Returns: JSON response with payment information and status.
+```js
 const initiateManualUPIPayment = async (req, res) => {
 
     const query = req.query
@@ -63,7 +68,7 @@ const initiateManualUPIPayment = async (req, res) => {
         dynamic_upi_Addr:upi_address,
     });
 }
-
+```
 This code defines an asynchronous function initiateManualUPIPayment that takes req and res as input parameters. It performs several database queries to fetch user and payment information, then renders a specified EJS template with the retrieved data.
 Here is a breakdown of the code:
 1.	Retrieves query parameters and cookie data from the request (req.query and req.cookies.auth).
@@ -76,15 +81,18 @@ Here is a breakdown of the code:
 8.	Finally, it renders the manual_payment.ejs template with the amount from the query, the UPI ID, and the dynamic UPI address obtained.
 
 Example:
+```js
 initiateUPIPayment({
   body: {
     money: 100
   }
 }, res);
+```
 verifyUPIPayment
 A function that verifies the status of a UPI payment.
 Parameters: req (Request object), res (Response object)
 Returns: JSON response with payment verification status.
+```js
 const verifyUPIPayment = async (req, res) => {
     const type = PaymentMethodsMap.UPI_GATEWAY
     let auth = req.cookies.auth;
@@ -172,7 +180,7 @@ const verifyUPIPayment = async (req, res) => {
         })
     }
 }
-
+```
 The provided code is an asynchronous function named verifyUPIPayment that handles UPI payment verification. Here's a breakdown of the code:
 1.	const type = PaymentMethodsMap.UPI_GATEWAY;: Defines a constant type with the value from PaymentMethodsMap.UPI_GATEWAY.
 2.	let auth = req.cookies.auth; and let orderId = req.query.client_txn_id;: Retrieve auth token from cookies and orderId from the query parameters.
@@ -186,11 +194,12 @@ The provided code is an asynchronous function named verifyUPIPayment that handle
 
 
 Example:
-verifyUPIPayment(req, res);
-initiatePiPayment
+`verifyUPIPayment(req, res);`
+`initiatePiPayment`
 A function that initiates a payment using the Pi Pay system.
 Parameters: req (Request object), res (Response object)
 Returns: JSON response with payment information and status.
+```js
 const initiatePiPayment = async (req, res) => {
     const type = PaymentMethodsMap.WOW_PAY
     let auth = req.cookies.auth;
@@ -240,7 +249,7 @@ const initiatePiPayment = async (req, res) => {
         })
      }
 }
-
+```
 The provided code defines an asynchronous function named 'initiatePiPayment' that handles a payment initiation process based on certain conditions and user data retrieved from the request object.
 Here is the breakdown of the code:
 1.	It extracts the payment type from the constant 'PaymentMethodsMap' and initializes variables for authentication token ('auth') and money amount ('money').
@@ -252,15 +261,18 @@ Here is the breakdown of the code:
 
 
 Example:
+```js
 initiatePiPayment({
   query: {
     money: 100
   }
 }, res);
+```
 verifyPiPayment
 A function that verifies the status of a payment made using the Pi Pay system.
 Parameters: req (Request object), res (Response object)
 Returns: JSON response with payment verification status.
+```js
 const verifyPiPayment = async (req, res) => {
     try {
         const type = PaymentMethodsMap.WOW_PAY
@@ -366,7 +378,7 @@ const verifyPiPayment = async (req, res) => {
     }
 }
 
-
+```
 The code provided is an asynchronous function verifyPiPayment that handles payment verification logic. Here is a breakdown of the key points:
 1.	const type = PaymentMethodsMap.WOW_PAY: Declares a constant type with the value WOW_PAY from PaymentMethodsMap.
 2.	let data = req.body;: Initializes data with the request body.
@@ -381,11 +393,12 @@ The code provided is an asynchronous function verifyPiPayment that handles payme
 11.	Handles errors by logging and returning a 500 status response with an error message.
 
 Example:
-verifyPiPayment(req, res);
-initiateManualUPIPayment
+`verifyPiPayment(req, res);`
+`initiateManualUPIPayment`
 A function that initiates a manual UPI payment.
 Parameters: req (Request object), res (Response object)
 Returns: HTML rendering of the manual payment page.
+```js
 const initiateManualUPIPayment = async (req, res) => {
 
     const query = req.query
@@ -424,7 +437,7 @@ const initiateManualUPIPayment = async (req, res) => {
         dynamic_upi_Addr:upi_address,
     });
 }
-
+```
 The provided code defines an asynchronous function initiateManualUPIPayment that takes two parameters req and res. It performs the following actions:
 1.	Extracts query parameters and authentication data from req.
 2.	Executes a SQL SELECT query to fetch data from the database table users based on the provided token and verification status.
@@ -437,11 +450,12 @@ The provided code defines an asynchronous function initiateManualUPIPayment that
  
 
 Example:
-initiateManualUPIPayment(req, res);
-addManualUPIPaymentRequest
+`initiateManualUPIPayment(req, res);`
+`addManualUPIPaymentRequest`
 A function that adds a manual UPI payment request to the system.
 Parameters: req (Request object), res (Response object)
 Returns: JSON response with the status of the payment request.
+```js
 const addManualUPIPaymentRequest = async (req, res) => {
     try {
         const data = req.body
@@ -512,7 +526,7 @@ const addManualUPIPaymentRequest = async (req, res) => {
     }
 }
 
-
+```
 This code defines an asynchronous function addManualUPIPaymentRequest that takes req and res as parameters to handle a manual UPI payment request.
 1.	Within a try block, the function extracts data from the request body, parses integers for money and utr, and retrieves the minimum allowed money from an environment variable.
 2.	If the money is missing or less than the minimum allowed, a JSON response with an error message is sent.
@@ -523,16 +537,19 @@ This code defines an asynchronous function addManualUPIPaymentRequest that takes
 7.	Finally, a success JSON response is sent with a message and the created recharge details.
 8.	If any error occurs during the process, an error message is logged, and a generic error response is sent back with a status code of 500.
 Example:
+```js
 addManualUPIPaymentRequest({
   body: {
     money: 100,
     utr: 123456789012
   }
 }, res);
-addManualUSDTPaymentRequest
+```
+`addManualUSDTPaymentRequest`
 A function that adds a manual USDT payment request to the system.
 Parameters: req (Request object), res (Response object)
 Returns: JSON response with the status of the payment request.
+```js
 const addManualUSDTPaymentRequest = async (req, res) => {
     try {
         const data = req.body
@@ -603,7 +620,7 @@ const addManualUSDTPaymentRequest = async (req, res) => {
         })
     }
 }
-
+```
 The provided code is a function called addManualUSDTPaymentRequest that handles a POST request to add a manual USD payment. Here is a breakdown of the code:
 1.	It is an asynchronous function using async and awaits response using await.
 2.	It extracts data, auth, money, and utr from the request body and cookies.
@@ -615,16 +632,19 @@ The provided code is a function called addManualUSDTPaymentRequest that handles 
 
 
 Example:
+```js
 addManualUSDTPaymentRequest({
   body: {
     money: 10,
     utr: 123456789012
   }
 }, res);
+```
 initiateManualUSDTPayment
 A function that initiates a manual USDT payment.
 Parameters: req (Request object), res (Response object)
 Returns: HTML rendering of the manual USDT payment page.
+```js
 const initiateManualUSDTPayment = async (req, res) => {
     const query = req.query
     const auth = req.cookies.auth;
@@ -649,7 +669,7 @@ const initiateManualUSDTPayment = async (req, res) => {
         UsdtWalletAddress: momo.usdt_wallet_address,
     });
 }
-
+```
 The given code is an asynchronous function named initiateManualUSDTPayment. It takes req and res as parameters.
 Here is a breakdown of the code:
 1.	It extracts query and auth from req and req.cookies.auth respectively.
@@ -659,8 +679,9 @@ Here is a breakdown of the code:
 5.	Creates an object momo with properties populated from bank_recharge_momo_data.
 6.	Returns the result of rendering an ejs file along with the Amount and UsdtWalletAddress.
 
-get_user_invitor
+`get_user_invitor`
 This function retrieves the inviter's phone number based on the provided phone number. It takes the phone number as a parameter and returns the inviter's phone number as a result. The function performs multiple database queries to find the inviter's phone number by traversing through multiple levels of invitations. If the provided phone number is "8895203112", it returns the username as the inviter's phone number.
+```js
 const get_user_invitor = async (phone_num) => {
     let phone = phone_num;
     let invite_phone = "";
@@ -725,6 +746,7 @@ const get_user_invitor = async (phone_num) => {
     }
     return invite_phone;
   }
+```
 The provided code defines an asynchronous function named get_user_invitor that takes a phone_num parameter. 
 1.	It queries a database table named users using the provided phone number and retrieves related information.
 2.	The function then checks if the phone number is not equal to a specific value '8895203112'. Based on this condition, it iterates through a series of nested queries to find the inviter user and their role until a certain level (2 or 1) is reached.
@@ -732,10 +754,12 @@ The provided code defines an asynchronous function named get_user_invitor that t
 4.	The optimized code refactors the nested if-else statements into a while loop to simplify the logic and reduce repetitive code. This improvement makes the function more concise and maintainable.
 
 Example usage:
-const inviterPhone = await get_user_invitor("9876543210");
-console.log(inviterPhone); // Output: "8895203112"
+
+`const inviterPhone = await get_user_invitor("9876543210");`
+`console.log(inviterPhone); // Output: "8895203112"`
 getUserDataByAuthToken
 This function retrieves user data based on the provided authentication token. It takes the authentication token as a parameter and returns an object containing the user's phone number, code, username, and invitation code. The function performs a database query to fetch the user data using the authentication token. If the user data is not found, it throws an error.
+```js
 const getUserDataByAuthToken = async (authToken) => {
     let [users] = await connection.query('SELECT `phone`, `code`,`name_user`,`invite` FROM users WHERE `token` = ? ', [authToken]);
     const user = users?.[0]
@@ -751,7 +775,7 @@ const getUserDataByAuthToken = async (authToken) => {
         invite: user.invite,
     }
 }
-
+```
 In the provided code:
 1.	An asynchronous function getUserDataByAuthToken is defined that takes authToken as a parameter.
 2.	It utilizes await to asynchronously query the database connection to retrieve user data based on the provided authToken.
@@ -760,11 +784,12 @@ In the provided code:
 5.	Finally, it returns an object containing the user data fields like phone, code, username, and invite based on the retrieved user information.
 
 Example usage:
-const authToken = "abc123";
-const userData = await getUserDataByAuthToken(authToken);
-console.log(userData); // Output: { phone: "9876543210", code: "USER123", username: "John Doe", invite: "INVITE123" }
-addUserAccountBalance
+`const authToken = "abc123";`
+`const userData = await getUserDataByAuthToken(authToken);`
+`console.log(userData); // Output: { phone: "9876543210", code: "USER123", username: "John Doe", invite: "INVITE123" }`
+`addUserAccountBalance`
 This function adds account balance to a user's account. It takes an object as a parameter containing the amount of money to be added, the user's phone number, and the inviter's code. The function calculates the user's money and inviter's money using the given amounts. It then updates the user's and inviter's account balances in the database. If the inviter's code is found, the function adds the inviter's money to their account as well. This function is executed asynchronously.
+```js
 const addUserAccountBalance = async ({ money, phone, invite }) => {
     const user_money = money + (money / 100) * 5
     const inviter_money = (money / 100) * 5
@@ -780,6 +805,7 @@ const addUserAccountBalance = async ({ money, phone, invite }) => {
         console.log("SUCCESSFULLY ADD MONEY TO inviter")
     }
 }
+```
 In this code snippet, there is an asynchronous function addUserAccountBalance that takes an object as a parameter containing money, phone, and invite.
 Inside the function:
 1.	user_money is calculated by adding 5% of the money input to itself.
@@ -790,6 +816,7 @@ Inside the function:
 6.	The code also contains some console.log statements for logging purposes.
 
 Example usage:
+```js
 const accountBalanceData = {
   money: 100,
   phone: "9876543210",
@@ -797,8 +824,10 @@ const accountBalanceData = {
 };
 await addUserAccountBalance(accountBalanceData);
 console.log("Successfully added account balance!");
+```
 getRechargeOrderId
 This function generates a recharge order ID using the current date and a randomly generated number. The function does not require any parameters and returns the generated recharge order ID. The order ID is a combination of the year, month, day, and a randomly generated number.
+```js
 const getRechargeOrderId = () => {
     const date = new Date();
     let id_time = date.getUTCFullYear() + '' + date.getUTCMonth() + 1 + '' + date.getUTCDate();
@@ -806,6 +835,7 @@ const getRechargeOrderId = () => {
 
     return id_time + id_order
 }
+```
 The given code defines a function getRechargeOrderId that generates a unique recharge order ID based on the current UTC date and a random number.
 1.	It first creates a new Date object to get the current date and time.
 2.	It then concatenates the year, month + 1 (months start from 0), and date to create a part of the order ID (id_time).
@@ -813,21 +843,26 @@ The given code defines a function getRechargeOrderId that generates a unique rec
 4.	Finally, it returns the combination of id_time and id_order as the recharge order ID.
 
 Example usage:
+```js
 const orderId = getRechargeOrderId();
 console.log(orderId); // Output: "20221113123456789"
+```
 rechargeTable
 This constant represents a collection of functions related to recharge records. It provides functions to get recharge records based on phone number and status, get a recharge record by order ID, cancel a recharge record by ID, set the status of a recharge record to success, get the current time for the "today" field, get the formatted date for the "today" field, and create a new recharge record. The functions are executed asynchronously.
 getRecordByPhoneAndStatus
 This function retrieves recharge records based on the provided phone number, status, and type. It takes an object as a parameter containing phone number, status, and optional type. If the type is provided, the function retrieves records matching all three criteria. If the type is not provided, the function retrieves records matching the phone number and status only. The function performs a database query to fetch the recharge records and returns an array of objects containing various details of each record.
 Example usage:
+```js
 const recordData = {
   phone: "9876543210",
   status: "success",
   type: "online"
 };
-getRechargeByOrderId
+```
+`getRechargeByOrderId`
 This function retrieves a recharge record based on the provided order ID. It takes the order ID as a parameter and returns an object containing the details of the recharge record. The function performs a database query to fetch the recharge record using the order ID. If the record is not found, it returns null.
 Example usage:
+```js
 const orderId = "20221113123456789";
 const record = await rechargeTable.getRechargeByOrderId({ orderId });
 console.log(record);
@@ -846,35 +881,45 @@ console.log(record);
   time: "13:45:00"
 }
 */
+```
 cancelById
 This function cancels a recharge record based on the provided ID. It takes the ID as a parameter and updates the status of the recharge record to cancelled in the database. The function throws an error if the provided ID is not a number.
 Example usage:
+```js
 const recordId = 1;
 await rechargeTable.cancelById(recordId);
 console.log("Recharge record cancelled successfully!");
-setStatusToSuccessByIdAndOrderId
+```
+`setStatusToSuccessByIdAndOrderId`
 This function sets the status of a recharge record to success based on the provided ID and order ID. It takes an object as a parameter containing the ID and order ID. The function updates the status of the recharge record to success in the database. The function throws an error if the provided ID is not a number.
 Example usage:
+```js
 const recordData = {
   id: 1,
   orderId: "20221113123456789"
 };
 await rechargeTable.setStatusToSuccessByIdAndOrderId(recordData);
 console.log("Recharge record status updated to success!");
-getCurrentTimeForTodayField
+```
+`getCurrentTimeForTodayField`
 This function returns the current time in the format "YYYY-DD-MM h:mm:ss A" for the "today" field of a recharge record. The function does not require any parameters.
 Example usage:
+```js
 const currentTime = rechargeTable.getCurrentTimeForTodayField();
 console.log(currentTime); // Output: "2022-11-13 13:45:00 PM"
-getDMYDateOfTodayFiled
+```
+`getDMYDateOfTodayFiled`
 This function formats the provided "today" field of a recharge record to the "DD-MM-YYYY" format. It takes the "today" field as a parameter and returns the formatted date.
 Example usage:
+```js
 const today = "2022-11-13 13:45:00";
 const formattedDate = rechargeTable.getDMYDateOfTodayFiled(today);
 console.log(formattedDate); // Output: "13-11-2022"
-create
+```
+`create`
 This function creates a new recharge record in the database. It takes an object as a parameter containing the details of the new record. The function inserts the record into the database and returns the created recharge record. If the URL is not provided, it defaults to "0". The function throws an error if the record is not created successfully.
 Example usage:
+```js
 const newRecharge = {
   orderId: "20221113123456789",
 const rechargeTable = {
@@ -970,7 +1015,7 @@ const rechargeTable = {
         return recharge[0]
     }
 }
-
+```
 The provided code is defining a JavaScript object called 'rechargeTable' which contains several async functions to interact with a 'recharge' table in a database. Here is a breakdown of the key functions:
 1.	getRechargeRecordByPhoneAndStatus: Accepts 'phone', 'status', and 'type' parameters, checks for valid 'status', and queries the database for records based on the provided parameters.
 2.	getRechargeByOrderId: Accepts 'orderId', queries the database for records matching the order ID, and returns the first item found.
